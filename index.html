@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Somandepalli | Google DeepMind</title>
+    <style>
+        :root {
+            /* BRANDING COLORS */
+            --primary: #003366; /* Your Jacket Navy */
+            --primary-light: #004d99; 
+            --text-dark: #111111;
+            --text-gray: #555555;
+            --bg-light: #ffffff;
+            --bg-offwhite: #f9fafb;
+            --border: #e5e7eb;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            line-height: 1.7;
+            background-color: var(--bg-light);
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.2s; }
+        ul { list-style: none; }
+
+        /* NAVIGATION BAR (The "Tabs") */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 1.5rem;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-cta {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white !important;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-cta:hover { background-color: var(--primary-light); }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 5rem 1.5rem;
+            background-color: var(--bg-offwhite);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .hero-content h1 {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            color: var(--text-dark);
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.35rem;
+            color: var(--text-gray);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .hero-img {
+            flex-shrink: 0;
+        }
+
+        .hero-img img {
+            width: 240px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px; /* Soft square looks more modern than circle */
+            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.15);
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 5rem 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .text-block p {
+            margin-bottom: 1.5rem;
+            color: #444;
+            font-size: 1.05rem;
+        }
+
+        /* GRID FOR PROJECTS/WORKS */
+        .work-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .work-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .work-card:hover {
+            border-color: var(--primary);
+            background-color: #fafbfd;
+            transform: translateY(-2px);
+        }
+
+        .work-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .work-card .meta {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 4rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a { margin: 0 10px; color: var(--primary); font-weight: 600;}
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-container { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+            .hero-content h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* Hidden on mobile for simplicity in V1 */
+            .logo { flex: 1; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Krishna Somandepalli</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#about">About</a>
+                <a href="#research">Research</a>
+                <a href="https://scholar.google.com/citations?hl=en&user=ih4OLKoAAAAJ" target="_blank">Publications</a>
+                <a href="#" onclick="alert('CV PDF coming soon!')">CV</a> 
+                <a href="mailto:krishna.somandepalli@gmail.com" class="btn-cta">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Architecting the next generation of multimodal intelligence.</h1>
+                <p class="subtitle">Senior Research Scientist at <strong>Google DeepMind</strong>.</p>
+            </div>
+            <div class="hero-img">
+                <img src="IMG_2799.jpeg" alt="Krishna Somandepalli">
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <span class="section-title">About Me</span>
+        <div class="text-block">
+            <p>
+                My research creates the connective tissue between raw data and human experience. With a foundation in Electrical and Computer Engineering from USC’s SAIL (Signal Analysis and Interpretation Laboratory), I spent years decoding the subtleties of human communication—how we speak, move, and emote.
+            </p>
+            <p>
+                Today, I apply those insights at the scale of the internet. At <strong>Google DeepMind</strong>, I lead efforts in generative media and agentic AI, moving beyond static analysis to build systems that can synthesize complex video and audio narratives. I don't just teach machines to see; I teach them to understand context, culture, and causality.
+            </p>
+        </div>
+    </section>
+
+    <section id="research" class="section">
+        <span class="section-title">Research Philosophy</span>
+        <h2>Perception Meets Creation</h2>
+        <div class="text-block">
+            <p>
+                My technical agenda focuses on the convergence of perception and creation. I architect Multimodal Generative AI systems that go beyond simple text prompts to synthesize video and audio with cinematic coherence and temporal consistency.
+            </p>
+            <p>
+                However, generation without understanding is insufficient. That is why I ground my models in <strong>Computational Media Intelligence</strong>—applying rigorous analysis to how AI interprets human behavior, emotion, and social bias. From parsing box-office films for representation to training large models on physical dynamics, my goal is to build intelligence that is not only powerful but sociologically aware.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <span class="section-title">Selected Works</span>
+        <div class="work-grid">
+            
+            <div class="work-card">
+                <h3>VideoPoet & GenAI</h3>
+                <div class="meta">Google DeepMind | ICML 2024</div>
+                <p>
+                    Core contributor to VideoPoet. Developed a zero-shot video generation model capable of synthesizing high-fidelity motion and audio from text prompts—a significant step toward world simulators.
+                </p>
+            </div>
+
+            <div class="work-card">
+                <h3>Media Intelligence (MICA)</h3>
+                <div class="meta">USC SAIL</div>
+                <p>
+                    Developed robust frameworks for analyzing character portrayals in media, quantifying social bias in film, and modeling family interaction dynamics. 
+                </p>
+            </div>
+
+             <div class="work-card">
+                <h3>Affective Computing</h3>
+                <div class="meta">Multimodal Analysis</div>
+                <p>
+                    Pioneered methods for multimodal sentiment analysis, bridging the gap between signal processing and psychological interpretation of human behavior.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://scholar.google.com/citations?hl=en&user=ih4OLKoAAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/krishna-somandepalli-38827912" target="_blank">LinkedIn</a>
+            <a href="https://sail.usc.edu/~somandep/" target="_blank">Academic Archive</a>
+        </div>
+        <br>
+        <p>&copy; 2025 Krishna Somandepalli. Built in NYC.</p>
+    </footer>
+
+</body>
+</html>
