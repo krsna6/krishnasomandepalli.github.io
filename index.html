@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krishna Somandepalli | Google DeepMind</title>
+    <title>Krishna Somandepalli, PhD | Senior Research Engineer</title>
     <style>
         :root {
-            /* BRANDING COLORS */
-            --primary: #003366; /* Your Jacket Navy */
+            /* BRANDING COLORS - Navy from your jacket */
+            --primary: #003366; 
             --primary-light: #004d99; 
-            --text-dark: #111111;
+            --text-dark: #222222;
             --text-gray: #555555;
             --bg-light: #ffffff;
             --bg-offwhite: #f9fafb;
@@ -23,19 +23,18 @@
         body {
             font-family: var(--font-main);
             color: var(--text-dark);
-            line-height: 1.7;
+            line-height: 1.6;
             background-color: var(--bg-light);
         }
 
         a { text-decoration: none; color: inherit; transition: 0.2s; }
         ul { list-style: none; }
 
-        /* NAVIGATION BAR (The "Tabs") */
+        /* NAVIGATION BAR */
         .navbar {
             position: sticky;
             top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
             padding: 0 1.5rem;
@@ -52,9 +51,8 @@
 
         .logo {
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--primary);
-            letter-spacing: -0.02em;
         }
 
         .nav-links {
@@ -68,9 +66,7 @@
             color: var(--text-gray);
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+        .nav-links a:hover { color: var(--primary); }
 
         .btn-cta {
             padding: 0.5rem 1rem;
@@ -98,30 +94,29 @@
         }
 
         .hero-content h1 {
-            font-size: 2.75rem;
-            line-height: 1.1;
+            font-size: 2.25rem;
+            line-height: 1.2;
             margin-bottom: 1rem;
-            letter-spacing: -0.03em;
             color: var(--text-dark);
+            font-weight: 700;
         }
 
         .hero-content .subtitle {
-            font-size: 1.35rem;
+            font-size: 1.2rem;
             color: var(--text-gray);
             font-weight: 400;
             margin-bottom: 2rem;
+            line-height: 1.5;
         }
 
-        .hero-img {
-            flex-shrink: 0;
-        }
+        .hero-img { flex-shrink: 0; }
 
         .hero-img img {
             width: 240px;
             height: 240px;
             object-fit: cover;
-            border-radius: 12px; /* Soft square looks more modern than circle */
-            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         /* SECTIONS */
@@ -142,9 +137,9 @@
         }
 
         .section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
         }
 
         .text-block p {
@@ -156,7 +151,7 @@
         /* GRID FOR PROJECTS/WORKS */
         .work-grid {
             display: grid;
-            gap: 2rem;
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
@@ -170,11 +165,10 @@
         .work-card:hover {
             border-color: var(--primary);
             background-color: #fafbfd;
-            transform: translateY(-2px);
         }
 
         .work-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
@@ -182,8 +176,9 @@
         .work-card .meta {
             font-size: 0.85rem;
             color: #888;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
         }
 
         /* FOOTER */
@@ -200,9 +195,10 @@
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             .hero-container { flex-direction: column-reverse; text-align: center; gap: 2rem; }
-            .hero-content h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* Hidden on mobile for simplicity in V1 */
+            .hero-content h1 { font-size: 1.8rem; }
+            .nav-links { display: none; } 
             .logo { flex: 1; text-align: center; }
+            .hero-img img { width: 180px; height: 180px; }
         }
     </style>
 </head>
@@ -225,8 +221,10 @@
     <header class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>Architecting the next generation of multimodal intelligence.</h1>
-                <p class="subtitle">Senior Research Scientist at <strong>Google DeepMind</strong>.</p>
+                <h1>Senior Research Engineer at Google DeepMind</h1>
+                <p class="subtitle">
+                    Multimodal Machine Learning | Affective Computing | Computational Media Intelligence
+                </p>
             </div>
             <div class="hero-img">
                 <img src="IMG_2799.jpeg" alt="Krishna Somandepalli">
@@ -238,23 +236,26 @@
         <span class="section-title">About Me</span>
         <div class="text-block">
             <p>
-                My research creates the connective tissue between raw data and human experience. With a foundation in Electrical and Computer Engineering from USC’s SAIL (Signal Analysis and Interpretation Laboratory), I spent years decoding the subtleties of human communication—how we speak, move, and emote.
+                I build robust machine intelligence models by learning from multiple views and modalities in datasets. My research focuses on <strong>multimodal machine learning</strong>, bridging the gap between raw signals and human-level understanding.
             </p>
             <p>
-                Today, I apply those insights at the scale of the internet. At <strong>Google DeepMind</strong>, I lead efforts in generative media and agentic AI, moving beyond static analysis to build systems that can synthesize complex video and audio narratives. I don't just teach machines to see; I teach them to understand context, culture, and causality.
+                Currently, I am a <strong>Senior Research Engineer</strong> at <strong>Google DeepMind</strong> in New York City, working on next-generation generative models. I enjoy working on open-ended problems that contribute to products with a tangible societal impact.
+            </p>
+            <p>
+                Prior to DeepMind, I completed my PhD at USC's Signal Analysis and Interpretation Laboratory (SAIL), where I developed inclusive technologies to analyze media content and computational imaging.
             </p>
         </div>
     </section>
 
     <section id="research" class="section">
-        <span class="section-title">Research Philosophy</span>
-        <h2>Perception Meets Creation</h2>
+        <span class="section-title">Research Areas</span>
+        <h2>Multimodal Intelligence & Society</h2>
         <div class="text-block">
             <p>
-                My technical agenda focuses on the convergence of perception and creation. I architect Multimodal Generative AI systems that go beyond simple text prompts to synthesize video and audio with cinematic coherence and temporal consistency.
+                <strong>Generative Media (VideoPoet & Gemini):</strong> Pushing the frontier of zero-shot video generation and agentic capabilities. My work leverages large language models to synthesize high-fidelity motion and audio, creating systems that understand temporal dynamics and consistency.
             </p>
             <p>
-                However, generation without understanding is insufficient. That is why I ground my models in <strong>Computational Media Intelligence</strong>—applying rigorous analysis to how AI interprets human behavior, emotion, and social bias. From parsing box-office films for representation to training large models on physical dynamics, my goal is to build intelligence that is not only powerful but sociologically aware.
+                <strong>Computational Media Intelligence:</strong> I develop frameworks to "watch" and "listen" to media at scale. This involves analyzing character representations, quantifying social bias in entertainment, and using AI to decode complex human interactions.
             </p>
         </div>
     </section>
@@ -264,26 +265,26 @@
         <div class="work-grid">
             
             <div class="work-card">
-                <h3>VideoPoet & GenAI</h3>
+                <h3>VideoPoet</h3>
                 <div class="meta">Google DeepMind | ICML 2024</div>
                 <p>
-                    Core contributor to VideoPoet. Developed a zero-shot video generation model capable of synthesizing high-fidelity motion and audio from text prompts—a significant step toward world simulators.
+                    A large language model for zero-shot video generation. Contributed to audio-video synchronization and high-fidelity motion synthesis capabilities.
                 </p>
             </div>
 
             <div class="work-card">
-                <h3>Media Intelligence (MICA)</h3>
-                <div class="meta">USC SAIL</div>
+                <h3>Computational Media Intelligence</h3>
+                <div class="meta">IEEE Proceedings | USC SAIL</div>
                 <p>
-                    Developed robust frameworks for analyzing character portrayals in media, quantifying social bias in film, and modeling family interaction dynamics. 
+                    Human-centered machine analysis of media. Developed frameworks for quantifying character representation and social bias in film and TV.
                 </p>
             </div>
 
              <div class="work-card">
-                <h3>Affective Computing</h3>
-                <div class="meta">Multimodal Analysis</div>
+                <h3>Multimodal Affective Computing</h3>
+                <div class="meta">Analysis & Perception</div>
                 <p>
-                    Pioneered methods for multimodal sentiment analysis, bridging the gap between signal processing and psychological interpretation of human behavior.
+                    Research on modeling human emotion and behavioral dynamics through audio, visual, and physiological signals to build more inclusive technologies.
                 </p>
             </div>
 
@@ -297,7 +298,7 @@
             <a href="https://sail.usc.edu/~somandep/" target="_blank">Academic Archive</a>
         </div>
         <br>
-        <p>&copy; 2025 Krishna Somandepalli. Built in NYC.</p>
+        <p>&copy; 2025 Krishna Somandepalli, PhD. Built in NYC.</p>
     </footer>
 
 </body>
