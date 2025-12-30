@@ -11,10 +11,17 @@
 
     <style>
         /* GLOBAL STYLES */
+        :root {
+            /* Define the blue from the suit jacket as a variable */
+            --accent-blue: #0f244a; 
+            --text-gray: #202124;
+            --light-gray: #5f6368;
+        }
+
         body {
             font-family: 'DM Sans', sans-serif;
             background-color: #ffffff;
-            color: #202124; /* Google Dark Gray */
+            color: var(--text-gray);
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -23,7 +30,7 @@
 
         /* LAYOUT CONTAINER */
         .container {
-            max-width: 960px; /* Wider to fit side-by-side */
+            max-width: 960px;
             margin: 0 auto;
             padding: 80px 40px;
         }
@@ -31,49 +38,54 @@
         /* HERO SECTION (Text + Image Side-by-Side) */
         .hero-wrapper {
             display: flex;
-            flex-direction: row-reverse; /* Puts image on right, text on left */
+            flex-direction: row-reverse;
             align-items: flex-start;
-            gap: 60px; /* Space between text and image */
+            gap: 60px;
         }
 
         .hero-text {
-            flex: 1; /* Takes up remaining space */
+            flex: 1;
         }
 
         .hero-image-container {
-            flex: 0 0 300px; /* Fixed width for image column */
+            flex: 0 0 300px;
         }
 
         /* IMAGE STYLE */
         .profile-photo {
             width: 100%;
             max-width: 300px;
-            border-radius: 12px; /* Soft rounded corners instead of circle */
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Subtle shadow for depth */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(15, 36, 74, 0.15); /* Slight blue tint to shadow */
             object-fit: cover;
             display: block;
         }
 
-        /* TYPOGRAPHY */
+        /* TYPOGRAPHY & COLOR UPDATES */
         h1 {
             font-weight: 700;
             font-size: 2.8rem;
             margin: 0 0 10px 0;
             letter-spacing: -1px;
-            color: #000;
+            color: var(--accent-blue); /* UPDATED COLOR */
             line-height: 1.1;
+        }
+
+        /* Specific rule to color bold text */
+        strong {
+            color: var(--accent-blue); /* UPDATED COLOR */
         }
 
         .subtitle {
             font-size: 1.4rem;
-            color: #5f6368;
+            color: var(--light-gray);
             font-weight: 400;
             margin-bottom: 30px;
             display: block;
         }
 
         a {
-            color: #1a73e8;
+            color: var(--accent-blue); /* UPDATED COLOR to match theme */
             text-decoration: none;
         }
         a:hover {
@@ -86,7 +98,7 @@
         ul { margin: 20px 0; padding-left: 20px; }
         li { margin-bottom: 12px; }
 
-        /* SOCIAL LINKS */
+        /* SOCIAL LINKS BUTTONS */
         .social-links {
             margin-top: 40px;
             display: flex;
@@ -96,35 +108,34 @@
         .social-button {
             display: inline-block;
             padding: 10px 20px;
-            border: 1px solid #dadce0;
+            border: 2px solid var(--accent-blue); /* UPDATED border color */
             border-radius: 24px;
-            color: #202124;
+            color: var(--accent-blue); /* UPDATED text color */
             font-weight: 500;
             transition: all 0.2s ease;
         }
         
         .social-button:hover {
-            background-color: #f8f9fa;
-            border-color: #202124;
+            background-color: var(--accent-blue);
+            color: #ffffff; /* White text on hover */
             text-decoration: none;
         }
 
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
+            .container { padding: 40px 20px; }
             .hero-wrapper {
-                flex-direction: column; /* Stack vertically on phone */
-                align-items: center; /* Center everything */
+                flex-direction: column;
+                align-items: center;
             }
-            
             .hero-image-container {
                 margin-bottom: 30px;
                 flex: 0 0 auto;
-                width: 200px; /* Smaller image on phone */
+                width: 220px;
             }
-
             h1 { font-size: 2rem; text-align: center; }
             .subtitle { font-size: 1.1rem; text-align: center; }
-            .social-links { justify-content: center; }
+            .social-links { justify-content: center; flex-wrap: wrap; }
         }
     </style>
 </head>
