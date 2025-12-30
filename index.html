@@ -18,79 +18,113 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            font-size: 18px; /* Slightly larger for modern readability */
+            font-size: 18px; 
         }
 
         /* LAYOUT CONTAINER */
         .container {
-            max-width: 800px;
+            max-width: 960px; /* Wider to fit side-by-side */
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 40px;
         }
 
-        /* LINKS */
+        /* HERO SECTION (Text + Image Side-by-Side) */
+        .hero-wrapper {
+            display: flex;
+            flex-direction: row-reverse; /* Puts image on right, text on left */
+            align-items: flex-start;
+            gap: 60px; /* Space between text and image */
+        }
+
+        .hero-text {
+            flex: 1; /* Takes up remaining space */
+        }
+
+        .hero-image-container {
+            flex: 0 0 300px; /* Fixed width for image column */
+        }
+
+        /* IMAGE STYLE */
+        .profile-photo {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 12px; /* Soft rounded corners instead of circle */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Subtle shadow for depth */
+            object-fit: cover;
+            display: block;
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+            color: #000;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #5f6368;
+            font-weight: 400;
+            margin-bottom: 30px;
+            display: block;
+        }
+
         a {
-            color: #1a73e8; /* Google Blue */
+            color: #1a73e8;
             text-decoration: none;
         }
         a:hover {
             text-decoration: underline;
         }
 
-        /* HEADER SECTION */
-        header {
-            margin-bottom: 50px;
-        }
-
-        h1 {
-            font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-            letter-spacing: -0.5px;
-            color: #000;
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            color: #5f6368; /* Google Gray */
-            font-weight: 400;
-        }
-
-        /* PROFILE PHOTO (Optional) */
-        .profile-photo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* Circle */
-            object-fit: cover;
-            margin-bottom: 30px;
-            background-color: #f1f3f4; /* Placeholder gray */
-        }
-
         /* BIO CONTENT */
-        .bio-section p {
-            margin-bottom: 20px;
-        }
-
-        /* LIST STYLING */
-        ul {
-            margin: 20px 0;
-            padding-left: 20px;
-        }
+        p { margin-bottom: 20px; }
         
-        li {
-            margin-bottom: 12px;
-        }
+        ul { margin: 20px 0; padding-left: 20px; }
+        li { margin-bottom: 12px; }
 
-        /* FOOTER / SOCIALS */
+        /* SOCIAL LINKS */
         .social-links {
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #dadce0;
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
         }
         
-        .social-links a {
-            margin-right: 20px;
+        .social-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            color: #202124;
             font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .social-button:hover {
+            background-color: #f8f9fa;
+            border-color: #202124;
+            text-decoration: none;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .hero-wrapper {
+                flex-direction: column; /* Stack vertically on phone */
+                align-items: center; /* Center everything */
+            }
+            
+            .hero-image-container {
+                margin-bottom: 30px;
+                flex: 0 0 auto;
+                width: 200px; /* Smaller image on phone */
+            }
+
+            h1 { font-size: 2rem; text-align: center; }
+            .subtitle { font-size: 1.1rem; text-align: center; }
+            .social-links { justify-content: center; }
         }
     </style>
 </head>
@@ -98,44 +132,51 @@
 
     <div class="container">
         
-        <header>
-            <img src="IMG_2801.jpeg" alt="Dr. Krishna Somandepalli" class="profile-photo">
+        <div class="hero-wrapper">
             
-            <h1>Dr. Krishna Somandepalli</h1>
-            <div class="subtitle">Senior Research Engineer @ Google DeepMind</div>
-        </header>
-
-        <section class="bio-section">
-            <p>
-                I’m a <strong>Senior Research Engineer at Google DeepMind</strong>, where I develop AI systems that learn from multimodal, real-world data—integrating vision, audio, language, and structured signals to understand, model, and generate rich human-centered content.
-            </p>
-
-            <p>My recent work includes key contributions to:</p>
-            <ul>
-                <li><strong>Gemini 2.5</strong> – advancing multimodal reasoning, long-context modeling, and agentic capabilities (2025).</li>
-                <li><strong>VideoPoet</strong> – a universal autoregressive model for text-to-video generation, awarded <em>Best Paper at CVPR 2024</em>.</li>
-                <li><strong>Versatile Diffusion</strong> – a patented, flexible diffusion transformer with mixture-of-noise-levels for audiovisual generation (NeurIPS 2024).</li>
-            </ul>
-
-            <p>
-                Previously, I was a researcher at Google Research and received my PhD in Electrical and Computer Engineering from the <strong>University of Southern California (USC)</strong>, advised by Prof. Shri Narayanan at the Signal Analysis and Interpretation Laboratory (SAIL). My research focused on multimodal representation learning, affective computing, and computational media analysis. At SAIL, I led the Media Informatics and Content Analysis group, developing computational narrative understanding systems for media content.
-            </p>
-
-            <p>
-                Before USC, I earned my Master's degree from UC Santa Barbara and worked as a research scientist at NYU Langone, developing models to study functional brain networks using fMRI.
-            </p>
-
-            <p>
-                Across all my work—from foundational models to recent AI agents—I’m driven by the goal of building AI that is technically robust, meaningful, and useful to society.
-            </p>
-        </section>
-
-        <div class="social-links">
-            <a href="https://scholar.google.com/citations?user=YOUR_USER_ID" target="_blank">Google Scholar</a>
-            <a href="https://www.linkedin.com/in/YOUR_PROFILE" target="_blank">LinkedIn</a>
-            <a href="https://github.com/krsna6" target="_blank">GitHub</a>
+            <div class="hero-image-container">
+                <img src="image.png" alt="Dr. Krishna Somandepalli" class="profile-photo">
             </div>
 
+            <div class="hero-text">
+                <header>
+                    <h1>Dr. Krishna Somandepalli</h1>
+                    <span class="subtitle">Senior Research Engineer @ Google DeepMind</span>
+                </header>
+
+                <div class="bio-section">
+                    <p>
+                        I’m a <strong>Senior Research Engineer at Google DeepMind</strong>, where I develop AI systems that learn from multimodal, real-world data—integrating vision, audio, language, and structured signals to understand, model, and generate rich human-centered content.
+                    </p>
+
+                    <p>My recent work includes key contributions to:</p>
+                    <ul>
+                        <li><strong>Gemini 2.5</strong> – advancing multimodal reasoning, long-context modeling, and agentic capabilities (2025).</li>
+                        <li><strong>VideoPoet</strong> – a universal autoregressive model for text-to-video generation, awarded <em>Best Paper at CVPR 2024</em>.</li>
+                        <li><strong>Versatile Diffusion</strong> – a patented, flexible diffusion transformer with mixture-of-noise-levels for audiovisual generation (NeurIPS 2024).</li>
+                    </ul>
+
+                    <p>
+                        Previously, I was a researcher at Google Research and received my PhD in Electrical and Computer Engineering from the <strong>University of Southern California (USC)</strong>, advised by Prof. Shri Narayanan at the Signal Analysis and Interpretation Laboratory (SAIL). My research focused on multimodal representation learning, affective computing, and computational media analysis. At SAIL, I led the Media Informatics and Content Analysis group, developing computational narrative understanding systems for media content.
+                    </p>
+
+                    <p>
+                        Before USC, I earned my Master's degree from UC Santa Barbara and worked as a research scientist at NYU Langone, developing models to study functional brain networks using fMRI.
+                    </p>
+
+                    <p>
+                        Across all my work—from foundational models to recent AI agents—I’m driven by the goal of building AI that is technically robust, meaningful, and useful to society.
+                    </p>
+                    
+                    <div class="social-links">
+                        <a href="https://scholar.google.com/citations?user=YOUR_USER_ID" class="social-button" target="_blank">Google Scholar</a>
+                        <a href="https://www.linkedin.com/in/YOUR_PROFILE" class="social-button" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/krsna6" class="social-button" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
 
 </body>
