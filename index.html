@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna Somandepalli, PhD | Google DeepMind</title>
     <style>
-        :root {
-            /* Your Jacket Colors */
-            --accent-color: #003366; /* Deep Navy */
+    :root {
+            /* BRANDING COLORS */
+            --accent-color: #003366; /* Deep Navy (Primary) */
+            --link-hover: #800020;   /* ADD THIS LINE: Burgundy for hover */
+            
+            /* ... keep your other existing variables below ... */
             --bg-color: #ffffff;
             --text-color: #333333;
             --sidebar-bg: #f8f9fa; 
             --border-color: #e9ecef;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -78,7 +80,32 @@
             padding: 3rem 2rem;
             max-width: 800px;
         }
+/* MODERN LINK STYLING (The Burgundy Update) */
+        .main-content a {
+            color: var(--text-color); /* Keeps text dark/readable */
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 51, 102, 0.3); /* Subtle navy underline */
+            transition: all 0.2s ease;
+        }
 
+        .main-content a:hover {
+            color: var(--link-hover); /* Burgundy Text */
+            border-bottom: 2px solid var(--link-hover); /* Burgundy Underline */
+            background-color: rgba(128, 0, 32, 0.05); /* Very faint burgundy highlight */
+        }
+
+        /* Keep sidebar links clean (No underline by default) */
+        .contact-links a {
+            border-bottom: none; 
+        }
+
+        .contact-links a:hover { 
+            color: var(--link-hover);
+            text-decoration: underline; 
+            background-color: transparent; /* No background box for sidebar */
+        }
+        
         h3 {
             color: var(--accent-color);
             border-bottom: 2px solid var(--border-color);
@@ -178,6 +205,9 @@
         </p>
         <p>
             Previously, I was with Google Research and received my PhD in Electrical and Computer Engineering from University of Southern California (<a href="https://sail.usc.edu/" target="_blank">Signal Analysis and Interpretation Lab</a>). My academic background is rooted in <strong>multimodal representation learning</strong> and <strong>affective computing</strong>—bridging the gap between raw signals and human-level understanding.
+        </p>
+        <p>
+            Prior to my doctoral studies, I earned my Master's degree in Electrical Engineering from <strong>UC Santa Barbara</strong> and served as a Jr. Research Scientist at <strong>NYU Langone Medical Center</strong>. There, I developed statistical models to analyze functional brain networks using fMRI data, an experience that grounded my later work in decoding complex human signals.
         </p>
         <p>
             Across all my work—from foundational models to recent AI agents—I'm driven by the goal of building AI that is technically robust, meaningful, and useful to society.
