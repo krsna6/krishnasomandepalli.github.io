@@ -10,7 +10,7 @@
             --accent-color: #003366; /* Deep Navy */
             --bg-color: #ffffff;
             --text-color: #333333;
-            --sidebar-bg: #f8f9fa; /* Very light gray for academic sidebar */
+            --sidebar-bg: #f8f9fa; 
             --border-color: #e9ecef;
         }
 
@@ -40,7 +40,7 @@
         .profile-pic {
             width: 180px;
             height: 180px;
-            border-radius: 50%; /* Circle */
+            border-radius: 50%;
             object-fit: cover;
             border: 4px solid #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -71,9 +71,7 @@
             font-size: 0.9rem;
         }
 
-        .contact-links a:hover {
-            text-decoration: underline;
-        }
+        .contact-links a:hover { text-decoration: underline; }
 
         /* MAIN CONTENT (Right) */
         .main-content {
@@ -93,21 +91,28 @@
 
         p { margin-bottom: 1.5rem; text-align: justify; }
 
-        /* Work Item Styling */
-        .work-item {
-            margin-bottom: 1.5rem;
+        /* RESEARCH AREA STYLING */
+        .research-area {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed var(--border-color);
         }
-        .work-title {
+        .research-area:last-child { border-bottom: none; }
+
+        .area-title {
             font-weight: 700;
             color: #222;
-            font-size: 1.1rem;
-        }
-        .work-meta {
-            font-size: 0.85rem;
-            color: #666;
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
+        }
+        
+        .area-tags {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* Footer */
@@ -120,15 +125,13 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* DESKTOP VIEW (Side by Side) */
+        /* DESKTOP VIEW */
         @media (min-width: 900px) {
-            .wrapper {
-                flex-direction: row;
-            }
+            .wrapper { flex-direction: row; }
             .sidebar {
-                width: 320px; /* Fixed width sidebar */
+                width: 320px;
                 flex-shrink: 0;
-                text-align: left; /* Align text left on desktop sidebar */
+                text-align: left;
                 height: 100vh;
                 position: sticky;
                 top: 0;
@@ -141,16 +144,11 @@
             .profile-pic {
                 width: 160px;
                 height: 160px;
-                margin: 0 auto 1.5rem auto; /* Center image */
+                margin: 0 auto 1.5rem auto;
                 display: block;
             }
-            .sidebar h1, .sidebar h2, .contact-links {
-                text-align: center; /* Keep text centered in sidebar */
-            }
-            .main-content {
-                padding: 4rem 5rem;
-                overflow-y: auto; /* Allows scrolling only on the right side */
-            }
+            .sidebar h1, .sidebar h2, .contact-links { text-align: center; }
+            .main-content { padding: 4rem 5rem; overflow-y: auto; }
         }
     </style>
 </head>
@@ -159,9 +157,9 @@
 <div class="wrapper">
     
     <aside class="sidebar">
-        <img src="IMG_2801.jpeg" alt="Krishna Somandepalli" class="profile-pic">
+        <img src="IMG_2799.jpeg" alt="Krishna Somandepalli" class="profile-pic">
         
-        <h1>Dr. Krishna Somandepalli</h1>
+        <h1>Krishna Somandepalli</h1>
         <h2>Senior Research Engineer<br>Google DeepMind</h2>
         
         <div class="contact-links">
@@ -179,48 +177,40 @@
             I am a <strong>Senior Research Engineer</strong> at <strong>Google DeepMind</strong> in New York City, where I develop AI systems that learn from multimodal, real-world data. My work integrates vision, audio, language, and structured signals to model and generate rich human-centered content.
         </p>
         <p>
-            Previously, I was a researcher at Google Research and received my PhD in Electrical and Computer Engineering from USC (SAIL). My academic background is rooted in <strong>multimodal representation learning</strong> and <strong>affective computing</strong>—bridging the gap between raw signals and human-level understanding.
+            Previously, I was with Google Research and received my PhD in Electrical and Computer Engineering from University of Southern California (<a href="https://sail.usc.edu/" target="_blank">Signal Analysis and Interpretation Lab</a>). My academic background is rooted in <strong>multimodal representation learning</strong> and <strong>affective computing</strong>—bridging the gap between raw signals and human-level understanding.
         </p>
         <p>
             Across all my work—from foundational models to recent AI agents—I'm driven by the goal of building AI that is technically robust, meaningful, and useful to society.
         </p>
 
-        <h3>Selected Works</h3>
+        <h3>Research Areas</h3>
         
-        <div class="work-item">
-            <div class="work-title">Gemini 2.5 & Agentic AI</div>
-            <div class="work-meta">Google DeepMind (2025)</div>
+        <div class="research-area">
+            <div class="area-title">Multimodal & Agentic AI</div>
+            <div class="area-tags">Gemini 2.5 • Reasoning • Long-Context</div>
             <div>
-                Advancing multimodal reasoning, long-context modeling, and agentic capabilities. Focused on systems that can plan, perceive, and act across complex environments.
+                I focus on advancing the reasoning and agentic capabilities of large-scale systems to model and understand multimodal content. My work on <a href="https://arxiv.org/abs/2507.06261" target="_blank"><strong>Gemini 2.5</strong></a> family of model centers on perceiving complex environments, reason over long contexts, and act autonomously, pushing the boundaries of what foundational models can achieve in real-world applications.
             </div>
         </div>
 
-        <div class="work-item">
-            <div class="work-title">VideoPoet</div>
-            <div class="work-meta">CVPR 2024 (Best Paper)</div>
+        <div class="research-area">
+            <div class="area-title">Generative Media & Expressivity</div>
+            <div class="area-tags">VideoPoet • Versatile Diffusion • Patents</div>
             <div>
-                A universal autoregressive model for text-to-video generation. Contributed to audio-video synchronization and high-fidelity motion synthesis, enabling zero-shot video creation.
+                Generating content is not enough; we must enable fine-grained control. I build architectures for high-fidelity video and audio generation: notably, <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:abG-DnoFyZgC" target="_blank"><strong>VideoPoet</strong></a> (Best Paper Award, CVPR 2024) and <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:dfsIfKJdRG4C" target="_blank"><strong>Versatile Diffusion</strong></a> (NeurIPS 2024), with a focus on expressivity and temporal coherence. I hold multiple patents that enable <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:nb7KW1ujOQ8C" target="_blank">rich captioning</a> technologies, <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:1sJd4Hv_s6UC" target="_blank">task-agnostic training</a> for multimodal diffusion, and <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:abG-DnoFyZgC" target="_blank">cross-modal emotion-understanding</a> systems.            
             </div>
         </div>
 
-        <div class="work-item">
-            <div class="work-title">Versatile Diffusion</div>
-            <div class="work-meta">NeurIPS 2024</div>
+        <div class="research-area">
+            <div class="area-title">Computational Media Intelligence</div>
+            <div class="area-tags">Longitudinal Analysis • Event Structure • Scale</div>
             <div>
-                A patented, flexible diffusion transformer with mixture-of-noise-levels for audiovisual generation.
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-title">Computational Media Intelligence</div>
-            <div class="work-meta">USC SAIL</div>
-            <div>
-                Led the Media Informatics and Content Analysis (MICA) group, developing computational narrative understanding systems to quantify character representation and social bias in media.
+                Understanding complex media content requires more than pixel-level processing; it requires analyzing structure over time. I develop systems for the <strong>large-scale longitudinal analysis</strong> of media content, establishing the foundational frameworks for <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&citation_for_view=ih4OLKoAAAAJ:ufrVoPGSRksC" target="_blank"><strong>Computational Media Intelligence</strong></a>. This includes patented methods for <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ih4OLKoAAAAJ&sortby=pubdate&citation_for_view=ih4OLKoAAAAJ:u_35RYKgDlwC" target="_blank">unsupervised event discovery</a>, enabling machines to parse narrative arcs across thousands of hours of video—work <a href="https://www.youtube.com/watch?v=2EDiHryKwwE" target="_blank">featured by Google Research</a>.
             </div>
         </div>
 
         <div class="mobile-footer">
-            &copy; 2025 Dr. Krishna Somandepalli. Built in NYC.
+            &copy; 2025 Krishna Somandepalli. Built in NYC.
         </div>
 
     </main>
