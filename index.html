@@ -126,76 +126,63 @@
 
         p { margin-bottom: 1.5rem; text-align: left; }
 
-        /* RESEARCH AREA STYLING */
+        /* Research portfolio: one restrained card system across all three areas */
         .research-area {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px dashed var(--border-color);
-        }
-        .research-area:last-child { border-bottom: none; }
-
-        .area-title {
-            font-weight: 700;
-            color: #222;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .area-tags {
-            font-size: 0.85rem;
-            color: var(--accent-color);
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Computational Media Intelligence feature card */
-        .featured-research {
             box-sizing: border-box;
             padding: 1.5rem;
+            margin-bottom: 1.5rem;
             background: #fff;
             border: 1px solid #e3e6ea;
             border-radius: 18px;
         }
 
-        .featured-research .area-title {
+        .area-title {
+            font-weight: 700;
+            color: #222;
             font-size: 1.35rem;
             line-height: 1.35;
             margin-bottom: 0.75rem;
         }
 
-        .featured-research .area-tags {
+        .area-tags {
             color: #62666b;
+            font-size: 0.85rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             margin-bottom: 1.1rem;
         }
 
-        /* Treat the video as a distinct, recognizable media feature. */
-        .featured-research .watch-row {
+        .research-area > p {
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+        }
+
+        .research-area .resource-links {
+            line-height: 1.7;
+            font-size: 0.94rem;
+        }
+
+        .research-area .watch-row {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.65rem;
-            margin-top: 0.9rem;
+            margin-top: 1rem;
             line-height: 1.6;
         }
 
-        .featured-research .watch-icon {
+        .research-area .watch-icon {
             width: 18px;
             height: 18px;
+            margin-top: 0.25rem;
             flex-shrink: 0;
             display: block;
         }
 
-        .featured-research .watch-icon circle {
-            fill: #70757a;
-        }
+        .research-area .watch-icon circle { fill: #70757a; }
+        .research-area .watch-icon path { fill: #ffffff; }
 
-        .featured-research .watch-icon path {
-            fill: #ffffff;
-        }
-
-        .featured-research .recognition {
+        .research-area .recognition {
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
@@ -204,7 +191,7 @@
             margin-top: 1.5rem;
         }
 
-        .featured-research .recognition-icon {
+        .research-area .recognition-icon {
             flex-shrink: 0;
             width: 21px;
             height: 21px;
@@ -216,7 +203,7 @@
             stroke-linejoin: round;
         }
 
-        .featured-research .recognition-description {
+        .research-area .recognition-description {
             margin: 0.35rem 0 0;
             font-size: 0.92rem;
             line-height: 1.55;
@@ -224,22 +211,19 @@
             overflow-wrap: anywhere;
         }
 
-        /* Light link emphasis and wider card on phones, matching the reference. */
-        .featured-research .watch-row a,
-        .featured-research .recognition a {
+        .research-area .watch-row a,
+        .research-area .recognition a,
+        .research-area .resource-links a {
             font-weight: 500;
         }
 
         @media (max-width: 599px) {
-            .featured-research {
+            .research-area {
                 margin-left: -1.25rem;
                 margin-right: -1.25rem;
                 padding: 1.25rem;
             }
-
-            .featured-research .area-title {
-                font-size: 1.2rem;
-            }
+            .research-area .area-title { font-size: 1.2rem; }
         }
 
         /* Footer */
@@ -315,34 +299,49 @@
 <h3>Research Areas</h3>
 
 <div class="research-area">
-<div class="area-title">Multimodal & Agentic AI</div>
-<div class="area-tags">Gemini 2.5 • Reasoning • Long-Context</div>
+<div class="area-title">Multimodal &amp; Agentic AI</div>
+<div class="area-tags">Gemini 2.5 &middot; Reasoning &middot; Long-Context</div>
 <p>
-I work on multimodal systems that can <strong>perceive</strong> complex environments, <strong>reason</strong> over long contexts, and <strong>act</strong> autonomously in real settings—grounding
-with vision/audio/language modalities and other structured signals. I contribute to the <a href="https://arxiv.org/abs/2507.06261">Gemini 2.5</a> family with a focus on multimodality.
+I work on multimodal systems that can <strong>perceive</strong> complex environments, <strong>reason</strong> over long contexts, and <strong>act</strong> autonomously in real settings, grounded in vision, audio, language, and other structured signals. I contribute to the <a href="https://arxiv.org/abs/2507.06261">Gemini 2.5</a> family with a focus on multimodality.
 </p>
-<strong>Selected:</strong> <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro">Gemini 2.5</a>
+<div class="resource-links">
+<strong>Explore:</strong> <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro">Gemini 2.5 model documentation</a>
+</div>
 </div>
 
 <div class="research-area">
-<div class="area-title">Generative Media & Expressivity</div>
-<div class="area-tags">VideoPoet • Versatile Diffusion • Patents</div>
+<div class="area-title">Generative Media &amp; Expressivity</div>
+<div class="area-tags">VideoPoet &middot; Versatile Diffusion &middot; Patents</div>
 <p>
-I build generative models for video and audio where <strong>controllability</strong> is the core goal—timing,
-motion, style, and semantic fidelity. This includes
-<a href="https://arxiv.org/abs/2312.14125">VideoPoet</a> (CVPR 2024 Best Paper Award) and
-<a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/15f4cefb0e143c7ad9d40e879b0a9d0c-Paper-Conference.pdf">Versatile Diffusion</a> (NeurIPS 2024), with an emphasis on expressivity
-and temporal coherence.
+I build generative models for video and audio where <strong>controllability</strong> is the core goal—timing, motion, style, and semantic fidelity. This includes <a href="https://arxiv.org/abs/2312.14125">VideoPoet</a> (ICML 2024) and <a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/15f4cefb0e143c7ad9d40e879b0a9d0c-Paper-Conference.pdf">Versatile Diffusion</a> (NeurIPS 2024), with an emphasis on expressivity and temporal coherence.
 </p>
-<strong>Selected:</strong>
-<a href="https://sites.research.google/videopoet/">VideoPoet</a> &bull;
-<a href="https://avdit2024.github.io/">Versatile Diffusion</a> &bull;
-<a href="https://patents.google.com/patent/US20250349298A1/en">rich captioning</a> &bull;
-<a href="https://patents.google.com/patent/US20250252305A1/en">task-agnostic diffusion training</a> &bull;
+<div class="resource-links">
+<strong>Patents:</strong>
+<a href="https://patents.google.com/patent/US20250349298A1/en">rich captioning</a> &middot;
+<a href="https://patents.google.com/patent/US20250252305A1/en">task-agnostic diffusion training</a> &middot;
 <a href="https://patents.google.com/patent/US20250061917A1/en">cross-modal emotion understanding</a>
 </div>
+<div class="watch-row">
+<svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="11"></circle>
+    <path d="M10 7.5 17 12l-7 4.5z"></path>
+</svg>
+<span><strong>Watch:</strong> <a href="https://sites.research.google/videopoet/">VideoPoet demos</a> &middot; <a href="https://avdit2024.github.io/">Versatile Diffusion demos</a></span>
+</div>
+<div class="recognition">
+<svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="5"></circle>
+    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
+</svg>
+<div>
+<strong>Recognition:</strong>
+<a href="https://icml.cc/virtual/2024/awards_detail">ICML 2024 Best Paper Award</a>
+<p class="recognition-description">Awarded to VideoPoet for research on multimodal, zero-shot video generation.</p>
+</div>
+</div>
+</div>
 
-<div class="research-area featured-research">
+<div class="research-area">
 <div class="area-title">Computational Media Intelligence</div>
 <div class="area-tags">Longitudinal Analysis &middot; Computational Narratology &middot; Scale</div>
 <p>
