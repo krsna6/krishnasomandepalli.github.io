@@ -175,6 +175,30 @@
             line-height: 1.7;
         }
 
+        /* Treat the video as a distinct, recognizable media feature. */
+        .featured-research .watch-row {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-top: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .featured-research .watch-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .featured-research .watch-icon circle {
+            fill: #70757a;
+        }
+
+        .featured-research .watch-icon path {
+            fill: #ffffff;
+        }
+
         .featured-research .recognition {
             display: flex;
             align-items: flex-start;
@@ -313,8 +337,14 @@ I develop methods to extract structure from large-scale media: event discovery, 
 <div class="selected-links">
 <strong>Selected:</strong>
 <a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a> &middot;
-<a href="https://patents.google.com/patent/US11775765B2/en">automated movie script analysis</a> &middot;
-<a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a>
+<a href="https://patents.google.com/patent/US11775765B2/en">automated movie script analysis</a>
+</div>
+<div class="watch-row">
+<svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="11"></circle>
+    <path d="M10 7.5 17 12l-7 4.5z"></path>
+</svg>
+<span><strong>Watch:</strong> <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a></span>
 </div>
 <div class="recognition">
 <svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true">
