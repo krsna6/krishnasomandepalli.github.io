@@ -150,6 +150,60 @@
             letter-spacing: 0.05em;
         }
 
+        /* Computational Media Intelligence feature card */
+        .featured-research {
+            box-sizing: border-box;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #e3e6ea;
+            border-radius: 18px;
+        }
+
+        .featured-research .area-title {
+            font-size: 1.35rem;
+            line-height: 1.35;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-research .area-tags {
+            color: #62666b;
+            font-weight: 500;
+            margin-bottom: 1.1rem;
+        }
+
+        .featured-research .selected-links {
+            line-height: 1.7;
+        }
+
+        .featured-research .recognition {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.35rem;
+            margin-top: 1.5rem;
+        }
+
+        .featured-research .recognition-icon {
+            flex-shrink: 0;
+            width: 21px;
+            height: 21px;
+            margin-top: 0.15rem;
+            fill: none;
+            stroke: #72777d;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .featured-research .recognition-description {
+            margin: 0.35rem 0 0;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            color: #666b70;
+            overflow-wrap: anywhere;
+        }
+
         /* Footer */
         .mobile-footer {
             text-align: center;
@@ -250,20 +304,28 @@ and temporal coherence.
 <a href="https://patents.google.com/patent/US20250061917A1/en">cross-modal emotion understanding</a>
 </div>
 
-<div class="research-area">
+<div class="research-area featured-research">
 <div class="area-title">Computational Media Intelligence</div>
-<div class="area-tags">Longitudinal Analysis &bull; Computational Narratology &bull; Scale</div>
+<div class="area-tags">Longitudinal Analysis &middot; Computational Narratology &middot; Scale</div>
 <p>
-I develop methods to extract structure from large-scale media: event discovery, temporal organization,
-and narrative-level understanding across thousands of hours of video. This includes patented work on
-<a href="https://patents.google.com/patent/US11775765B2/en">automated narrative analysis of movie scripts</a> and frameworks for
-<a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a>, featured by
-<a href="https://youtu.be/2EDiHryKwwE">Google Research video series</a>.
+I develop methods to extract structure from large-scale media: event discovery, temporal organization, and narrative-level understanding across thousands of hours of video. This includes patented work on <a href="https://patents.google.com/patent/US11775765B2/en">automated narrative analysis of movie scripts</a> and frameworks for <a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a>. I also discuss how this research was applied through a collaboration with the <strong>Geena Davis Institute on Gender in Media</strong> in a <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a>.
 </p>
+<div class="selected-links">
 <strong>Selected:</strong>
-<a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a> &bull;
-<a href="https://patents.google.com/patent/US11775765B2/en">automated movie script analysis</a> &bull;
-<a href="https://youtu.be/2EDiHryKwwE">Google Research feature</a>
+<a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a> &middot;
+<a href="https://patents.google.com/patent/US11775765B2/en">automated movie script analysis</a> &middot;
+<a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a>
+</div>
+<div class="recognition">
+<svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="5"></circle>
+    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
+</svg>
+<div>
+<strong>Recognition:</strong>
+<a href="https://ihrdighist.blogs.sas.ac.uk/2023/10/2023-richard-deswarte-prize-in-digital-history/">2023 Richard Deswarte Prize in Digital History</a>
+<p class="recognition-description">Awarded for research developing computational methods to analyze Auschwitz-Birkenau survivor narratives.</p>
+</div>
 </div>
 
 
