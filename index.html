@@ -228,6 +228,25 @@
             overflow-wrap: anywhere;
         }
 
+        /* Light link emphasis and wider card on phones, matching the reference. */
+        .featured-research .selected-links a,
+        .featured-research .watch-row a,
+        .featured-research .recognition a {
+            font-weight: 500;
+        }
+
+        @media (max-width: 599px) {
+            .featured-research {
+                margin-left: -1.25rem;
+                margin-right: -1.25rem;
+                padding: 1.25rem;
+            }
+
+            .featured-research .area-title {
+                font-size: 1.2rem;
+            }
+        }
+
         /* Footer */
         .mobile-footer {
             text-align: center;
