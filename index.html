@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Krishna Somandepalli, PhD | Staff Research Engineer">
-    <meta property="og:description" content="Staff Research Engineer at Google DeepMind working on Multimodal AI, Gemini, and Generative Media.">
+    <meta name="description" content="Staff Research Engineer at Google DeepMind researching multimodal AI, expressive audio, generative media, and human-centered machine learning.">
+    <link rel="canonical" href="https://krishnasomandepalli.com/">
+    <meta property="og:title" content="Krishna Somandepalli | Staff Research Engineer, Google DeepMind">
+    <meta property="og:description" content="Staff Research Engineer at Google DeepMind researching multimodal AI, expressive audio, generative media, and human-centered machine learning.">
     <meta property="og:image" content="https://krishnasomandepalli.com/IMG_2799.jpeg">
-    <meta property="og:url" content="https://krishnasomandepalli.com">
-    <meta property="og:type" content="website">
-    
+    <meta property="og:image:alt" content="Portrait of Krishna Somandepalli">
+    <meta property="og:url" content="https://krishnasomandepalli.com/">
+    <meta property="og:type" content="profile">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Krishna Somandepalli | Staff Research Engineer, Google DeepMind">
+    <meta name="twitter:description" content="Research in multimodal AI, expressive audio, generative media, and human-centered machine learning.">
+    <meta name="twitter:image" content="https://krishnasomandepalli.com/IMG_2799.jpeg">
     <meta name="theme-color" content="#003366">
     <link rel="icon" type="image/jpeg" href="IMG_2799.jpeg">
-    <title>Krishna Somandepalli, PhD | Google DeepMind</title>
+    <title>Krishna Somandepalli | Staff Research Engineer, Google DeepMind</title>
     <style>
     :root {
             /* BRANDING COLORS */
             --accent-color: #003366; /* Deep Navy (Primary) */
-            --link-hover: #800020;   /* ADD THIS LINE: Burgundy for hover */
-            
-            /* ... keep your other existing variables below ... */
+            --link-hover: #800020; /* Burgundy for hover */
             --bg-color: #ffffff;
             --text-color: #333333;
             --sidebar-bg: #f8f9fa; 
             --border-color: #e9ecef;
         }
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
+            background-color: var(--bg-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -58,13 +65,13 @@
         }
 
         .sidebar h1 {
-            font-size: 1.4rem;
+            font-size: 1.65rem;
             margin: 0.5rem 0;
             color: var(--accent-color);
             font-weight: 700;
         }
 
-        .sidebar h2 {
+        .sidebar .role-title {
             font-size: 1rem;
             font-weight: 500;
             color: #555;
@@ -85,21 +92,24 @@
 
         /* MAIN CONTENT (Right) */
         .main-content {
+            flex: 1;
+            min-width: 0;
+            width: 100%;
             padding: 3rem 2rem;
-            max-width: 800px;
+            max-width: 960px;
         }
-/* MODERN LINK STYLING (The Burgundy Update) */
+        /* Understated links with burgundy interactive states */
         .main-content a {
             color: var(--text-color); /* Keeps text dark/readable */
             text-decoration: none;
             font-weight: 600;
             border-bottom: 1px solid rgba(0, 51, 102, 0.3); /* Subtle navy underline */
-            transition: all 0.2s ease;
+            transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
 
         .main-content a:hover {
             color: var(--link-hover); /* Burgundy Text */
-            border-bottom: 2px solid var(--link-hover); /* Burgundy Underline */
+            border-bottom-color: var(--link-hover); /* Burgundy underline */
             background-color: rgba(128, 0, 32, 0.05); /* Very faint burgundy highlight */
         }
 
@@ -114,15 +124,15 @@
             background-color: transparent; /* No background box for sidebar */
         }
         
-        h3 {
+        .section-heading {
             color: var(--accent-color);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
-            margin-top: 2.5rem;
+            margin: 2.5rem 0 1.2rem;
             font-size: 1.4rem;
         }
-        
-        h3:first-child { margin-top: 0; }
+
+        .section-heading:first-child { margin-top: 0; }
 
         p { margin-bottom: 1.5rem; text-align: left; }
 
@@ -141,7 +151,7 @@
             color: #222;
             font-size: 1.35rem;
             line-height: 1.35;
-            margin-bottom: 0.75rem;
+            margin: 0 0 0.75rem;
         }
 
         .area-tags {
@@ -162,6 +172,8 @@
             line-height: 1.7;
             font-size: 0.94rem;
         }
+
+        .research-area .resource-links > div + div { margin-top: 0.4rem; }
 
         .research-area .watch-row {
             display: flex;
@@ -231,7 +243,7 @@
             text-align: center;
             padding: 2rem;
             font-size: 0.8rem;
-            color: #888;
+            color: #666;
             margin-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
@@ -258,122 +270,118 @@
                 margin: 0 auto 1.5rem auto;
                 display: block;
             }
-            .sidebar h1, .sidebar h2, .contact-links { text-align: center; }
-            .main-content { padding: 4rem 5rem; overflow-y: auto; }
+            .sidebar h1, .sidebar .role-title, .contact-links { text-align: center; }
+            .main-content { padding: 4rem 5rem; }
+        }
+
+        @media (min-width: 900px) and (max-width: 1150px) {
+            .main-content { padding: 3rem 2.5rem; }
+        }
+
+        .main-content a:focus-visible,
+        .contact-links a:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .main-content a { transition: none; }
         }
     </style>
 </head>
 <body>
-
 <div class="wrapper">
-    
     <aside class="sidebar">
-        <img src="IMG_2799.jpeg" alt="Krishna Somandepalli" class="profile-pic">
-        
+        <img src="IMG_2799.jpeg" alt="Krishna Somandepalli" class="profile-pic" width="180" height="180" decoding="async" fetchpriority="high">
         <h1>Krishna Somandepalli</h1>
-        <h2>Staff Research Engineer<br>Google DeepMind</h2>
-        
-        <div class="contact-links">
-            <a href="https://www.linkedin.com/in/krishna-somandepalli-38827912" target="_blank">LinkedIn</a>
-            <a href="https://scholar.google.com/citations?hl=en&user=ih4OLKoAAAAJ&view_op=list_works" target="_blank">Google Scholar</a>
-            <a href="https://sail.usc.edu/~somandep/" target="_blank">Academic Archive</a>
-        </div>
+        <p class="role-title">Staff Research Engineer<br>Google DeepMind</p>
+        <nav class="contact-links" aria-label="Professional profiles">
+            <a href="https://www.linkedin.com/in/krishna-somandepalli-38827912" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://scholar.google.com/citations?hl=en&amp;user=ih4OLKoAAAAJ&amp;view_op=list_works" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://sail.usc.edu/~somandep/" target="_blank" rel="noopener noreferrer">Academic Archive</a>
+        </nav>
     </aside>
 
     <main class="main-content">
-        
-        <h3>About Me</h3>
+        <h2 class="section-heading">About Me</h2>
         <p>
-            I am a <strong>Staff Research Engineer</strong> at <strong>Google DeepMind</strong> in New York City, where I develop AI systems that learn from multimodal, real-world data. My work integrates vision, audio, language, and structured signals to model and generate rich human-centered content.
+            I am a <strong>Staff Research Engineer</strong> at <strong>Google DeepMind</strong> in New York City, where I develop AI systems that learn from multimodal, real-world data. My research brings together audio, vision, language, and structured signals to advance how machines perceive, reason about, and generate human-centered content.
         </p>
         <p>
-            Previously, I was with Google Research and received my PhD in Electrical and Computer Engineering from <a href="https://viterbi.usc.edu/directory/faculty/Narayanan/Shrikanth" target="_blank">Prof. Shri Narayanan</a> at University of Southern California (<a href="https://sail.usc.edu/" target="_blank">Signal Analysis and Interpretation Lab</a>). My academic background is rooted in <strong>multimodal representation learning</strong> and <strong>affective computing</strong>—bridging the gap between raw signals and human-level understanding.
+            At Google DeepMind, I contribute to the Gemini family of models, with a focus on multimodal understanding and expressive interaction. My work spans foundational model research, generative systems, and translating emerging capabilities into real-world applications. Across these efforts, I am driven by the goal of building AI that is technically robust, perceptive, and useful to society.
         </p>
         <p>
-            Prior to my doctoral studies, I earned my Master's degree in Electrical Engineering from <strong>UC Santa Barbara</strong> and worked as a Junior Research Scientist at <strong>NYU Langone Medical Center</strong>. There, I developed statistical models to analyze functional brain networks using fMRI data, an experience that grounded my later work in decoding complex human signals.
-        </p>
-        <p>
-            Across all my work—from foundational models to recent AI agents—I'm driven by the goal of building AI that is technically robust, meaningful, and useful to society.
+            Previously, I was with Google Research. I earned my PhD in Electrical and Computer Engineering from the University of Southern California, where I was advised by <a href="https://viterbi.usc.edu/directory/faculty/Narayanan/Shrikanth">Prof. Shri Narayanan</a> at the <a href="https://sail.usc.edu/">Signal Analysis and Interpretation Laboratory</a>. My academic background is rooted in <strong>multimodal representation learning</strong> and <strong>affective computing</strong>. I earned my Master’s degree in Electrical Engineering from UC Santa Barbara and worked as a Junior Research Scientist at NYU Langone Medical Center, developing statistical models of functional brain networks using fMRI.
         </p>
 
-<h3>Research Areas</h3>
+        <h2 class="section-heading">Research Areas</h2>
+        <section class="research-area" aria-labelledby="multimodal-heading">
+            <h3 class="area-title" id="multimodal-heading">Multimodal &amp; Agentic AI</h3>
+            <div class="area-tags">Gemini 2.5 &middot; Multimodal Reasoning &middot; Expressive Interaction</div>
+            <p>
+                I work on multimodal AI systems that can <strong>perceive</strong> complex environments, <strong>reason</strong> across contexts, and <strong>interact</strong> naturally in real-world settings. My contributions to the <a href="https://arxiv.org/abs/2507.06261">Gemini 2.5</a> family focus on multimodal capabilities, particularly understanding audio and human expression. I am especially interested in systems that move beyond recognizing content to understanding the context and nuance of human communication.
+            </p>
+            <div class="resource-links">
+                <div><strong>Explore:</strong> <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro">Gemini 2.5 model documentation</a></div>
+                <div><strong>Related patent:</strong> <a href="https://patents.google.com/patent/US20250061917A1/en">Speech emotion recognition</a></div>
+            </div>
+        </section>
 
-<div class="research-area">
-<div class="area-title">Multimodal &amp; Agentic AI</div>
-<div class="area-tags">Gemini 2.5 &middot; Reasoning &middot; Long-Context</div>
-<p>
-I work on multimodal systems that can <strong>perceive</strong> complex environments, <strong>reason</strong> over long contexts, and <strong>act</strong> autonomously in real settings, grounded in vision, audio, language, and other structured signals. I contribute to the <a href="https://arxiv.org/abs/2507.06261">Gemini 2.5</a> family with a focus on multimodality.
-</p>
-<div class="resource-links">
-<strong>Explore:</strong> <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro">Gemini 2.5 model documentation</a>
-</div>
-</div>
+        <section class="research-area" aria-labelledby="generative-heading">
+            <h3 class="area-title" id="generative-heading">Generative Media &amp; Expressivity</h3>
+            <div class="area-tags">VideoPoet &middot; Versatile Diffusion &middot; Patents</div>
+            <p>
+                I build generative models for video and audio where <strong>controllability</strong> is the core goal—timing, motion, style, and semantic fidelity. This includes <a href="https://arxiv.org/abs/2312.14125">VideoPoet</a> (ICML 2024) and <a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/15f4cefb0e143c7ad9d40e879b0a9d0c-Paper-Conference.pdf">Versatile Diffusion</a> (NeurIPS 2024), with an emphasis on expressivity and temporal coherence.
+            </p>
+            <div class="resource-links">
+                <strong>Patents:</strong> <a href="https://patents.google.com/patent/US20250349298A1/en">expressive captions</a> &middot; <a href="https://patents.google.com/patent/US20250252305A1/en">task-agnostic diffusion training</a>
+            </div>
+            <div class="watch-row">
+                <svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="11"></circle>
+                    <path d="M10 7.5 17 12l-7 4.5z"></path>
+                </svg>
+                <span><strong>Watch:</strong> <a href="https://sites.research.google/videopoet/">VideoPoet demos</a> &middot; <a href="https://avdit2024.github.io/">Audiovisual Diffusion</a></span>
+            </div>
+            <div class="recognition">
+                <svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="5"></circle>
+                    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
+                </svg>
+                <div>
+                    <strong>Recognition:</strong> <a href="https://icml.cc/virtual/2024/awards_detail">ICML 2024 Best Paper Award</a>
+                    <p class="recognition-description">Awarded to VideoPoet for research on multimodal, zero-shot video generation.</p>
+                </div>
+            </div>
+        </section>
 
-<div class="research-area">
-<div class="area-title">Generative Media &amp; Expressivity</div>
-<div class="area-tags">VideoPoet &middot; Versatile Diffusion &middot; Patents</div>
-<p>
-I build generative models for video and audio where <strong>controllability</strong> is the core goal—timing, motion, style, and semantic fidelity. This includes <a href="https://arxiv.org/abs/2312.14125">VideoPoet</a> (ICML 2024) and <a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/15f4cefb0e143c7ad9d40e879b0a9d0c-Paper-Conference.pdf">Versatile Diffusion</a> (NeurIPS 2024), with an emphasis on expressivity and temporal coherence.
-</p>
-<div class="resource-links">
-<strong>Patents:</strong>
-<a href="https://patents.google.com/patent/US20250349298A1/en">rich captioning</a> &middot;
-<a href="https://patents.google.com/patent/US20250252305A1/en">task-agnostic diffusion training</a> &middot;
-<a href="https://patents.google.com/patent/US20250061917A1/en">cross-modal emotion understanding</a>
-</div>
-<div class="watch-row">
-<svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <circle cx="12" cy="12" r="11"></circle>
-    <path d="M10 7.5 17 12l-7 4.5z"></path>
-</svg>
-<span><strong>Watch:</strong> <a href="https://sites.research.google/videopoet/">VideoPoet demos</a> &middot; <a href="https://avdit2024.github.io/">Audiovisual Diffusion</a></span>
-</div>
-<div class="recognition">
-<svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="8" r="5"></circle>
-    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
-</svg>
-<div>
-<strong>Recognition:</strong>
-<a href="https://icml.cc/virtual/2024/awards_detail">ICML 2024 Best Paper Award</a>
-<p class="recognition-description">Awarded to VideoPoet for research on multimodal, zero-shot video generation.</p>
-</div>
-</div>
-</div>
-
-<div class="research-area">
-<div class="area-title">Computational Media Intelligence</div>
-<div class="area-tags">Longitudinal Analysis &middot; Computational Narratology &middot; Scale</div>
-<p>
-I develop methods to extract structure from large-scale media: event discovery, temporal organization, and narrative-level understanding across thousands of hours of video. This includes patented work on <a href="https://patents.google.com/patent/US11775765B2/en">automated narrative analysis of movie scripts</a> and frameworks for <a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a>. I also discuss how this research was applied through a collaboration with the <strong>Geena Davis Institute on Gender in Media</strong> in a <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a>.
-</p>
-<div class="watch-row">
-<svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <circle cx="12" cy="12" r="11"></circle>
-    <path d="M10 7.5 17 12l-7 4.5z"></path>
-</svg>
-<span><strong>Watch:</strong> <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a></span>
-</div>
-<div class="recognition">
-<svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="8" r="5"></circle>
-    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
-</svg>
-<div>
-<strong>Recognition:</strong>
-<a href="https://ihrdighist.blogs.sas.ac.uk/2023/10/2023-richard-deswarte-prize-in-digital-history/">2023 Richard Deswarte Prize in Digital History</a>
-<p class="recognition-description">Awarded for research developing computational methods to analyze Auschwitz-Birkenau survivor narratives.</p>
-</div>
-</div>
-</div>
-
-
-        <div class="mobile-footer">
-            &copy; 2026 Krishna Somandepalli. Built in NYC.
-        </div>
-
+        <section class="research-area" aria-labelledby="media-heading">
+            <h3 class="area-title" id="media-heading">Computational Media Intelligence</h3>
+            <div class="area-tags">Longitudinal Analysis &middot; Computational Narratology &middot; Scale</div>
+            <p>
+                I develop methods to extract structure from large-scale media: event discovery, temporal organization, and narrative-level understanding across thousands of hours of video. This includes patented work on <a href="https://patents.google.com/patent/US11775765B2/en">automated narrative analysis of movie scripts</a> and frameworks for <a href="https://ieeexplore.ieee.org/abstract/document/9319168">Computational Media Intelligence</a>. I also discuss how this research was applied through a collaboration with the <strong>Geena Davis Institute on Gender in Media</strong> in a <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a>.
+            </p>
+            <div class="watch-row">
+                <svg class="watch-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="11"></circle>
+                    <path d="M10 7.5 17 12l-7 4.5z"></path>
+                </svg>
+                <span><strong>Watch:</strong> <a href="https://youtu.be/2EDiHryKwwE">Google Research video feature</a></span>
+            </div>
+            <div class="recognition">
+                <svg class="recognition-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="5"></circle>
+                    <path d="m8.8 12-1.3 9 4.5-2.5 4.5 2.5-1.3-9"></path>
+                </svg>
+                <div>
+                    <strong>Recognition:</strong> <a href="https://ihrdighist.blogs.sas.ac.uk/2023/10/2023-richard-deswarte-prize-in-digital-history/">2023 Richard Deswarte Prize in Digital History</a>
+                    <p class="recognition-description">Awarded for research developing computational methods to analyze Auschwitz-Birkenau survivor narratives.</p>
+                </div>
+            </div>
+        </section>
+        <footer class="mobile-footer">&copy; 2026 Krishna Somandepalli. Built in NYC.</footer>
     </main>
 </div>
-
 </body>
 </html>
