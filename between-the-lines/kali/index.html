@@ -129,7 +129,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--lamp);outline-offse
     <div class="tapper" id="tapper" aria-hidden="true"></div>
     <div class="top">
       <div class="ticks" id="ticks" role="progressbar" aria-label="Progress through the story" aria-valuemin="1" aria-valuemax="30" aria-valuenow="1"></div>
-      <div class="label" id="label" aria-hidden="true"></div>
     </div>
     <div class="cap" id="cap" hidden><p id="capText" aria-live="polite"></p></div>
     <div class="bar" id="bar">
@@ -300,8 +299,6 @@ function show(i, kind, dur) {
     }
   } else { next.style.setProperty("--soft", "0px"); next.style.transitionDuration = d + "s"; next.classList.add("on"); }
   $("ambient").style.backgroundImage = `url(${SRC.img(i)})`;
-  const label = $("label");
-  if (Number(label.dataset.m) !== b.m) { label.style.opacity = 0; setTimeout(() => { label.innerHTML = `<b>${ROMAN[b.m - 1]}</b>${MOVEMENTS[b.m - 1]}`; label.style.opacity = 1; label.dataset.m = b.m; }, 600); }
   const capP = $("capText"); capP.style.opacity = 0; setTimeout(() => { capP.textContent = b.text; capP.style.opacity = .88; }, Math.min(900, d * 500));
   spans.forEach((s, k) => { s.classList.toggle("now", k === i); if (k === i) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); });
   ticks.forEach((t, k) => { t.style.transform = `scaleX(${k < i ? 1 : 0})`; });
