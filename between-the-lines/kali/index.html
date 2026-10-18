@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KALI · Between the Lines</title>
+<meta name="description" content="KALI, a short story by Krishna Somandepalli, told as a night film in thirty shots.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0907">
+<meta property="og:type" content="video.other">
+<meta property="og:title" content="KALI">
+<meta property="og:description" content="KALI, a short story by Krishna Somandepalli, told as a night film in thirty shots.">
+<meta property="og:image" content="https://krishnasomandepalli.com/between-the-lines/kali/assets/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/literata-latin-normal.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/img/01.jpg" as="image">
+</head>
+<body>
+<style>
+/* KALI, the night film. One portrait stage, centred; overlays are quiet and get out of the way.
+   Single night look by design (it is a film at night), so the page sets every colour itself. */
+@font-face{font-family:"Literata";font-style:normal;font-weight:200 900;font-display:swap;src:url("assets/fonts/literata-latin-normal.woff") format("woff")}
+@font-face{font-family:"Literata";font-style:italic;font-weight:200 900;font-display:swap;src:url("assets/fonts/literata-latin-italic.woff") format("woff")}
+:root{
+  --night:#0b0907;
+  --ink:#ece3d3;
+  --dim:#a99e8b;
+  --lamp:#e2a446;
+  --glass:rgba(11,9,7,.58);
+  --line:rgba(236,227,211,.24);
+  --f-text:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%;background:var(--night);color:var(--ink)}
+body{margin:0;overflow:hidden;font-family:var(--f-text);-webkit-tap-highlight-color:transparent}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.room{position:fixed;inset:0;display:grid;place-items:center;background:var(--night)}
+.ambient{position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(38px) brightness(.3) saturate(.9);opacity:.9;transition:background-image 1.6s ease}
+.stage{position:relative;height:100%;max-height:100dvh;aspect-ratio:941/1672;max-width:100vw;overflow:hidden;overflow:clip;background:#000;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+@media (max-aspect-ratio:941/1672){.stage{width:100vw;height:auto;min-height:100%;aspect-ratio:auto}}
+
+/* pictures */
+.frame{position:absolute;inset:0;opacity:0;visibility:hidden;filter:blur(var(--soft,0px));transition-property:opacity,filter;transition-timing-function:cubic-bezier(.45,0,.25,1)}
+.frame.near{visibility:visible}
+.frame.on{opacity:1}
+.frame img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;transform-origin:var(--ox,50%) var(--oy,50%);will-change:transform}
+.frame.move img{animation:kb var(--kd,12s) cubic-bezier(.37,0,.63,1) forwards}
+@keyframes kb{from{transform:translate(var(--x0,0),var(--y0,0)) scale(var(--s0,1)) rotate(var(--r0,0deg))}to{transform:translate(var(--x1,0),var(--y1,0)) scale(var(--s1,1.06)) rotate(var(--r1,0deg))}}
+.paused .frame img,.paused .grain{animation-play-state:paused}
+.veil,.flash{position:absolute;inset:0;pointer-events:none;opacity:0}
+.veil{background:#000}
+.flash{background:radial-gradient(ellipse at 50% 55%,#fffaf0 0%,#f4ead8 45%,#9e2a2b 140%)}
+.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,6%)}80%{transform:translate(5%,2%)}100%{transform:translate(0,0)}}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 16%,rgba(0,0,0,0) 62%,rgba(0,0,0,.72) 100%);transition:opacity .5s ease}
+
+/* top: progress, grouped by the five movements */
+.top{position:absolute;left:0;right:0;top:0;padding:calc(10px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));display:grid;gap:9px;pointer-events:none}
+.ticks{display:flex;gap:7px}
+.mvt{display:flex;gap:2px;flex:var(--w) 1 0}
+.tick{flex:var(--d) 1 0;height:2px;background:rgba(236,227,211,.22);border-radius:1px;overflow:hidden}
+.tick i{display:block;height:100%;width:100%;background:var(--lamp);transform-origin:left;transform:scaleX(0)}
+.label{font:500 12.5px/1 var(--f-text);font-variant:small-caps;letter-spacing:.12em;color:var(--dim);transition:opacity .9s ease;text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.label b{color:var(--lamp);font-weight:600;margin-right:.6em}
+
+/* captions */
+.cap{position:absolute;left:0;right:0;bottom:calc(92px + env(safe-area-inset-bottom,0px));padding:0 max(22px,env(safe-area-inset-right,0px)) 0 max(22px,env(safe-area-inset-left,0px));pointer-events:none;text-align:center;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.chrome-off .cap{transform:translateY(58px)}
+.cap p{margin:0 auto;max-width:34ch;font:italic 300 15.5px/1.5 var(--f-text);color:var(--ink);text-wrap:balance;text-shadow:0 1px 10px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.9);transition:opacity .6s ease}
+
+/* controls: a single bar, hidden while the film plays undisturbed */
+.bar{position:absolute;left:0;right:0;bottom:0;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));display:grid;gap:8px;z-index:5;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+.chrome-off .bar{opacity:0;transform:translateY(12px);pointer-events:none}
+.stage:not(.started) .bar,.stage:not(.started) .top{visibility:hidden}
+.time{font:12px/1 var(--f-ui);color:var(--dim);font-variant-numeric:tabular-nums;text-shadow:0 1px 6px #000;display:flex;justify-content:space-between}
+.buttons{display:flex;align-items:center;gap:6px}
+.buttons .gap{flex:1}
+.bar button{display:inline-grid;place-items:center;min-width:44px;height:44px;padding:0 12px;font:500 13px/1 var(--f-ui);color:var(--ink);background:var(--glass);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;font-variant-numeric:tabular-nums}
+.bar button svg{width:18px;height:18px;fill:currentColor}
+.bar button.play{min-width:52px}
+.bar button[aria-pressed="true"]{border-color:var(--lamp);color:var(--lamp)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.tapper{position:absolute;inset:0;z-index:2}
+
+/* title card and credits */
+.card{position:absolute;inset:0;z-index:8;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at 50% 62%,rgba(226,164,70,.16) 0,rgba(11,9,7,0) 42%),rgba(11,9,7,.94);padding:0 max(24px,env(safe-area-inset-right,0px)) 0 max(24px,env(safe-area-inset-left,0px));transition:opacity 1.6s ease}
+.card.gone{opacity:0;pointer-events:none;visibility:hidden;transition:opacity 1.6s ease,visibility 0s 1.6s}
+.card h1{font:600 clamp(48px,15vw,84px)/1 var(--f-text);font-variant:small-caps;letter-spacing:.3em;margin:0 0 0 .3em;color:var(--ink)}
+.card .by{font:italic 300 16px/1.6 var(--f-text);color:var(--dim);margin:14px 0 0}
+.card .note{font:13px/1.65 var(--f-ui);color:var(--dim);margin:30px 0 0}
+.card .begin{margin-top:22px;font:600 15px/1 var(--f-text);font-variant:small-caps;letter-spacing:.24em;color:var(--night);background:var(--lamp);border:0;border-radius:999px;padding:15px 30px 15px 34px;cursor:pointer;min-height:48px}
+.card .alt{display:inline-block;margin-top:16px;font:13px var(--f-ui);color:var(--dim);background:none;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px}
+.lamp{width:9px;height:9px;border-radius:50%;background:var(--lamp);box-shadow:0 0 22px 9px rgba(226,164,70,.45);margin:0 auto 28px;animation:flicker 3.2s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:.82}52%{opacity:.95}70%{opacity:.88}}
+.credits dl{display:grid;grid-template-columns:auto auto;gap:8px 16px;margin:26px auto 0;font:14px/1.45 var(--f-text);text-align:left;width:max-content;max-width:100%}
+.credits dt{font:600 12.5px/1.6 var(--f-text);font-variant:small-caps;letter-spacing:.12em;color:var(--dim);text-align:right}
+.credits dd{margin:0;color:var(--ink)}
+.credits .pledge{font:italic 300 14px/1.6 var(--f-text);color:var(--dim);margin:24px auto 0;max-width:30ch}
+.credits .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.credits .row button,.credits .row a{font:600 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.18em;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:14px 20px;cursor:pointer;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+
+/* the text, as written */
+.read{position:absolute;inset:0;z-index:9;background:var(--night);transform:translateY(100%);visibility:hidden;transition:transform .55s cubic-bezier(.2,.7,.2,1),visibility 0s .55s;display:flex;flex-direction:column}
+.read.open{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.read-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid rgba(236,227,211,.12)}
+.read-head h2{font:600 16px/1 var(--f-text);font-variant:small-caps;letter-spacing:.2em;margin:0;color:var(--lamp)}
+.read-head button{min-height:44px;padding:0 16px;font:500 13px/1 var(--f-ui);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:22px;cursor:pointer}
+.read-body{position:relative;overflow-y:auto;padding:18px max(20px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));-webkit-overflow-scrolling:touch}
+.read-body h3{font:600 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.14em;color:var(--dim);margin:28px 0 10px}
+.read-body h3:first-of-type{margin-top:6px}
+.read-body p{font:16.5px/1.72 var(--f-text);margin:0 0 14px;max-width:38ch;color:#d9cfbe}
+.read-body .beat{cursor:pointer;border-radius:3px;transition:background .4s,color .4s}
+.read-body .beat:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.read-body .beat.now{color:var(--ink);background:rgba(226,164,70,.16);box-shadow:0 0 0 2px rgba(226,164,70,.16)}
+.read-hint{font:12.5px/1.5 var(--f-ui);color:var(--dim);margin:0 0 6px}
+
+@media (prefers-reduced-motion:reduce){.frame.move img{animation:none}.grain{animation:none}.lamp{animation:none}.bar,.cap,.read{transition:none}}
+</style>
+
+<main class="room" id="room">
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+  <section class="stage" id="stage" aria-label="KALI, told as a film in thirty shots">
+    <div id="frames" aria-hidden="true"></div>
+    <div class="veil" id="veil" aria-hidden="true"></div>
+    <div class="flash" id="flash" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="shade" aria-hidden="true"></div>
+    <div class="tapper" id="tapper" aria-hidden="true"></div>
+    <div class="top">
+      <div class="ticks" id="ticks" role="progressbar" aria-label="Progress through the story" aria-valuemin="1" aria-valuemax="30" aria-valuenow="1"></div>
+      <div class="label" id="label" aria-hidden="true"></div>
+    </div>
+    <div class="cap" id="cap" hidden><p id="capText" aria-live="polite"></p></div>
+    <div class="bar" id="bar">
+      <div class="time" aria-hidden="true"><span id="where"></span><span id="clock"></span></div>
+      <div class="buttons" role="toolbar" aria-label="Film controls">
+        <button id="bBack" type="button" aria-label="Previous shot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9.5 12z"/></svg></button>
+        <button id="bPlay" class="play" type="button" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true" id="iPlay"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <button id="bNext" type="button" aria-label="Next shot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l10.5-7z"/></svg></button>
+        <span class="gap"></span>
+        <button id="bSpeed" type="button" aria-label="Speed, 1 times. Change speed">1&times;</button>
+        <button id="bCap" type="button" aria-pressed="false" aria-label="Captions">CC</button>
+        <button id="bRead" type="button" aria-label="Read the text" aria-haspopup="dialog">Text</button>
+      </div>
+    </div>
+    <section class="read" id="read" role="dialog" aria-modal="true" aria-labelledby="readTitle">
+      <div class="read-head"><h2 id="readTitle">KALI</h2><button id="bClose" type="button">Back to the film</button></div>
+      <div class="read-body" id="readBody"><p class="read-hint">The text as written. Choose a passage to hear it from there.</p></div>
+    </section>
+    <div class="card" id="start">
+      <div>
+        <div class="lamp" aria-hidden="true"></div>
+        <h1>KALI</h1>
+        <p class="by">a short story by Krishna Somandepalli</p>
+        <p class="note">Told in thirty shots, about eight minutes.<br>Best at night, with headphones.</p>
+        <button class="begin" id="bBegin" type="button">BEGIN</button><br>
+        <button class="alt" id="bReadFirst" type="button">or read it first</button>
+      </div>
+    </div>
+    <div class="card credits gone" id="end">
+      <div>
+        <div class="lamp" aria-hidden="true"></div>
+        <h1>KALI</h1>
+        <dl id="creditList"></dl>
+        <p class="pledge">The words are the author's, unchanged. Every line you heard was checked against them.</p>
+        <div class="row"><button id="bAgain" type="button">Watch again</button><button id="bReadEnd" type="button">Read it</button><a id="lHome" hidden>Between the Lines</a></div>
+      </div>
+    </div>
+  </section>
+  <noscript><p style="position:fixed;inset:auto 16px 16px;color:#ece3d3;font:15px/1.5 Georgia,serif">This film needs JavaScript. The story can be read on its own page.</p></noscript>
+</main>
+
+<script>
+/* ---------- Settings for the site (edit here) ---------- */
+const SITE = {
+  credits: [["Written by", "Krishna Somandepalli"], ["Told by", "Daniel, ElevenLabs v4"], ["Pictures", "Made for this telling, one per shot"]],
+  homeUrl: null,          // link on the credits card back to the project page, or null
+};
+/* ------------------------------------------------------- */
+const BEATS = [{"n":1,"m":1,"p":1,"text":"My eyes grew wide as though seeking the comfort of my brow from as much amazement as much fear at my grandmother's voice.","dur":8.56},{"n":2,"m":1,"p":2,"text":"\"Kali\", she said. \"Her skin darker than the deep night, eyes as red as the setting sun, a gushing river made hair, the very fury of nature bound human\", she sighed, \"Kali faced one final challenge\".","dur":18.08},{"n":3,"m":1,"p":3,"text":"Quite a storyteller she was and oh, how the old woman loved metaphors.","dur":6.24},{"n":4,"m":1,"p":4,"text":"The story was a bribe for getting me to eat my dinner and like all her stories, this one too was supernatural, mythical and fantasy filled.","dur":10.08},{"n":5,"m":1,"p":4,"text":"The story must have begun along the lines of a demon-king ruling over the world and a prophecy-born Kali, the world's savior come to rescue them after much suffering.","dur":11.6},{"n":6,"m":2,"p":5,"text":"\"Kali's final challenge was the King himself\", she continued. \"The King didn't look fearsome like what you would expect of a demon, in fact he looked very much human.","dur":10.88},{"n":7,"m":2,"p":5,"text":"But Kali who could see beneath the mantle knew better; for this self-proclaimed king was a skilled sorcerer, the darkest and cruelest at that, a sorcerer who could live a thousand lives and not age a day, a tyrant who rejoiced at the suffering of the weak, how terrible..., that is very fearsome, no?\", she asked.","dur":24.4},{"n":8,"m":2,"p":5,"text":"I blinked, nodded and looked on. It was her cue to keep going.","dur":5.2},{"n":9,"m":2,"p":6,"text":"\"Kali was the supreme incarnate and no less extraordinary\", her voice now seemed to carry a certainty that mere grammar couldn't convey, \"Kali had a unique power, she could create anything just by thinking it, she herself was indeed a manifestation of the supreme thought\".","dur":20.56},{"n":10,"m":2,"p":6,"text":"She paused, \"the silence between Kali and the king seemed to stretch forever, or perhaps the voices of their hostility were so loud that mere humans like us couldn't perceive.","dur":12.08},{"n":11,"m":2,"p":6,"text":"As a wicked smile etched across his thin, pale lips, Kali knew it was past time to do what she must have done a long time ago - to end the life of this tyrant\".","dur":12.64},{"n":12,"m":3,"p":7,"text":"My grandmother's ancient eyes glistened at something very distant, \"Kali knew the power of his sorcery, the magic that made him immune to earthly weapons was like nothing she had known to be possible, death was but a feeble servant of the king.","dur":16.88},{"n":13,"m":3,"p":7,"text":"She closed her eyes in a calculating thought, muttered something strange under her breath, her eyes flew open and her whispers now seemed to be all around like they were always there, the wind around her wore a new face, wielding an unnatural power.","dur":17.6},{"n":14,"m":3,"p":7,"text":"As though in response, the king's voice rose with every gust of the wind, speaking an ancient tongue long forgotten, his voice turned hoarse and an invisible dome seemed to form around him holding Kali at bay, the world around them seemed to wither as he drew his power from everything around.","dur":20.88},{"n":15,"m":3,"p":7,"text":"Kali realized keeping at this might just as well lead to the destruction of life around her, she stopped for a brief moment, a quick thought crossed her mind, and a fierce weapon formed in thin air before her and fell into her waiting hands\".","dur":15.84},{"n":16,"m":3,"p":7,"text":"My grandmother drew a deep breath, smiled and said, \"Oh, the weapon she conjured was magnificent, forged from the sinew of a very powerful being that existed before time itself - it could sever anything, physical or otherwise.","dur":18.56},{"n":17,"m":3,"p":7,"text":"Before the king could even draw on his next breath, Kali swung her weapon in a wide arc at the foe cutting through his flesh, bone and the sorcery that bound him human, severing him into a million pieces as the field around her turned dark with his blood\".","dur":17.84},{"n":18,"m":4,"p":8,"text":"I took a deep breath, but something told me it wasn't over yet and as if echoing my thoughts, my grandmother shook her head.","dur":8.56},{"n":19,"m":4,"p":9,"text":"\"Oh, that wasn't the end of him, the king in his infinite guile may have anticipated this, for the anger, surprise and perhaps even despair in Kali's eyes spoke volumes of the horror that unfolded before her.","dur":16.4},{"n":20,"m":4,"p":9,"text":"Every drop of the sorcerer's blood that was spilled seemed to have a will of its own drawing mass from nowhere and everywhere, each drop of the blood shaped itself to look like the king, it was like looking at the sorcerer in a million mirrors, only they weren't mere reflections.","dur":18.96},{"n":21,"m":4,"p":9,"text":"The king's magic ran wild a million times over and there was only so much she could do against the overwhelming army of madmen closing in on her; she conjured up a shield and hoped it would hold. Kali was perplexed and knew there was very little time before her sanctuary would give way\".","dur":18.96},{"n":22,"m":4,"p":9,"text":"My grandmother paused, ruffled my hair as though urging me not to despair.","dur":5.28},{"n":23,"m":4,"p":9,"text":"She cracked her knuckles and said, \"Clarity dawned upon Kali as she realized that the king had perhaps cursed his own blood to cheat his death and she couldn't afford another cut at him, her thoughts roared like a raging ocean and the solution hit her like a tiny rock caught amidst the waves.","dur":20.48},{"n":24,"m":4,"p":9,"text":"She had no time to lose. Kali began to grow towards the heavens stepping out of her shield, the enormity of her form could only be measured by the  fear reflected in a million eyes of the sorcerer. One of Kali's hand alone could block out the skies of a hundred worlds\".","dur":19.6},{"n":25,"m":4,"p":9,"text":"The wonder in my eyes painted my grandmother's words with a smile, \"Like a giant net trapping a thousand trout, Kali grabbed at the whole encroaching army and swallowed them down her immense gut all in a single gulp.","dur":15.2},{"n":26,"m":4,"p":9,"text":"You see, Kali was but Thought-made-human and she knew the king's sorcery would be lost in the abyss of her nature.","dur":7.76},{"n":27,"m":4,"p":9,"text":"The duel was over just like that, the king's fall brought a great joy to the world. The magic he had woven that enslaved the world vanished with him.","dur":10.56},{"n":28,"m":4,"p":9,"text":"The smell of freedom told Kali that her purpose there was fulfilled. She resumed her normal form, spared a fleeting glance around and stepped into the mists of air to become one with it like she was never there\".","dur":14.24},{"n":29,"m":5,"p":10,"text":"My grandmother's wide grin announced the end of the story.","dur":3.76},{"n":30,"m":5,"p":11,"text":"As I think, it was as much her success as much as Kali's for my dinner plate was clean; vegetables, greens and all gone.","dur":8.96}];
+const MEDIA = null;    // null on the website: files are loaded from assets/
+const MOVEMENTS = ["The telling begins","The king revealed","The weapon and the blood","The blood army","The plate is clean"];
+const ROMAN = ["I","II","III","IV","V"];
+const PACE = {
+  // f: where the camera looks (x%, y%) in the picture; z: zoom [from, to]; r: tilt [from, to] in degrees;
+  // d: drift [x from, x to, y from, y to] in %. hold: silence after the voice; into: how the next picture arrives.
+  1:{f:[66,58],z:[1.00,1.16],hold:1.1,into:["dissolve",2.0]},              // into the boy's widening eyes
+  2:{f:[50,82],z:[1.24,1.00],hold:1.5,into:["dip",2.2]},                   // pull back from the table: Kali rises over it
+  3:{f:[56,40],z:[1.02,1.12],hold:0.5,into:["dissolve",1.2]},              // her face, the storyteller
+  4:{f:[60,22],z:[1.04,1.16],hold:1.0,into:["dip",2.2]},                   // up toward the king and the dark above
+  5:{f:[84,48],z:[1.32,1.02],hold:0.8,into:["dissolve",1.4]},              // from the king on his wall out to his world
+  6:{f:[62,50],z:[1.00,1.26],hold:0.6,into:["dissolve",1.2]},              // slowly toward the throne: very much human
+  7:{f:[76,24],z:[1.18,1.03],hold:0.4,into:["dissolve",0.9]},              // a thousand lives: back along his faces
+  8:{f:[70,48],z:[1.04,1.14],hold:1.7,into:["dip",2.0]},                   // the boy blinks
+  9:{f:[72,30],z:[1.26,1.00],d:[0,0,0,2],hold:0.9,into:["dissolve",1.3]},  // her reach opens out to the world
+  10:{f:[86,64],z:[1.00,1.10],hold:2.1,into:["dissolve",1.0]},             // the silence: barely moving
+  11:{f:[78,22],z:[1.04,1.32],hold:1.9,into:["dip",2.6]},                  // into the wicked smile
+  12:{f:[42,40],z:[1.02,1.13],hold:0.6,into:["dissolve",1.0]},             // her ancient eyes
+  13:{f:[50,45],z:[1.14,1.02],r:[-1.6,0.8],hold:0.45,into:["dissolve",0.9]}, // the wind turns
+  14:{f:[66,56],z:[1.00,1.20],hold:0.4,into:["quick",0.55]},               // toward the king in his dome
+  15:{f:[82,45],z:[1.00,1.24],hold:0.7,into:["dissolve",0.8]},             // the weapon into her hand
+  16:{f:[52,24],z:[1.22,1.00],hold:0.2,into:["flash",1.1]},                // from the blade down to the table
+  17:{f:[42,46],z:[1.08,1.22],r:[0,-2.2],hold:2.6,into:["dip",2.6]},       // the cut, and the field darkening
+  18:{f:[76,56],z:[1.00,1.09],hold:1.1,into:["dissolve",1.5]},             // a deep breath
+  19:{f:[64,30],z:[1.00,1.22],hold:0.5,into:["quick",0.6]},                // into her eye
+  20:{f:[60,55],z:[1.22,1.02],hold:0.4,into:["quick",0.6]},                // the mirrors multiply
+  21:{f:[46,44],z:[1.00,1.14],hold:1.3,into:["dissolve",1.5]},             // will the shield hold
+  22:{f:[62,50],z:[1.02,1.11],hold:0.8,into:["dissolve",1.2]},             // her hand in his hair
+  23:{f:[82,32],z:[1.00,1.38],hold:0.4,into:["quick",0.6]},                // into the light: the answer
+  24:{f:[60,14],z:[1.40,1.00],hold:0.6,into:["quick",0.6]},                // pull back: a hundred worlds
+  25:{f:[56,45],z:[1.00,1.22],r:[0,1.6],hold:0.5,into:["dissolve",0.9]},   // the gulp
+  26:{f:[56,40],z:[1.16,1.00],r:[1.2,0],hold:1.0,into:["dissolve",1.8]},   // into the abyss of her nature
+  27:{f:[56,62],z:[1.20,1.00],d:[0,0,-2,1],hold:1.7,into:["dissolve",2.4]},// out to the freed valley
+  28:{f:[56,34],z:[1.00,1.12],d:[0,0,1,-2],hold:2.4,into:["dip",3.0]},     // she becomes the air
+  29:{f:[56,48],z:[1.03,1.11],hold:0.6,into:["dissolve",1.4]},             // her wide grin
+  30:{f:[56,76],z:[1.14,1.00],hold:4.0,into:["end",2.4]}                   // the clean plate holds
+};
+
+const SPEEDS = [0.75, 1, 1.25, 1.5];
+
+const pad = (n) => String(n).padStart(2, "0");
+const SRC = {
+  img: (i) => MEDIA ? MEDIA.img[i] : `assets/img/${pad(i + 1)}.jpg`,
+  aud: (i) => MEDIA ? MEDIA.aud[i] : `assets/audio/${pad(i + 1)}.mp3`,
+};
+const $ = (id) => document.getElementById(id);
+const stage = $("stage"), framesEl = $("frames"), veil = $("veil"), flash = $("flash");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const audio = new Audio(); audio.preload = "auto"; audio.playsInline = true;
+if ("preservesPitch" in audio) audio.preservesPitch = true; else if ("webkitPreservesPitch" in audio) audio.webkitPreservesPitch = true;
+let rate = Number(store.get("kali-speed")) || 1; if (!SPEEDS.includes(rate)) rate = 1;
+const T = (s) => s / rate;   // every pause, transition and camera move follows the speed
+
+/* frames, ticks, the text */
+const frames = BEATS.map((b, i) => { const f = document.createElement("div"); f.className = "frame"; const img = document.createElement("img"); img.alt = ""; img.decoding = "async"; img.dataset.src = SRC.img(i); f.appendChild(img); framesEl.appendChild(f); return f; });
+const ticks = [];
+MOVEMENTS.forEach((_, mi) => {
+  const g = document.createElement("div"); g.className = "mvt";
+  const mine = BEATS.filter((b) => b.m === mi + 1);
+  g.style.setProperty("--w", mine.reduce((s, b) => s + b.dur, 0).toFixed(1));
+  mine.forEach((b) => { const t = document.createElement("div"); t.className = "tick"; t.style.setProperty("--d", b.dur); const i = document.createElement("i"); t.appendChild(i); g.appendChild(t); ticks[b.n - 1] = i; });
+  $("ticks").appendChild(g);
+});
+const spans = [];
+(function buildReading() {
+  const body = $("readBody"); let mv = 0, para = 0, p = null;
+  BEATS.forEach((b) => {
+    if (b.m !== mv) { mv = b.m; const h = document.createElement("h3"); h.textContent = `${ROMAN[mv - 1]} · ${MOVEMENTS[mv - 1]}`; body.appendChild(h); }
+    if (b.p !== para) { para = b.p; p = document.createElement("p"); body.appendChild(p); } else p.appendChild(document.createTextNode(" "));
+    // a span, not a button, so each passage flows inline with the rest of the paragraph
+    const s = document.createElement("span"); s.className = "beat"; s.textContent = b.text; s.tabIndex = 0; s.setAttribute("role", "button");
+    s.setAttribute("aria-label", `Play from: ${b.text.slice(0, 60)}`);
+    const jump = () => { closeRead(false); if (!started) begin(b.n - 1); else go(b.n - 1, true); };
+    s.addEventListener("click", jump);
+    s.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(); } });
+    p.appendChild(s); spans.push(s);
+  });
+})();
+SITE.credits.forEach(([k, v]) => { const dt = document.createElement("dt"); dt.textContent = k.toUpperCase(); const dd = document.createElement("dd"); dd.textContent = v; $("creditList").append(dt, dd); });
+if (SITE.homeUrl) { const a = $("lHome"); a.href = SITE.homeUrl; a.hidden = false; }
+function load(i) { const img = frames[i]?.querySelector("img"); if (img && !img.src) img.src = img.dataset.src; }
+function warm(i) { load(i); load(i + 1); load(i + 2); if (!MEDIA && BEATS[i + 1]) { const l = document.createElement("link"); l.rel = "preload"; l.as = "audio"; l.href = SRC.aud(i + 1); document.head.appendChild(l); } }
+
+let cur = -1, playing = -1, timer = null, timerEnd = 0, timerLeft = 0, waitFn = null, paused = false, started = false, phase = "idle";
+
+function show(i, kind, dur) {
+  const prev = frames[cur], next = frames[i], b = BEATS[i], P = PACE[b.n];
+  load(i);
+  frames.forEach((f, k) => f.classList.toggle("near", Math.abs(k - i) <= 1));
+  const img = next.querySelector("img");
+  const z = reduce ? [1, 1] : P.z, r = reduce ? [0, 0] : (P.r || [0, 0]), dr = reduce ? [0, 0, 0, 0] : (P.d || [0, 0, 0, 0]);
+  img.style.setProperty("--ox", P.f[0] + "%"); img.style.setProperty("--oy", P.f[1] + "%");
+  img.style.setProperty("--s0", z[0]); img.style.setProperty("--s1", z[1]);
+  img.style.setProperty("--r0", r[0] + "deg"); img.style.setProperty("--r1", r[1] + "deg");
+  img.style.setProperty("--x0", dr[0] + "%"); img.style.setProperty("--x1", dr[1] + "%");
+  img.style.setProperty("--y0", dr[2] + "%"); img.style.setProperty("--y1", dr[3] + "%");
+  img.style.setProperty("--kd", T(dur + b.dur + P.hold + (P.into[1] || 1)).toFixed(2) + "s");
+  next.classList.remove("move"); void next.offsetWidth; next.classList.add("move");
+  if (reduce) kind = "dissolve";
+  const d = Math.max(0.2, T(dur));
+  const fade = (el, on, secs, soft) => { el.style.transitionDuration = secs + "s"; el.style.setProperty("--soft", soft + "px"); el.classList.toggle("on", on); };
+  if (prev && prev !== next) {
+    if (kind === "flash") {
+      flash.style.transition = "opacity .07s ease-out"; flash.style.opacity = .95;
+      setTimeout(() => { fade(prev, false, 0.01, 0); next.style.setProperty("--soft", "0px"); next.style.transitionDuration = "0.01s"; next.classList.add("on"); flash.style.transition = `opacity ${d}s cubic-bezier(.2,.6,.3,1)`; flash.style.opacity = 0; }, 80);
+    } else {
+      const soft = kind === "quick" ? 2 : 5;
+      next.style.transitionDuration = "0s"; next.style.setProperty("--soft", soft + "px"); next.classList.remove("on"); void next.offsetWidth;
+      if (kind === "dip") {
+        veil.style.transition = `opacity ${d * 0.45}s cubic-bezier(.45,0,.55,1)`; veil.style.opacity = .92;
+        fade(prev, false, d * 0.6, soft);
+        setTimeout(() => fade(next, true, d * 0.6, 0), d * 0.35 * 1000);
+        setTimeout(() => { veil.style.transition = `opacity ${d * 0.55}s cubic-bezier(.45,0,.55,1)`; veil.style.opacity = 0; }, d * 0.45 * 1000);
+      } else {
+        fade(prev, false, d, soft);
+        requestAnimationFrame(() => fade(next, true, d, 0));
+      }
+    }
+  } else { next.style.setProperty("--soft", "0px"); next.style.transitionDuration = d + "s"; next.classList.add("on"); }
+  $("ambient").style.backgroundImage = `url(${SRC.img(i)})`;
+  const label = $("label");
+  if (Number(label.dataset.m) !== b.m) { label.style.opacity = 0; setTimeout(() => { label.innerHTML = `<b>${ROMAN[b.m - 1]}</b>${MOVEMENTS[b.m - 1]}`; label.style.opacity = 1; label.dataset.m = b.m; }, 600); }
+  const capP = $("capText"); capP.style.opacity = 0; setTimeout(() => { capP.textContent = b.text; capP.style.opacity = .88; }, Math.min(900, d * 500));
+  spans.forEach((s, k) => { s.classList.toggle("now", k === i); if (k === i) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); });
+  ticks.forEach((t, k) => { t.style.transform = `scaleX(${k < i ? 1 : 0})`; });
+  $("ticks").setAttribute("aria-valuenow", String(i + 1));
+  $("ticks").setAttribute("aria-valuetext", `Shot ${i + 1} of 30, ${MOVEMENTS[b.m - 1]}`);
+  cur = i;
+}
+
+function speak(i) {
+  playing = i; phase = "clip"; audio.src = SRC.aud(i); audio.playbackRate = rate;
+  const p = audio.play(); if (p && p.catch) p.catch(() => setPaused(true));
+  warm(i); mediaMeta(i);
+}
+function wait(sec, fn) { clearTimeout(timer); timerLeft = sec * 1000; timerEnd = performance.now() + timerLeft; waitFn = fn; phase = "hold"; if (!paused) timer = setTimeout(fn, timerLeft); }
+
+function go(i, jump) {
+  clearTimeout(timer); audio.pause();
+  if (i < 0) i = 0;
+  if (i >= BEATS.length) return finish();
+  const into = jump ? ["dissolve", .7] : ["dip", 2.4];
+  show(i, into[0], into[1]);
+  wait(T(jump ? 0.45 : 1.7), () => speak(i));
+  setPaused(false);
+}
+
+function preroll() {
+  if (phase !== "clip" || paused || playing < 0 || cur !== playing || !audio.duration) return;
+  const b = BEATS[playing], P = PACE[b.n];
+  if (b.n === 30 || P.into[0] === "flash") return;
+  const lead = Math.min(0.7, P.into[1] * 0.35) * rate; // in audio seconds
+  if (audio.currentTime >= audio.duration - lead) show(playing + 1, P.into[0], P.into[1]);
+}
+audio.addEventListener("ended", () => {
+  const idx = playing, b = BEATS[idx], P = PACE[b.n];
+  ticks[idx].style.transform = "scaleX(1)";
+  if (b.n === 30) { wait(T(P.hold), finish); return; }
+  if (cur === idx) show(idx + 1, P.into[0], P.into[1]);
+  wait(T(Math.max(P.hold, P.into[0] === "dip" ? P.into[1] * 0.55 : 0)), () => speak(idx + 1));
+});
+
+function finish() {
+  clearTimeout(timer); phase = "end"; playing = -1; releaseWake();
+  veil.style.transition = "opacity 2.4s ease"; veil.style.opacity = 1;
+  setTimeout(() => { $("end").classList.remove("gone"); $("bAgain").focus({ preventScroll: true }); }, 2000);
+}
+
+function setPaused(v) {
+  paused = v; stage.classList.toggle("paused", v);
+  $("bPlay").setAttribute("aria-label", v ? "Play" : "Pause");
+  $("iPlay").innerHTML = v ? '<path d="M7 5v14l12-7z"/>' : '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
+  if ("mediaSession" in navigator) navigator.mediaSession.playbackState = v ? "paused" : "playing";
+  if (v) { audio.pause(); if (phase === "hold") { clearTimeout(timer); timerLeft = Math.max(0, timerEnd - performance.now()); } releaseWake(); showChrome(true); }
+  else if (started) {
+    if (phase === "clip" && audio.src && audio.paused && !audio.ended) { const p = audio.play(); if (p && p.catch) p.catch(() => {}); }
+    else if (phase === "hold" && waitFn) { clearTimeout(timer); timerEnd = performance.now() + timerLeft; timer = setTimeout(waitFn, timerLeft); }
+    holdWake(); showChrome();
+  }
+}
+
+/* speed */
+function setSpeed(r) {
+  rate = r; audio.playbackRate = r; store.set("kali-speed", String(r));
+  const label = r === 1 ? "1" : String(r).replace(/^0/, "");
+  $("bSpeed").innerHTML = `${label}&times;`;
+  $("bSpeed").setAttribute("aria-label", `Speed, ${r} times. Change speed`);
+  if (phase === "hold" && waitFn && !paused) { const left = Math.max(0, timerEnd - performance.now()); clearTimeout(timer); timerLeft = left; timerEnd = performance.now() + left; timer = setTimeout(waitFn, left); }
+}
+$("bSpeed").addEventListener("click", () => { setSpeed(SPEEDS[(SPEEDS.indexOf(rate) + 1) % SPEEDS.length]); showChrome(); });
+setSpeed(rate);
+
+/* controls appear on touch, mouse or keys, and step aside while the film plays */
+let chromeT = null;
+function showChrome(stay) { stage.classList.remove("chrome-off"); clearTimeout(chromeT); if (!stay && started && !paused) chromeT = setTimeout(() => { if (!stage.contains(document.activeElement) || document.activeElement === document.body) stage.classList.add("chrome-off"); }, 3200); }
+// touch: a tap shows the controls, a second tap puts them away; mouse: moving shows them, a click on the picture pauses or plays
+let lastPointer = "mouse";
+$("tapper").addEventListener("pointerdown", (e) => { lastPointer = e.pointerType || "mouse"; });
+$("tapper").addEventListener("click", () => {
+  if (!started) return;
+  if (lastPointer === "mouse") { setPaused(!paused); showChrome(); return; }
+  if (stage.classList.contains("chrome-off")) showChrome(); else stage.classList.add("chrome-off");
+});
+stage.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") showChrome(); });
+stage.addEventListener("focusin", () => showChrome(true));
+stage.addEventListener("focusout", () => showChrome());
+$("bPlay").addEventListener("click", () => setPaused(!paused));
+$("bNext").addEventListener("click", () => { go(cur + 1, true); showChrome(); });
+$("bBack").addEventListener("click", () => { if (phase === "clip" && audio.currentTime > 1.5) go(cur, true); else go(cur - 1, true); showChrome(); });
+document.addEventListener("keydown", (e) => {
+  if ($("read").classList.contains("open")) { if (e.key === "Escape") closeRead(true); return; }
+  if (!started) return;
+  if (e.key === " " || e.key === "k") { e.preventDefault(); setPaused(!paused); }
+  else if (e.key === "ArrowRight") go(cur + 1, true);
+  else if (e.key === "ArrowLeft") go(cur - 1, true);
+  else if (e.key === "c") $("bCap").click();
+  else if (e.key === ">" || e.key === "]") setSpeed(SPEEDS[Math.min(SPEEDS.length - 1, SPEEDS.indexOf(rate) + 1)]);
+  else if (e.key === "<" || e.key === "[") setSpeed(SPEEDS[Math.max(0, SPEEDS.indexOf(rate) - 1)]);
+  else return;
+  showChrome();
+});
+
+/* progress and time */
+const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+const total = BEATS.reduce((s, b) => s + b.dur + PACE[b.n].hold, 0);
+(function loop() {
+  preroll();
+  if (playing >= 0 && phase === "clip" && audio.duration) ticks[playing].style.transform = `scaleX(${Math.min(1, audio.currentTime / audio.duration)})`;
+  const k = playing >= 0 ? playing : cur;
+  if (k >= 0) {
+    const before = BEATS.slice(0, k).reduce((s, b) => s + b.dur + PACE[b.n].hold, 0) + (phase === "clip" ? audio.currentTime || 0 : BEATS[k].dur);
+    $("where").textContent = `${ROMAN[BEATS[k].m - 1]} · shot ${k + 1} of 30`;
+    $("clock").textContent = `${fmt(before)} / ${fmt(total)}`;
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* captions and the text */
+function setCaps(v) { $("cap").hidden = !v; $("bCap").setAttribute("aria-pressed", String(v)); store.set("kali-captions", v ? "1" : "0"); }
+$("bCap").addEventListener("click", () => { setCaps($("cap").hidden); showChrome(); });
+setCaps(store.get("kali-captions") === "1");
+let wasPaused = false, returnFocus = null;
+function openRead() { returnFocus = document.activeElement; wasPaused = paused; if (started) setPaused(true); $("read").classList.add("open"); setTimeout(() => { $("bClose").focus({ preventScroll: true }); const s = spans[Math.max(cur, 0)], body = $("readBody"); if (s && cur >= 0) body.scrollTop = Math.max(0, s.offsetTop - body.clientHeight / 2); }, 60); }
+function closeRead(resume) { $("read").classList.remove("open"); if (resume && started && !wasPaused) setPaused(false); (returnFocus || $("bRead")).focus?.({ preventScroll: true }); }
+$("bRead").addEventListener("click", openRead);
+$("bReadFirst").addEventListener("click", openRead);
+$("bClose").addEventListener("click", () => closeRead(true));
+$("read").addEventListener("keydown", (e) => { if (e.key !== "Tab") return; const f = [...$("read").querySelectorAll("button, .beat")]; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } });
+
+/* lock screen and keeping the screen awake */
+function mediaMeta(i) {
+  if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
+  navigator.mediaSession.metadata = new MediaMetadata({ title: `KALI · ${MOVEMENTS[BEATS[i].m - 1]}`, artist: "Krishna Somandepalli", album: "Between the Lines", artwork: [{ src: SRC.img(i), sizes: "941x1672", type: "image/jpeg" }] });
+}
+if ("mediaSession" in navigator) {
+  const h = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch (e) {} };
+  h("play", () => setPaused(false)); h("pause", () => setPaused(true));
+  h("nexttrack", () => go(cur + 1, true)); h("previoustrack", () => go(cur - 1, true));
+}
+let wake = null;
+async function holdWake() { try { if (!wake && navigator.wakeLock) { wake = await navigator.wakeLock.request("screen"); wake.addEventListener("release", () => { wake = null; }); } } catch (e) { wake = null; } }
+function releaseWake() { try { wake?.release(); } catch (e) {} wake = null; }
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && started && !paused && phase !== "end") holdWake(); });
+
+/* begin, again */
+function begin(at) { started = true; stage.classList.add("started"); $("start").classList.add("gone"); warm(at || 0); holdWake(); go(at || 0, Boolean(at)); showChrome(); }
+$("bBegin").addEventListener("click", () => begin(0));
+$("bAgain").addEventListener("click", () => { $("end").classList.add("gone"); veil.style.transition = "opacity 1.2s"; veil.style.opacity = 0; cur = -1; playing = -1; frames.forEach((f) => f.classList.remove("on")); holdWake(); go(0); });
+$("bReadEnd").addEventListener("click", () => { wasPaused = true; openRead(); });
+
+/* the first picture sits behind the title card, so a shared link shows the film */
+load(0); frames[0].classList.add("on", "near"); $("ambient").style.backgroundImage = `url(${SRC.img(0)})`;
+stage.classList.add("chrome-off");
+$("bBegin").focus({ preventScroll: true });
+</script>
+
+</body>
+</html>
