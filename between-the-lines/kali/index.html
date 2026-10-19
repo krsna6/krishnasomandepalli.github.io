@@ -3330,18 +3330,21 @@ let paused = false, started = false;
 let lastNow = performance.now();
 
 function beatAt(t) { let i = 0; for (let k = 0; k < BEATS.length; k++) if (BEATS[k].start <= t + 1e-6) i = k; return i; }
-/* Safari (iPhone) only lets a page start sound inside the tap itself; the first clip starts ~1.7 s later,
-   after the opening fade. So the tap "unlocks" the audio element: it starts the first clip silently and
-   stops it at once. Every later clip plays through the same, now-unlocked element. */
+/* Safari (iPhone, iPad) only lets a page start sound inside the tap itself; the first clip starts ~1.7 s later,
+   after the opening fade. So the tap "unlocks" the audio element by playing a quarter second of silence
+   through it, and every clip then plays through the same, now-unlocked element. Safari grants the element
+   when play() is called inside the tap, so it counts as unlocked at once. It never touches a clip that is
+   playing. (Unlocking with the first clip itself, muted, leaked its opening words on iPad.) */
+const SILENCE = "data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YdAHAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==";
 let unlocked = false;
-function unlockAudio(i) {
-  if (unlocked) return;
+function unlockAudio() {
+  if (unlocked || phase === "clip") return;
   try {
-    audio.muted = true; audio.src = SRC.aud(i || 0);
+    audio.src = SILENCE;
     const p = audio.play();
-    const done = () => { if (phase !== "clip") { audio.pause(); try { audio.currentTime = 0; } catch (e) {} } audio.muted = false; };
-    if (p && p.then) p.then(() => { unlocked = true; done(); }).catch(() => { audio.muted = false; }); else { unlocked = true; done(); }
-  } catch (e) { audio.muted = false; }
+    if (p && p.catch) p.catch(() => {});
+    unlocked = true;
+  } catch (e) {}
 }
 function speak(i) {
   playing = i; phase = "clip";
@@ -3397,7 +3400,7 @@ const spans = [];
     if (b.p !== para) { para = b.p; p = document.createElement("p"); body.appendChild(p); } else p.appendChild(document.createTextNode(" "));
     const s = document.createElement("span"); s.className = "beat"; s.textContent = b.text.trim(); s.tabIndex = 0; s.setAttribute("role", "button");
     s.setAttribute("aria-label", `Play from: ${b.text.trim().slice(0, 60)}`);
-    const jump = () => { unlockAudio(i); closeRead(false); if (!started) begin(i); else seekBeat(i); };
+    const jump = () => { unlockAudio(); closeRead(false); if (!started) begin(i); else seekBeat(i); };
     s.addEventListener("click", jump);
     s.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(); } });
     p.appendChild(s); spans.push(s);
@@ -3461,7 +3464,7 @@ $("tapper").addEventListener("click", () => {
 stage.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") showChrome(); });
 stage.addEventListener("focusin", () => showChrome(true));
 stage.addEventListener("focusout", () => showChrome());
-$("bPlay").addEventListener("click", () => { if (paused) unlockAudio(Math.max(0, playing)); setPaused(!paused); });
+$("bPlay").addEventListener("click", () => { if (paused) unlockAudio(); setPaused(!paused); });
 $("bNext").addEventListener("click", () => { seekBeat(beatAt(Math.max(0, T)) + 1); });
 $("bBack").addEventListener("click", () => { const bi = beatAt(Math.max(0, T)); seekBeat(T - BEATS[bi].start > 2 ? bi : bi - 1); });
 document.addEventListener("keydown", (e) => {
@@ -3509,8 +3512,8 @@ function begin(at) {
   if (at) seekBeat(at); else { playing = 0; phase = "lead"; T = SHOTS[0].in[0]; }
   showChrome();
 }
-$("bBegin").addEventListener("click", () => { unlockAudio(0); begin(0); });
-$("bAgain").addEventListener("click", () => { unlockAudio(0); $("end").classList.add("gone"); holdWake(); playing = 0; phase = "lead"; T = SHOTS[0].in[0]; lastNow = performance.now(); setPaused(false); });
+$("bBegin").addEventListener("click", () => { unlockAudio(); begin(0); });
+$("bAgain").addEventListener("click", () => { unlockAudio(); $("end").classList.add("gone"); holdWake(); playing = 0; phase = "lead"; T = SHOTS[0].in[0]; lastNow = performance.now(); setPaused(false); });
 $("bReadEnd").addEventListener("click", () => { wasPaused = true; openRead(); });
 
 /* ---------- the lamp on the opening and closing cards: 00 in the bottom-left corner, motes rising from its flame ---------- */
