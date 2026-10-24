@@ -117,7 +117,21 @@ button.info:hover,button.info:focus-visible{opacity:1}
 .read-body .beat.now{color:var(--ink);background:rgba(226,164,70,.16);box-shadow:0 0 0 2px rgba(226,164,70,.16)}
 .read-hint{font:12.5px/1.5 var(--f-ui);color:var(--dim);margin:0 0 6px}
 
-@media (prefers-reduced-motion:reduce){.lamp{animation:none}.bar,.cap,.read{transition:none}}
+/* captions: each word lights as she says it */
+.cap .w{opacity:.42;transition:opacity .45s ease,text-shadow 1.2s ease}
+.cap .w.said{opacity:1}
+
+/* the landscape film: a screen on its side gets the whole screen; the camera's window takes the screen's
+   shape and stays on the subject */
+.land .room{height:100dvh}
+.land .stage{width:100%;height:100%;max-height:none;max-width:none;aspect-ratio:auto;container-type:size}
+.land .cap p{max-width:46ch;font-size:clamp(15.5px,1.45cqw,24px)}
+.land .card h1{font-size:clamp(36px,11cqh,84px)}
+#bFull{display:none}
+.land #bFull.can{display:inline-grid}
+.room:fullscreen,.room:-webkit-full-screen{width:100vw;height:100vh}
+
+@media (prefers-reduced-motion:reduce){.cap .w{transition:none}.lamp{animation:none}.bar,.cap,.read{transition:none}}
 </style>
 
 <main class="room" id="room">
@@ -138,6 +152,7 @@ button.info:hover,button.info:focus-visible{opacity:1}
         <span class="gap"></span>
         <button id="bSpeed" type="button" aria-label="Speed, 1 times. Change speed">1&times;</button>
         <button id="bCap" type="button" aria-pressed="false" aria-label="Captions">CC</button>
+        <button id="bFull" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
         <button id="bRead" type="button" aria-label="Read the text" aria-haspopup="dialog">Text</button>
         <button class="info bar-info" type="button" aria-label="About this story" aria-haspopup="dialog">i</button>
       </div>
@@ -3069,11 +3084,32 @@ const MEDIA = null;      // null on the website (files in assets/)
 const MOVEMENTS = ["The telling begins","The king revealed","The weapon and the blood","The blood army","The plate is clean"];
 const ROMAN = ["I","II","III","IV","V"];
 const SPEEDS = [0.75, 1, 1.25, 1.5];
-const IMG_ASPECT = 941 / 1672;
+const LAND = {"01.1":{"a":{"z":2.05,"x":62,"y":56},"b":{"z":2.25,"x":62,"y":56},"sa":{"x":62,"y":56,"r":0.1586,"a":0.9},"sb":{"x":62,"y":56,"r":0.2239,"a":0.88}},"01.2":{"a":{"z":2.25,"x":62,"y":56},"b":{"z":1.0,"x":50,"y":50},"sa":{"x":62,"y":56,"r":0.2239,"a":0.88},"sb":{"x":50,"y":50,"r":1.7724,"a":0.0}},"02.1":{"a":{"z":1.05,"x":41,"y":44},"b":{"z":1.32,"x":36,"y":40},"sa":{"x":50,"y":50,"r":1.7724,"a":0.0},"sb":{"x":50,"y":50,"r":1.2,"a":0.0}},"02.2":{"a":{"z":1.12,"x":29,"y":45},"b":{"z":1.0,"x":28,"y":53},"sa":null,"sb":null},"02.3":{"a":{"z":1.55,"x":68,"y":28},"b":{"z":1.85,"x":67.5,"y":27},"sa":null,"sb":null},"02.4":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.12,"x":50,"y":44},"sa":null,"sb":null},"02.5":{"a":{"z":1.28,"x":60,"y":38},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"02.6":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.7,"x":67.5,"y":27.5},"sa":null,"sb":null},"03.1":{"a":{"z":1.12,"x":41.6,"y":44},"b":{"z":1.18,"x":43.9,"y":40.0},"sa":{"x":42.5,"y":44,"r":0.3891,"a":0.45},"sb":{"x":44.99,"y":39.65,"r":0.4142,"a":0.4}},"04.1":{"a":{"z":1.6,"x":32.76,"y":68.05},"b":{"z":1.45,"x":32.76,"y":63.98},"sa":null,"sb":null},"04.2":{"a":{"z":1.45,"x":32.76,"y":63.98},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"05.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.18,"x":60,"y":40},"sa":null,"sb":null},"05.2":{"a":{"z":1.35,"x":71.32,"y":43.89},"b":{"z":1.0,"x":63.98,"y":59.56},"sa":null,"sb":null},"06.1":{"a":{"z":1.5,"x":38,"y":40},"b":{"z":1.62,"x":38.5,"y":39},"sa":null,"sb":null},"06.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.08,"x":70,"y":49},"sa":null,"sb":null},"06.3":{"a":{"z":1.08,"x":70,"y":49},"b":{"z":1.9,"x":71.4,"y":46.2},"sa":null,"sb":null},"07.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.1,"x":70,"y":45},"sa":null,"sb":null},"07.2":{"a":{"z":1.1,"x":70,"y":45},"b":{"z":1.75,"x":74,"y":29},"sa":null,"sb":null},"07.3":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.15,"x":47.6,"y":43.8},"sa":null,"sb":null},"07.4":{"a":{"z":1.2,"x":44.15,"y":39.63},"b":{"z":1.3,"x":45.03,"y":38.5},"sa":null,"sb":null},"08.1":{"a":{"z":1.22,"x":48.06,"y":50.49},"b":{"z":1.22,"x":48.06,"y":50.49},"sa":null,"sb":null},"09.1":{"a":{"z":1.7,"x":23.29,"y":48.95},"b":{"z":1.85,"x":22.97,"y":46.6},"sa":null,"sb":null},"09.2":{"a":{"z":1.3,"x":47.5,"y":47.6},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"09.3":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.14,"x":40.4,"y":74},"sa":null,"sb":null},"10.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"10.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.25,"x":52,"y":62},"sa":null,"sb":null},"11.1":{"a":{"z":2.2,"x":67,"y":36},"b":{"z":2.35,"x":67,"y":36},"sa":null,"sb":null},"11.2":{"a":{"z":2.35,"x":67,"y":36},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"12.1":{"a":{"z":1.35,"x":23.23,"y":39.72},"b":{"z":1.0,"x":26.95,"y":48.85},"sa":null,"sb":null},"12.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.25,"x":63,"y":52},"sa":null,"sb":null},"12.3":{"a":{"z":2.1,"x":24.81,"y":18.6},"b":{"z":2.35,"x":24.93,"y":15.71},"sa":null,"sb":null},"13.1":{"a":{"z":1.15,"x":41.05,"y":44.15},"b":{"z":1.15,"x":41.05,"y":44.15},"sa":null,"sb":null},"13.2":{"a":{"z":1.8,"x":36,"y":38},"b":{"z":1.9,"x":36,"y":38},"sa":null,"sb":null},"13.3":{"a":{"z":1.9,"x":36,"y":38},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"13.4":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.1,"x":34,"y":63},"sa":null,"sb":null},"14.1":{"a":{"z":1.65,"x":68.33,"y":60.26},"b":{"z":1.45,"x":67.4,"y":54.78},"sa":null,"sb":null},"14.2":{"a":{"z":1.45,"x":67.4,"y":54.78},"b":{"z":1.0,"x":62.1,"y":49.43},"sa":null,"sb":null},"14.3":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.15,"x":33,"y":61},"sa":null,"sb":null},"15.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.15,"x":60.7,"y":56},"sa":null,"sb":null},"15.2":{"a":{"z":1.8,"x":44.2,"y":30},"b":{"z":1.8,"x":44.2,"y":30},"sa":null,"sb":null},"15.3":{"a":{"z":1.8,"x":44.2,"y":30},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"15.4":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.7,"x":63,"y":46},"sa":null,"sb":null},"16.1":{"a":{"z":1.55,"x":28.9,"y":52.65},"b":{"z":1.4,"x":29.4,"y":50.8},"sa":null,"sb":null},"16.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.18,"x":55,"y":42},"sa":null,"sb":null},"16.3":{"a":{"z":1.1,"x":36.8,"y":39},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"17.1":{"a":{"z":1.0,"x":49.6,"y":55},"b":{"z":1.08,"x":54,"y":58},"sa":null,"sb":null},"17.2":{"a":{"z":1.2,"x":36,"y":53},"b":{"z":1.05,"x":38,"y":56},"sa":null,"sb":null},"17.3":{"a":{"z":1.05,"x":38,"y":56},"b":{"z":1.6,"x":50,"y":70},"sa":null,"sb":null},"17.4":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.18,"x":55,"y":68},"sa":null,"sb":null},"18.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.12,"x":51,"y":52},"sa":null,"sb":null},"18.2":{"a":{"z":1.12,"x":51,"y":52},"b":{"z":1.8,"x":36.89,"y":42.36},"sa":null,"sb":null},"19.1":{"a":{"z":1.6,"x":37.45,"y":40.69},"b":{"z":1.7,"x":36.96,"y":40.66},"sa":null,"sb":null},"19.2":{"a":{"z":1.5,"x":59.1,"y":35.8},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"20.1":{"a":{"z":1.0,"x":48.5,"y":50},"b":{"z":1.45,"x":42.4,"y":66.5},"sa":null,"sb":null},"20.2":{"a":{"z":1.15,"x":54.7,"y":48.2},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"20.3":{"a":{"z":1.3,"x":56.3,"y":63},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"21.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.08,"x":46,"y":45},"sa":null,"sb":null},"21.2":{"a":{"z":1.08,"x":46,"y":45},"b":{"z":1.45,"x":45,"y":43},"sa":null,"sb":null},"21.3":{"a":{"z":1.45,"x":45,"y":43},"b":{"z":1.9,"x":45,"y":44},"sa":null,"sb":null},"22.1":{"a":{"z":1.12,"x":50,"y":52},"b":{"z":1.12,"x":50,"y":52},"sa":null,"sb":null},"23.1":{"a":{"z":1.45,"x":38.5,"y":40},"b":{"z":1.5,"x":38.5,"y":40},"sa":null,"sb":null},"23.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"23.3":{"a":{"z":1.04,"x":33.5,"y":62},"b":{"z":1.04,"x":33.5,"y":62},"sa":null,"sb":null},"23.4":{"a":{"z":1.45,"x":66.3,"y":39},"b":{"z":1.15,"x":61.8,"y":53.9},"sa":null,"sb":null},"24.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"24.2":{"a":{"z":1.9,"x":44.4,"y":30},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"24.3":{"a":{"z":1.1,"x":31.6,"y":45.4},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"24.4":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"25.1":{"a":{"z":1.22,"x":48.06,"y":50.49},"b":{"z":1.3,"x":48.44,"y":50.26},"sa":null,"sb":null},"25.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.12,"x":42.4,"y":43.6},"sa":null,"sb":null},"25.3":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.3,"x":52.8,"y":45},"sa":null,"sb":null},"26.1":{"a":{"z":1.0,"x":60.73,"y":69.19},"b":{"z":1.0,"x":60.73,"y":69.19},"sa":null,"sb":null},"26.2":{"a":{"z":1.0,"x":60.73,"y":69.19},"b":{"z":1.45,"x":66.11,"y":72.18},"sa":null,"sb":null},"27.1":{"a":{"z":1.25,"x":40.3,"y":40.2},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"27.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.1,"x":55,"y":52},"sa":null,"sb":null},"28.1":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.15,"x":51.8,"y":53.5},"sa":null,"sb":null},"28.2":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.1,"x":41.8,"y":41.3},"sa":null,"sb":null},"28.3":{"a":{"z":1.08,"x":53.8,"y":55},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"29.1":{"a":{"z":1.55,"x":47.29,"y":33.78},"b":{"z":1.6,"x":47.3,"y":35.33},"sa":{"x":47.29,"y":33.78,"r":0.4779,"a":0.35},"sb":{"x":47.3,"y":33.83,"r":0.6017,"a":0.3}},"30.1":{"a":{"z":1.5,"x":42.5,"y":42},"b":{"z":1.45,"x":47,"y":46},"sa":null,"sb":null},"30.2":{"a":{"z":1.45,"x":47,"y":46},"b":{"z":1.0,"x":50,"y":50},"sa":null,"sb":null},"30.3":{"a":{"z":1.0,"x":50,"y":50},"b":{"z":1.65,"x":53.3,"y":77.5},"sa":null,"sb":{"x":53.3,"y":80,"r":0.4104,"a":0.5}}};        // per shot, the landscape camera and pools of light (film/kali-4k), keyed by shot id
+const WORDS = [[["My ",0.1],["eyes ",0.32],["grew ",0.72],["wide ",1.02],["as ",1.78],["though ",1.9],["seeking ",2.2],["the ",2.56],["comfort ",2.74],["of ",3.1],["my ",3.22],["brow",3.46]],[["from ",4.16],["as ",4.32],["much ",4.48],["amazement ",4.7],["as ",5.66],["much ",5.8],["fear ",6.18],["at ",6.8],["my ",6.94],["grandmother's ",7.16],["voice.",7.78]],[["\"Kali\", ",9.72],["she ",10.66],["said. ",10.88],["\"",11.14]],[["Her ",11.76],["skin ",12.02],["darker ",12.68],["than ",13.14],["the ",13.32],["deep ",13.58],["night,",13.92]],[["eyes ",14.84],["as ",15.38],["red ",15.7],["as ",16.12],["the ",16.26],["setting ",16.48],["sun,",16.96]],[["a ",17.86],["gushing ",18.14],["river ",18.72],["made ",19.06],["hair,",19.36]],[["the ",20.16],["very ",20.28],["fury ",20.8],["of ",21.26],["nature ",21.52],["bound ",22.16],["human\", ",22.66],["she ",23.56],["sighed, ",23.8],["\"",24.16]],[["Kali ",24.8],["faced ",25.34],["one ",25.86],["final ",26.42],["challenge\".",26.94]],[["Quite ",29.32],["a ",29.62],["storyteller ",29.88],["she ",30.56],["was ",30.78],["and ",31.46],["oh, ",31.84],["how ",32.52],["the ",32.72],["old ",32.94],["woman ",33.2],["loved ",33.72],["metaphors.",34.14]],[["The ",36.14],["story ",36.34],["was ",36.74],["a ",36.9],["bribe ",37.08],["for ",37.6],["getting ",37.74],["me ",38.0],["to ",38.14],["eat ",38.3],["my ",38.48],["dinner ",38.74],["and ",39.52],["like ",39.92],["all ",40.24],["her ",40.4],["stories,",40.62]],[["this ",41.42],["one ",41.68],["too ",41.92],["was ",42.26],["supernatural, ",42.56],["mythical ",43.68],["and ",44.32],["fantasy ",44.62],["filled.",45.18]],[["The ",47.16],["story ",47.38],["must ",47.88],["have ",48.12],["begun ",48.26],["along ",48.7],["the ",48.98],["lines ",49.12],["of ",49.54],["a ",49.64],["demon-king ",49.86],["ruling ",50.82],["over ",51.24],["the ",51.42],["world",51.58]],[["and ",52.36],["a ",52.48],["prophecy-born ",52.62],["Kali, ",53.52],["the ",54.36],["world's ",54.52],["savior ",54.98],["come ",55.78],["to ",56.02],["rescue ",56.24],["them ",56.66],["after ",57.0],["much ",57.4],["suffering.",57.72]],[["\"Kali's ",59.6],["final ",60.2],["challenge ",60.64],["was ",61.16],["the ",61.32],["King ",61.54],["himself\", ",61.86],["she ",62.98],["continued. ",63.14],["\"",63.72]],[["The ",64.26],["King ",64.4],["didn't ",64.68],["look ",65.08],["fearsome ",65.38],["like ",65.96],["what ",66.18],["you ",66.38],["would ",66.46],["expect ",66.58],["of ",67.1],["a ",67.2],["demon,",67.3]],[["in ",68.16],["fact ",68.32],["he ",68.92],["looked ",69.04],["very ",69.32],["much ",69.58],["human.",69.86]],[["But ",71.08],["Kali ",71.32],["who ",72.14],["could ",72.26],["see ",72.54],["beneath ",72.82],["the ",73.26],["mantle ",73.42],["knew ",74.14],["better; ",74.44],["for ",75.44],["this ",75.58],["self-proclaimed ",75.88],["king ",76.78],["was ",77.42],["a ",77.58],["skilled ",77.86],["sorcerer, ",78.4],["the ",79.44],["darkest ",79.68],["and ",80.28],["cruelest ",80.6],["at ",81.18],["that,",81.34]],[["a ",82.24],["sorcerer ",82.42],["who ",83.16],["could ",83.28],["live ",83.44],["a ",83.6],["thousand ",83.78],["lives ",84.36],["and ",85.08],["not ",85.3],["age ",85.7],["a ",86.04],["day,",86.28]],[["a ",87.259],["tyrant ",87.46],["who ",88.22],["rejoiced ",88.36],["at ",89.02],["the ",89.12],["suffering ",89.36],["of ",89.78],["the ",89.9],["weak,",90.06]],[["how ",91.0],["terrible..., ",91.34],["that ",92.64],["is ",92.78],["very ",93.06],["fearsome, ",93.44],["no?\", ",93.96],["she ",94.7],["asked.",94.98]],[["I ",96.08],["blinked, ",96.2],["nodded ",97.14],["and ",97.84],["looked ",98.02],["on. ",98.32],["It ",99.2],["was ",99.32],["her ",99.5],["cue ",99.78],["to ",100.12],["keep ",100.28],["going.",100.56]],[["\"Kali ",102.88],["was ",103.36],["the ",103.54],["supreme ",103.7],["incarnate ",104.4],["and ",105.38],["no ",105.72],["less ",106.06],["extraordinary\", ",106.4],["her ",107.96],["voice ",108.16],["now ",108.54],["seemed ",108.8],["to ",109.0],["carry ",109.16],["a ",109.46],["certainty ",109.68],["that ",110.3],["mere ",110.58],["grammar ",110.959],["couldn't ",111.44],["convey, ",111.74],["\"",112.28]],[["Kali ",112.94],["had ",113.38],["a ",113.54],["unique ",113.72],["power, ",114.26],["she ",115.2],["could ",115.36],["create ",115.58],["anything ",116.1],["just ",116.84],["by ",117.16],["thinking ",117.5],["it,",117.9]],[["she ",118.7],["herself ",118.919],["was ",119.54],["indeed ",119.72],["a ",120.36],["manifestation ",120.54],["of ",121.72],["the ",121.82],["supreme ",122.0],["thought\".",122.78]],[["She ",124.38],["paused, ",124.6],["\"the ",125.1],["silence ",125.86],["between ",126.32],["Kali ",126.78],["and ",127.14],["the ",127.26],["king ",127.44],["seemed ",127.92],["to ",128.18],["stretch ",128.48],["forever,",128.86]],[["or ",130.14],["perhaps ",130.4],["the ",130.82],["voices ",130.96],["of ",131.4],["their ",131.5],["hostility ",131.68],["were ",132.32],["so ",132.62],["loud ",132.9],["that ",133.64],["mere ",133.86],["humans ",134.2],["like ",134.66],["us ",134.96],["couldn't ",135.28],["perceive.",135.58]],[["As ",138.58],["a ",138.72],["wicked ",138.88],["smile ",139.28],["etched ",140.04],["across ",140.36],["his ",140.74],["thin, ",141.02],["pale ",141.6],["lips,",142.06]],[["Kali ",143.08],["knew ",143.5],["it ",143.84],["was ",143.96],["past ",144.22],["time ",144.62],["to ",144.96],["do ",145.14],["what ",145.4],["she ",145.58],["must ",145.82],["have ",146.06],["done ",146.24],["a ",146.62],["long ",146.86],["time ",147.28],["ago ",147.58],["- ",147.96],["to ",148.58],["end ",148.84],["the ",149.14],["life ",149.32],["of ",149.96],["this ",150.08],["tyrant\".",150.38]],[["My ",153.1],["grandmother's ",153.3],["ancient ",153.98],["eyes ",154.46],["glistened ",154.9],["at ",155.42],["something ",155.6],["very ",156.06],["distant, ",156.4],["\"Kali ",156.86],["knew ",158.22],["the ",158.54],["power ",158.74],["of ",159.12],["his ",159.24],["sorcery,",159.46]],[["the ",160.7],["magic ",160.86],["that ",161.24],["made ",161.42],["him ",161.64],["immune ",161.8],["to ",162.32],["earthly ",162.52],["weapons ",162.92],["was ",163.62],["like ",163.8],["nothing ",164.14],["she ",164.62],["had ",164.76],["known ",164.96],["to ",165.22],["be ",165.32],["possible,",165.5]],[["death ",166.62],["was ",167.3],["but ",167.46],["a ",167.64],["feeble ",167.9],["servant ",168.42],["of ",168.86],["the ",168.96],["king.",169.12]],[["She ",170.58],["closed ",170.76],["her ",171.12],["eyes ",171.38],["in ",171.76],["a ",171.86],["calculating ",172.06],["thought, ",172.82],["muttered ",173.82],["something ",174.18],["strange ",174.66],["under ",175.18],["her ",175.38],["breath,",175.6]],[["her ",176.54],["eyes ",176.8],["flew ",177.26],["open",177.56]],[["and ",178.22],["her ",178.36],["whispers ",178.56],["now ",179.04],["seemed ",179.36],["to ",179.62],["be ",179.72],["all ",180.04],["around ",180.26],["like ",181.16],["they ",181.34],["were ",181.44],["always ",181.7],["there,",182.14]],[["the ",183.24],["wind ",183.38],["around ",183.7],["her ",184.06],["wore ",184.3],["a ",184.52],["new ",184.7],["face, ",185.04],["wielding ",185.9],["an ",186.46],["unnatural ",186.719],["power.",187.56]],[["As ",188.68],["though ",188.84],["in ",189.04],["response, ",189.16],["the ",190.2],["king's ",190.36],["voice ",190.78],["rose ",191.24],["with ",191.7],["every ",192.0],["gust ",192.5],["of ",192.84],["the ",192.96],["wind, ",193.08],["speaking ",194.08],["an ",194.44],["ancient ",194.68],["tongue ",195.18],["long ",195.74],["forgotten, ",196.14],["his ",197.3],["voice ",197.5],["turned ",197.86],["hoarse ",198.22],["and",199.06]],[["an ",199.18],["invisible ",199.3],["dome ",199.98],["seemed ",200.5],["to ",200.7],["form ",200.92],["around ",201.22],["him ",201.6],["holding ",202.16],["Kali ",202.66],["at ",203.06],["bay,",203.26]],[["the ",204.38],["world ",204.52],["around ",204.86],["them ",205.2],["seemed ",205.48],["to ",205.74],["wither ",205.96],["as ",206.64],["he ",206.78],["drew ",206.98],["his ",207.26],["power ",207.52],["from ",207.92],["everything ",208.3],["around.",208.78]],[["Kali ",210.01],["realized ",210.39],["keeping ",211.05],["at ",211.37],["this ",211.53],["might ",211.89],["just ",212.19],["as ",212.43],["well ",212.57],["lead ",212.83],["to ",213.09],["the ",213.21],["destruction ",213.31],["of ",213.949],["life ",214.11],["around ",214.41],["her,",214.81]],[["she ",215.61],["stopped ",215.85],["for ",216.23],["a ",216.35],["brief ",216.49],["moment,",216.81]],[["a ",217.69],["quick ",217.81],["thought ",218.11],["crossed ",218.47],["her ",218.75],["mind,",218.95]],[["and ",219.81],["a ",219.93],["fierce ",220.17],["weapon ",220.57],["formed ",221.05],["in ",221.43],["thin ",221.73],["air ",222.01],["before ",222.21],["her ",222.61],["and ",223.19],["fell ",223.53],["into ",223.95],["her ",224.19],["waiting ",224.43],["hands\".",224.85]],[["My ",226.53],["grandmother ",226.71],["drew ",227.27],["a ",227.45],["deep ",227.65],["breath, ",227.93],["smiled ",228.83],["and ",229.59],["said, ",229.81],["\"Oh, ",230.03],["the ",231.67],["weapon ",231.83],["she ",232.19],["conjured ",232.43],["was ",232.89],["magnificent,",233.11]],[["forged ",234.77],["from ",235.25],["the ",235.41],["sinew ",235.63],["of ",236.11],["a ",236.23],["very ",236.49],["powerful ",236.93],["being ",237.47],["that ",238.13],["existed ",238.27],["before ",238.83],["time ",239.45],["itself ",239.73],["-",240.35]],[["it ",241.11],["could ",241.23],["sever ",241.51],["anything, ",241.99],["physical ",242.95],["or ",243.75],["otherwise.",243.99]],[["Before ",245.32],["the ",245.66],["king ",245.84],["could ",246.12],["even ",246.38],["draw ",246.72],["on ",247.12],["his ",247.26],["next ",247.48],["breath,",247.8]],[["Kali ",248.6],["swung ",249.16],["her ",249.52],["weapon ",249.7],["in ",250.08],["a ",250.2],["wide ",250.42],["arc ",250.92],["at ",251.14],["the ",251.24],["foe",251.42]],[["cutting ",252.12],["through ",252.52],["his ",252.72],["flesh, ",253.02],["bone ",253.66],["and ",254.34],["the ",254.54],["sorcery ",254.8],["that ",255.34],["bound ",255.56],["him ",255.86],["human, ",256.16],["severing ",257.06],["him ",257.48],["into ",257.74],["a ",257.98],["million ",258.24],["pieces",258.68]],[["as ",259.52],["the ",259.66],["field ",259.84],["around ",260.16],["her ",260.52],["turned ",261.04],["dark ",261.56],["with ",261.98],["his ",262.14],["blood\".",262.44]],[["I ",265.86],["took ",265.96],["a ",266.14],["deep ",266.32],["breath, ",266.6],["but ",267.44],["something ",267.64],["told ",268.02],["me ",268.3],["it ",268.54],["wasn't ",268.72],["over ",269.12],["yet ",269.4],["and ",270.2],["as ",270.74],["if ",270.88],["echoing ",271.08],["my ",271.44],["thoughts,",271.68]],[["my ",272.52],["grandmother ",272.72],["shook ",273.3],["her ",273.52],["head.",273.74]],[["\"Oh, ",275.42],["that ",276.2],["wasn't ",276.46],["the ",276.74],["end ",276.9],["of ",277.08],["him, ",277.22],["the ",278.24],["king ",278.42],["in ",278.9],["his ",279.06],["infinite ",279.38],["guile ",279.88],["may ",280.58],["have ",280.76],["anticipated ",280.92],["this,",281.7]],[["for ",282.56],["the ",282.66],["anger, ",282.92],["surprise ",283.499],["and ",284.5],["perhaps ",284.64],["even ",285.06],["despair ",285.3],["in ",286.02],["Kali's ",286.22],["eyes ",286.74],["spoke ",287.46],["volumes ",287.86],["of ",288.48],["the ",288.58],["horror ",288.82],["that ",289.22],["unfolded ",289.44],["before ",290.1],["her.",290.56]],[["Every ",292.38],["drop ",292.8],["of ",293.16],["the ",293.26],["sorcerer's ",293.46],["blood ",294.02],["that ",294.32],["was ",294.48],["spilled ",294.78],["seemed ",295.62],["to ",295.88],["have ",296.02],["a ",296.2],["will ",296.339],["of ",296.5],["its ",296.58],["own ",296.86],["drawing ",297.66],["mass ",298.14],["from ",298.52],["nowhere ",298.86],["and ",299.4],["everywhere,",299.74]],[["each ",300.92],["drop ",301.2],["of ",301.44],["the ",301.56],["blood ",301.68],["shaped ",302.36],["itself ",302.68],["to ",303.12],["look ",303.36],["like ",303.62],["the ",303.84],["king,",304.02]],[["it ",304.92],["was ",305.0],["like ",305.16],["looking ",305.4],["at ",305.68],["the ",305.78],["sorcerer ",305.98],["in ",306.56],["a ",306.68],["million ",306.92],["mirrors, ",307.38],["only ",308.38],["they ",309.08],["weren't ",309.32],["mere ",309.74],["reflections.",309.98]],[["The ",311.73],["king's ",311.89],["magic ",312.29],["ran ",312.75],["wild ",313.17],["a ",313.71],["million ",313.95],["times ",314.39],["over ",314.83],["and ",315.63],["there ",315.709],["was ",315.81],["only ",316.01],["so ",316.35],["much ",316.55],["she ",316.75],["could ",316.93],["do ",317.15],["against ",317.43],["the ",317.75],["overwhelming ",318.03],["army ",318.81],["of ",319.13],["madmen ",319.41],["closing ",320.05],["in ",320.47],["on ",320.59],["her;",320.75]],[["she ",321.55],["conjured ",321.75],["up ",322.09],["a ",322.21],["shield ",322.37],["and ",323.09],["hoped ",323.29],["it ",323.57],["would ",323.67],["hold.",323.87]],[["Kali ",324.87],["was ",325.19],["perplexed ",325.35],["and ",326.37],["knew ",326.53],["there ",326.79],["was ",326.91],["very ",327.19],["little ",327.45],["time ",327.749],["before ",328.41],["her ",328.71],["sanctuary ",328.95],["would ",329.51],["give ",329.73],["way\".",329.99]],[["My ",332.05],["grandmother ",332.21],["paused, ",332.75],["ruffled ",333.75],["my ",334.09],["hair ",334.33],["as ",334.99],["though ",335.11],["urging ",335.43],["me ",335.77],["not ",336.03],["to ",336.25],["despair.",336.37]],[["She ",338.09],["cracked ",338.29],["her ",338.57],["knuckles ",338.71],["and ",339.25],["said, ",339.45],["\"",339.73]],[["Clarity ",340.29],["dawned ",340.91],["upon ",341.23],["Kali ",341.59],["as ",342.43],["she ",342.57],["realized ",342.79],["that ",343.35],["the ",343.49],["king ",343.65],["had ",343.95],["perhaps ",344.09],["cursed ",344.61],["his ",344.95],["own ",345.25],["blood ",345.57],["to ",346.25],["cheat ",346.53],["his ",346.81],["death ",347.09],["and ",347.95],["she ",348.09],["couldn't ",348.31],["afford ",348.61],["another ",349.05],["cut ",349.43],["at ",349.63],["him,",349.77]],[["her ",350.73],["thoughts ",350.97],["roared ",351.59],["like ",352.03],["a ",352.23],["raging ",352.43],["ocean",352.99]],[["and ",353.77],["the ",353.87],["solution ",354.01],["hit ",354.55],["her ",354.75],["like ",355.23],["a ",355.41],["tiny ",355.63],["rock ",356.11],["caught ",356.67],["amidst ",357.01],["the ",357.39],["waves.",357.55]],[["She ",359.04],["had ",359.2],["no ",359.54],["time ",359.84],["to ",360.18],["lose.",360.34]],[["Kali ",361.48],["began ",361.84],["to ",362.18],["grow ",362.38],["towards ",362.8],["the ",363.24],["heavens ",363.4],["stepping ",364.36],["out ",364.8],["of ",364.98],["her ",365.08],["shield,",365.34]],[["the ",366.4],["enormity ",366.54],["of ",367.22],["her ",367.32],["form ",367.58],["could ",367.92],["only ",368.22],["be ",368.5],["measured ",368.68],["by ",369.26],["the  ",369.42],["fear ",369.76],["reflected ",370.1],["in ",370.72],["a ",370.82],["million ",371.08],["eyes ",371.62],["of ",371.96],["the ",372.06],["sorcerer.",372.24]],[["One ",373.32],["of ",373.48],["Kali's ",373.66],["hand ",374.12],["alone ",374.4],["could ",375.26],["block ",375.56],["out ",375.84],["the ",376.02],["skies ",376.22],["of ",376.74],["a ",376.88],["hundred ",377.08],["worlds\".",377.6]],[["The ",379.32],["wonder ",379.52],["in ",379.88],["my ",380.0],["eyes ",380.3],["painted ",380.72],["my ",381.12],["grandmother's ",381.3],["words ",381.88],["with ",382.22],["a ",382.36],["smile, ",382.58],["\"",383.44]],[["Like ",383.48],["a ",383.68],["giant ",383.9],["net ",384.46],["trapping ",384.84],["a ",385.22],["thousand ",385.46],["trout, ",386.04],["Kali ",386.88],["grabbed ",387.32],["at ",387.72],["the ",387.84],["whole ",388.06],["encroaching ",388.4],["army",389.06]],[["and ",389.7],["swallowed ",390.08],["them ",390.48],["down ",390.72],["her ",391.06],["immense ",391.24],["gut ",391.84],["all ",392.52],["in ",392.92],["a ",393.04],["single ",393.32],["gulp.",393.8]],[["You ",395.02],["see, ",395.16],["Kali ",395.88],["was ",396.38],["but ",396.56],["Thought-made-human ",396.88],["and",398.48]],[["she ",398.64],["knew ",398.9],["the ",399.2],["king's ",399.36],["sorcery ",399.72],["would ",400.26],["be ",400.4],["lost ",400.64],["in ",401.04],["the ",401.14],["abyss ",401.28],["of ",401.78],["her ",401.9],["nature.",402.1]],[["The ",403.76],["duel ",403.94],["was ",404.26],["over ",404.56],["just ",405.28],["like ",405.52],["that, ",405.76],["the ",406.58],["king's ",406.74],["fall ",407.16],["brought ",407.56],["a ",407.8],["great ",408.0],["joy ",408.48],["to ",408.82],["the ",408.94],["world.",409.08]],[["The ",410.08],["magic ",410.26],["he ",410.64],["had ",410.76],["woven ",410.96],["that ",411.38],["enslaved ",411.52],["the ",412.18],["world ",412.32],["vanished ",413.1],["with ",413.54],["him.",413.72]],[["The ",416.04],["smell ",416.28],["of ",416.5],["freedom ",416.74],["told ",417.3],["Kali ",417.62],["that ",418.04],["her ",418.18],["purpose ",418.44],["there ",418.88],["was ",419.1],["fulfilled.",419.26]],[["She ",420.64],["resumed ",420.78],["her ",421.26],["normal ",421.48],["form, ",421.9],["spared ",422.7],["a ",423.0],["fleeting ",423.18],["glance ",423.56],["around",423.94]],[["and ",424.72],["stepped ",425.04],["into ",425.44],["the ",425.64],["mists ",425.8],["of ",426.18],["air ",426.44],["to ",427.0],["become ",427.12],["one ",427.64],["with ",427.82],["it ",427.98],["like ",428.52],["she ",428.74],["was ",428.88],["never ",429.18],["there\".",429.48]],[["My ",432.7],["grandmother's ",432.86],["wide ",433.52],["grin ",433.9],["announced ",434.38],["the ",434.82],["end ",435.1],["of ",435.38],["the ",435.5],["story.",435.68]],[["As ",437.06],["I ",437.26],["think, ",437.38],["it ",438.12],["was ",438.22],["as ",438.36],["much ",438.54],["her ",438.8],["success ",439.06],["as ",439.62],["much ",439.76],["as ",439.96],["Kali's",440.16]],[["for ",440.98],["my ",441.12],["dinner ",441.38],["plate ",441.64],["was ",441.9],["clean;",442.14]],[["vegetables, ",443.06],["greens ",443.84],["and ",444.54],["all ",444.94],["gone.",445.24]]];      // per shot, each word's text and the program second it is spoken
+
+/* Two films on one clock. Held upright (a portrait screen) this is the KALI film as it was: the upright
+   pictures and their cameras, unchanged. On a screen on its side (a phone turned, a laptop) it is the
+   landscape telling: the landscape pictures, cameras that find the same subjects in them, and the whole
+   screen. Every time in the film (each word, arrival and hold) is the same in both, so turning the phone
+   carries on at the same moment of her voice. */
+let LAND_SIZE = (() => {    // landscape pictures for this screen: 3840 x 2160 or 1920 x 1080
+  const asked = new URLSearchParams(location.search).get("size");
+  if (asked === "2160" || asked === "1080") return asked;
+  const long = Math.max(screen.width, screen.height) * Math.min(window.devicePixelRatio || 1, 2);
+  return !matchMedia("(pointer: coarse)").matches && long > 1920 * 1.1 ? "2160" : "1080";
+})();
+const VIEWS = {
+  up: { aspect: 941 / 1672, img: (n) => `assets/img/${n}.jpg`, size: "941x1672", flame: [0.476, 0.656], mips: false, keep: 9 },
+  land: { aspect: 16 / 9, img: (n) => `assets/img/land/${LAND_SIZE}/${n}.jpg`, size: LAND_SIZE === "2160" ? "3840x2160" : "1920x1080", flame: [0.388, 0.658], mips: true, keep: LAND_SIZE === "2160" ? 7 : 9 },
+};
+const viewFor = () => (innerWidth > innerHeight ? "land" : "up");
+let VIEW = viewFor();         // the film on the screen
+document.documentElement.classList.toggle("land", VIEW === "land");
+let IMG_ASPECT = VIEWS[VIEW].aspect;
 
 const pad = (n) => String(n).padStart(2, "0");
 const SRC = {
-  img: (name) => MEDIA ? MEDIA.img[name] : `assets/img/${name}.jpg`,
+  img: (name, view = VIEW) => MEDIA ? MEDIA.img[view][name] : VIEWS[view].img(name),
   aud: (i) => MEDIA ? MEDIA.aud[i] : `assets/audio/${pad(i + 1)}.mp3`,
 };
 const $ = (id) => document.getElementById(id);
@@ -3101,8 +3137,9 @@ function stateOf(k, t) {
   const s = SHOTS[k], next = SHOTS[k + 1];
   const t0 = s.in[0], t1 = next ? next.in[1] : TL.totalSec;
   const u = reduce ? 0 : ease((t - t0) / Math.max(0.01, t1 - t0));
-  const cam = lerpCam(s.a, s.b, u);
-  const spot = lerpSpot(s.sa, s.sb, u);
+  const c = VIEW === "land" ? LAND[s.id] : s;
+  const cam = lerpCam(c.a, c.b, u);
+  const spot = lerpSpot(c.sa, c.sb, u);
   const haze = s.haze ? lerp(s.haze[0], s.haze[1], u) : 0;
   return { img: s.img, cam, spot, flow: reduce ? 0 : s.flow, lamp: reduce ? 0 : s.lamp, haze, motes: s.motes, seed: (k * 0.618) % 1 * 10 };
 }
@@ -3208,7 +3245,10 @@ void main(){
 }`;
 
 const R = (() => {
-  const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: false });
+  // WebGL 2 where there is one, so the landscape pictures get mipmaps (WebGL 1 makes them only for
+  // power-of-two sizes); the upright pictures are sampled exactly as before. The shader is GLSL ES 1.00.
+  const opts = { antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: false };
+  const gl = canvas.getContext("webgl2", opts) || canvas.getContext("webgl", opts);
   if (!gl) return null;
   const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
   let prog;
@@ -3220,33 +3260,39 @@ const R = (() => {
   const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = {}; ["tA", "tB", "camA", "camB", "spA", "spB", "fxA", "fxB", "mixP", "mode", "time", "aspect", "imgAspect", "motes"].forEach((n) => U[n] = gl.getUniformLocation(prog, n));
   gl.uniform1i(U.tA, 0); gl.uniform1i(U.tB, 1);
-  return { gl, U };
+  return { gl, U, mips: typeof WebGL2RenderingContext !== "undefined" && gl instanceof WebGL2RenderingContext, maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE) };
 })();
+if (R && R.maxTex < 3840 && LAND_SIZE === "2160") { LAND_SIZE = "1080"; Object.assign(VIEWS.land, { size: "1920x1080", keep: 9 }); }
 const ctx2d = R ? null : canvas.getContext("2d");
 
 /* textures: decoded pictures kept on the GPU, the nearest few only */
-const pics = new Map();   // name -> { img, tex, ready }
-function want(name) {
-  if (pics.has(name)) return pics.get(name);
+const pics = new Map();   // view:name -> { img, tex, ready }
+function want(name, view = VIEW) {
+  const key = `${view}:${name}`;
+  if (pics.has(key)) return pics.get(key);
+  const mips = VIEWS[view].mips && R && R.mips;
   const rec = { img: new Image(), tex: null, ready: false, used: performance.now() };
   rec.img.decoding = "async";
   rec.img.onload = () => {
     rec.ready = true;
     if (R) { const gl = R.gl; rec.tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, rec.tex);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, mips ? gl.LINEAR_MIPMAP_LINEAR : gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, rec.img); }
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, rec.img);
+      if (mips) gl.generateMipmap(gl.TEXTURE_2D); }
   };
-  rec.img.src = SRC.img(name);
-  pics.set(name, rec);
+  rec.img.src = SRC.img(name, view);
+  pics.set(key, rec);
   return rec;
 }
-function prefetch(k) {
-  const names = new Set();
-  for (let i = Math.max(0, k - 1); i < Math.min(SHOTS.length, k + 6); i++) names.add(SHOTS[i].img);
-  names.forEach((n) => { const r = want(n); r.used = performance.now(); });
-  if (pics.size > 9) {   // let go of pictures far behind
-    [...pics.entries()].filter(([n]) => !names.has(n)).sort((a, b) => a[1].used - b[1].used).slice(0, pics.size - 9)
+function prefetch(k, view = VIEW) {
+  const near = (v) => { const out = []; for (let i = Math.max(0, k - 1); i < Math.min(SHOTS.length, k + 6); i++) out.push(`${v}:${SHOTS[i].img}`); return out; };
+  near(view).forEach((n) => { const r = want(n.slice(n.indexOf(":") + 1), view); r.used = performance.now(); });
+  // while the other film is being fetched (the screen just turned), the film on screen keeps its pictures
+  const names = new Set(view === VIEW ? near(view) : [...near(view), ...near(VIEW)]);
+  const keep = view === VIEW ? VIEWS[view].keep : VIEWS.up.keep + VIEWS.land.keep;
+  if (pics.size > keep) {   // let go of pictures far behind (and the other film's, once this one is on screen)
+    [...pics.entries()].filter(([n]) => !names.has(n)).sort((a, b) => a[1].used - b[1].used).slice(0, pics.size - keep)
       .forEach(([n, r]) => { if (R && r.tex) R.gl.deleteTexture(r.tex); pics.delete(n); });
   }
 }
@@ -3409,7 +3455,7 @@ const spans = [];
 if (SITE.homeUrl) { const a = $("lHome"); a.href = SITE.homeUrl; a.hidden = false; }
 
 const fmt = (s) => { s = Math.max(0, s); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`; };
-let shownCap = -1, shownBeat = -1;
+let shownCap = -1, shownBeat = -1, capWords = [];
 function ui() {
   const bi = beatAt(Math.max(0, T));
   BEATS.forEach((b, i) => { const f = i < bi ? 1 : i > bi ? 0 : clamp((T - b.start) / b.dur, 0, 1); ticks[i].style.transform = `scaleX(${f})`; });
@@ -3419,16 +3465,34 @@ function ui() {
     $("ticks").setAttribute("aria-valuenow", String(bi + 1)); $("ticks").setAttribute("aria-valuetext", `Beat ${bi + 1} of 30, ${MOVEMENTS[BEATS[bi].m - 1]}`); }
   // captions follow the phrases now: each shot's words, from when they are spoken
   let ci = -1; for (let k = 0; k < SHOTS.length; k++) if (SHOTS[k].say - 0.15 <= T) ci = k; else break;
-  if (ci !== shownCap && ci >= 0) { shownCap = ci; const capP = $("capText"); capP.style.opacity = 0; setTimeout(() => { capP.textContent = SHOTS[ci].text; capP.style.opacity = .9; }, 160); }
+  // each word lights as she says it: the line arrives dim and fills in with her voice
+  if (ci !== shownCap && ci >= 0) { shownCap = ci; const capP = $("capText"); capP.style.opacity = 0; setTimeout(() => { if (shownCap !== ci) return; capP.textContent = ""; capWords = WORDS[ci].map(([w]) => { const e = document.createElement("span"); e.className = "w"; e.textContent = w; capP.appendChild(e); return e; }); capP.style.opacity = .9; }, 160); }
+  if (ci >= 0 && capWords.length === WORDS[ci].length) WORDS[ci].forEach(([, at], j) => { const on = T >= at - 0.04; if (capWords[j].classList.contains("said") !== on) capWords[j].classList.toggle("said", on); });
 }
 
 let prevFrame = performance.now();
+/* turning the screen: the other film is fetched for the shots around now, and takes over (pictures,
+   cameras and layout together) as soon as the shot on screen and the one arriving are ready, at the same
+   moment of her voice; until then the film on screen carries on */
+function settleView(k) {
+  const next = viewFor();
+  if (next === VIEW) return;
+  prefetch(k, next);
+  const s = SHOTS[k], inTransition = k > 0 && s.in[1] > s.in[0] && T < s.in[1];
+  if (!want(s.img, next).ready || (inTransition && !want(SHOTS[k - 1].img, next).ready)) return;
+  VIEW = next; IMG_ASPECT = VIEWS[VIEW].aspect;
+  document.documentElement.classList.toggle("land", VIEW === "land");
+  resize();
+  document.dispatchEvent(new Event("kaliview"));
+  if (playing >= 0) mediaMeta(playing);
+}
 function frame(now) {
   adapt(now - prevFrame); prevFrame = now;
   resize();
   tick(now);
   const k = shotAt(T);
-  prefetch(k);
+  settleView(k);
+  if (viewFor() === VIEW) prefetch(k);   // else settleView fetches for both films
   draw(T, now);
   if (started) ui();
   requestAnimationFrame(frame);
@@ -3452,6 +3516,37 @@ function setSpeed(r) {
 $("bSpeed").addEventListener("click", () => { setSpeed(SPEEDS[(SPEEDS.indexOf(rate) + 1) % SPEEDS.length]); showChrome(); });
 setSpeed(rate);
 
+/* full screen, in the landscape film: the page itself where the browser allows it (laptops, Android,
+   iPad); iPhone Safari lets only a video go full screen, so there the painted canvas is streamed into a
+   video that goes full screen while her voice plays from the page (without captions or the page's
+   controls) */
+const room = $("room");
+const pageFull = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+const videoFull = !pageFull && typeof document.createElement("video").webkitEnterFullscreen === "function" && typeof canvas.captureStream === "function";
+let fullVideo = null;
+$("bFull").classList.toggle("can", pageFull || videoFull);
+function toggleFull() {
+  if (pageFull) {
+    if (document.fullscreenElement || document.webkitFullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else { const p = (room.requestFullscreen || room.webkitRequestFullscreen).call(room); if (p && p.catch) p.catch(() => {}); }
+  } else if (videoFull) {
+    if (!fullVideo) {
+      fullVideo = document.createElement("video");
+      fullVideo.muted = true; fullVideo.playsInline = true; fullVideo.setAttribute("playsinline", "");
+      fullVideo.srcObject = canvas.captureStream(30);
+      fullVideo.style.cssText = "position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";
+      room.appendChild(fullVideo);
+      fullVideo.addEventListener("webkitendfullscreen", () => fullVideo.pause());
+    }
+    const go = () => { try { fullVideo.webkitEnterFullscreen(); } catch (e) {} };
+    const p = fullVideo.play(); if (p && p.then) p.then(go, go); else go();
+  }
+  showChrome();
+}
+$("bFull").addEventListener("click", toggleFull);
+$("tapper").addEventListener("dblclick", () => { if (VIEW === "land") toggleFull(); });
+document.addEventListener("fullscreenchange", resize); document.addEventListener("webkitfullscreenchange", resize);
+
 let chromeT = null;
 function showChrome(stay) { stage.classList.remove("chrome-off"); clearTimeout(chromeT); if (!stay && started && !paused) chromeT = setTimeout(() => { if (!stage.contains(document.activeElement) || document.activeElement === document.body) stage.classList.add("chrome-off"); }, 3200); }
 let lastPointer = "mouse";
@@ -3474,6 +3569,7 @@ document.addEventListener("keydown", (e) => {
   else if (e.key === "ArrowRight") $("bNext").click();
   else if (e.key === "ArrowLeft") $("bBack").click();
   else if (e.key === "c") $("bCap").click();
+  else if (e.key === "f" && VIEW === "land") toggleFull();
   else if (e.key === ">" || e.key === "]") setSpeed(SPEEDS[Math.min(SPEEDS.length - 1, SPEEDS.indexOf(rate) + 1)]);
   else if (e.key === "<" || e.key === "[") setSpeed(SPEEDS[Math.max(0, SPEEDS.indexOf(rate) - 1)]);
   else return;
@@ -3494,7 +3590,7 @@ $("read").addEventListener("keydown", (e) => { if (e.key !== "Tab") return; cons
 function mediaMeta(i) {
   if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
   const s = SHOTS.find((x) => x.beat === i + 1);
-  navigator.mediaSession.metadata = new MediaMetadata({ title: `KALI \u00b7 ${MOVEMENTS[BEATS[i].m - 1]}`, artist: "Krishna Somandepalli", album: "Between the Lines", artwork: [{ src: SRC.img(s.img), sizes: "941x1672", type: "image/jpeg" }] });
+  navigator.mediaSession.metadata = new MediaMetadata({ title: `KALI \u00b7 ${MOVEMENTS[BEATS[i].m - 1]}`, artist: "Krishna Somandepalli", album: "Between the Lines", artwork: [{ src: SRC.img(s.img), sizes: VIEWS[VIEW].size, type: "image/jpeg" }] });
 }
 if ("mediaSession" in navigator) {
   const h = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch (e) {} };
@@ -3518,8 +3614,12 @@ $("bReadEnd").addEventListener("click", () => { wasPaused = true; openRead(); })
 
 /* ---------- the lamp on the opening and closing cards: 00 in the bottom-left corner, motes rising from its flame ---------- */
 (function lampScenes() {
-  const FLAME = [0.476, 0.656];          // where the flame sits in 00 (brightest point, measured)
-  const lamp = new Image(); lamp.decoding = "async"; lamp.src = SRC.img("00");
+  // where the flame sits in each film's 00: upright (brightest point, measured), landscape (the centroid of
+  // its warm light, red > 200, measured)
+  const lamps = {};
+  const lampOf = (view) => { if (!lamps[view]) { const i = new Image(); i.decoding = "async"; i.onload = () => scenes.forEach((s) => { s.w = 0; }); i.src = SRC.img("00", view); lamps[view] = i; } return lamps[view]; };
+  let lamp = lampOf(VIEW), FLAME = VIEWS[VIEW].flame;
+  document.addEventListener("kaliview", () => { lamp = lampOf(VIEW); FLAME = VIEWS[VIEW].flame; scenes.forEach((s) => { s.w = 0; }); });
   const scenes = [...document.querySelectorAll(".lampscene")].map((c) => ({ c, ctx: c.getContext("2d"), card: c.parentElement, off: null, w: 0, h: 0, motes: [], last: 0 }));
   function layout(s) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2), r = s.c.getBoundingClientRect();
@@ -3570,7 +3670,6 @@ $("bReadEnd").addEventListener("click", () => { wasPaused = true; openRead(); })
     }
     ctx.globalCompositeOperation = "source-over";
   }
-  lamp.onload = () => scenes.forEach((s) => { s.w = 0; });
   (function loop(now) {
     for (const s of scenes) if (!s.card.classList.contains("gone")) draw(s, now);
     requestAnimationFrame(loop);
