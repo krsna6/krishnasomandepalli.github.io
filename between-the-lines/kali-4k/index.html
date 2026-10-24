@@ -1,0 +1,3613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>KALI 4K · Between the Lines</title>
+<meta name="description" content="KALI, a short story by Krishna Somandepalli, told as a night film in landscape.">
+<meta name="author" content="Krishna Somandepalli">
+<meta name="theme-color" content="#0b0907">
+<link rel="preload" href="assets/fonts/literata-latin-normal.woff" as="font" type="font/woff" crossorigin>
+</head>
+<body>
+<style>
+/* KALI, the night film, in landscape (KALI 4K). One 16:9 stage, as large as the screen allows and never
+   cropped (letterboxed on an upright phone); overlays are quiet and get out of the way.
+   Single night look by design (it is a film at night), so the page sets every colour itself. */
+@font-face{font-family:"Literata";font-style:normal;font-weight:200 900;font-display:swap;src:url("assets/fonts/literata-latin-normal.woff") format("woff")}
+@font-face{font-family:"Literata";font-style:italic;font-weight:200 900;font-display:swap;src:url("assets/fonts/literata-latin-italic.woff") format("woff")}
+:root{
+  --night:#0b0907;
+  --ink:#ece3d3;
+  --dim:#a99e8b;
+  --lamp:#e2a446;
+  --glass:rgba(11,9,7,.58);
+  --line:rgba(236,227,211,.24);
+  --f-text:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%;background:var(--night);color:var(--ink)}
+body{margin:0;overflow:hidden;font-family:var(--f-text);-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.room{position:fixed;inset:0;display:grid;place-items:center;background:var(--night)}
+.ambient{position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(38px) brightness(.3) saturate(.9);opacity:.9;transition:background-image 1.6s ease}
+.stage{position:relative;width:min(100vw,calc(100dvh * 16 / 9));aspect-ratio:16/9;max-width:100vw;container-type:size;overflow:hidden;overflow:clip;background:#000;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+
+/* the picture: one canvas, drawn on the GPU */
+#film{position:absolute;inset:0;width:100%;height:100%;display:block}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 16%,rgba(0,0,0,0) 62%,rgba(0,0,0,.72) 100%);transition:opacity .5s ease}
+
+/* top: progress, grouped by the five movements */
+.top{position:absolute;left:0;right:0;top:0;padding:calc(10px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));display:grid;gap:9px;pointer-events:none}
+.ticks{display:flex;gap:7px}
+.mvt{display:flex;gap:2px;flex:var(--w) 1 0}
+.tick{flex:var(--d) 1 0;height:2px;background:rgba(236,227,211,.22);border-radius:1px;overflow:hidden}
+.tick i{display:block;height:100%;width:100%;background:var(--lamp);transform-origin:left;transform:scaleX(0)}
+.label{font:500 12.5px/1 var(--f-text);font-variant:small-caps;letter-spacing:.12em;color:var(--dim);transition:opacity .9s ease;text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.label b{color:var(--lamp);font-weight:600;margin-right:.6em}
+
+/* captions */
+.cap{position:absolute;left:0;right:0;bottom:calc(92px + env(safe-area-inset-bottom,0px));padding:0 max(22px,env(safe-area-inset-right,0px)) 0 max(22px,env(safe-area-inset-left,0px));pointer-events:none;text-align:center;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.chrome-off .cap{transform:translateY(58px)}
+.cap p{margin:0 auto;max-width:46ch;font:italic 300 clamp(15.5px,1.45cqw,24px)/1.5 var(--f-text);color:var(--ink);text-wrap:balance;text-shadow:0 1px 10px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.9);transition:opacity .6s ease}
+
+/* controls: a single bar, hidden while the film plays undisturbed */
+.bar{position:absolute;left:0;right:0;bottom:0;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));display:grid;gap:8px;z-index:5;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+.chrome-off .bar{opacity:0;transform:translateY(12px);pointer-events:none}
+.stage:not(.started) .bar,.stage:not(.started) .top{visibility:hidden}
+.time{font:12px/1 var(--f-ui);color:var(--dim);font-variant-numeric:tabular-nums;text-shadow:0 1px 6px #000;display:flex;justify-content:space-between}
+.buttons{display:flex;align-items:center;gap:6px}
+.buttons .gap{flex:1}
+.bar button{display:inline-grid;place-items:center;min-width:44px;height:44px;padding:0 12px;font:500 13px/1 var(--f-ui);color:var(--ink);background:var(--glass);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;font-variant-numeric:tabular-nums}
+.bar button svg{width:18px;height:18px;fill:currentColor}
+.bar button.play{min-width:52px}
+.bar button[aria-pressed="true"]{border-color:var(--lamp);color:var(--lamp)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.tapper{position:absolute;inset:0;z-index:2}
+
+/* title card and credits */
+.card{position:absolute;inset:0;z-index:8;display:grid;place-items:center;text-align:center;background:var(--night);padding:0 max(24px,env(safe-area-inset-right,0px)) 0 max(24px,env(safe-area-inset-left,0px));transition:opacity 1.6s ease}
+.card.gone{opacity:0;pointer-events:none;visibility:hidden;transition:opacity 1.6s ease,visibility 0s 1.6s}
+.card h1{font:600 clamp(36px,11cqh,84px)/1 var(--f-text);font-variant:small-caps;letter-spacing:.3em;margin:0 0 0 .3em;color:var(--ink)}
+.card .content{position:relative;z-index:1}
+.lampscene{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+button.info{position:absolute;z-index:2;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));width:32px;height:32px;min-width:32px;padding:0;border-radius:50%;border:1px solid rgba(226,164,70,.45);background:transparent;color:var(--lamp);font:italic 600 16px/1 var(--f-text);cursor:pointer;opacity:.75}
+button.info:hover,button.info:focus-visible{opacity:1}
+.bar button.info.bar-info{position:static;width:44px;height:44px;min-width:44px;border-radius:22px;background:var(--glass);border-color:var(--line);opacity:1}
+.about{z-index:10}
+.about .read-body p{max-width:34ch}
+.about .how{font-size:14.5px;color:var(--dim)}
+.card .by{font:italic 300 16px/1.6 var(--f-text);color:var(--dim);margin:14px 0 0}
+.card .note{font:13px/1.65 var(--f-ui);color:var(--dim);margin:30px 0 0}
+.card .note.turn{display:none;margin-top:10px}.card .note.turn a{color:var(--ink)}
+@media (orientation:portrait) and (pointer:coarse){.card .note.turn{display:block}}
+.card .begin{margin-top:22px;font:600 15px/1 var(--f-text);font-variant:small-caps;letter-spacing:.24em;color:var(--night);background:var(--lamp);border:0;border-radius:999px;padding:15px 30px 15px 34px;cursor:pointer;min-height:48px}
+.card .alt{display:inline-block;margin-top:16px;font:13px var(--f-ui);color:var(--dim);background:none;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px}
+.lamp{width:9px;height:9px;border-radius:50%;background:var(--lamp);box-shadow:0 0 22px 9px rgba(226,164,70,.45);margin:0 auto 28px;animation:flicker 3.2s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:.82}52%{opacity:.95}70%{opacity:.88}}
+.credits .dedication{font:italic 300 17px/1.5 var(--f-text);color:var(--ink);margin:16px 0 0}
+.credits .roll{display:grid;gap:7px;margin:26px auto 0;max-width:30ch;font:14.5px/1.5 var(--f-text);color:#d9cfbe;text-wrap:balance}
+.credits .roll p{margin:0}
+.credits .roll a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(226,164,70,.45);text-underline-offset:3px}
+.credits .roll a:hover{text-decoration-color:var(--lamp)}
+.credits .pledge{font:italic 300 14px/1.6 var(--f-text);color:var(--dim);margin:24px auto 0;max-width:30ch}
+.credits .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.credits .row button,.credits .row a{font:600 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.18em;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:14px 20px;cursor:pointer;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+
+/* the text, as written */
+.read{position:absolute;inset:0;z-index:9;background:var(--night);transform:translateY(100%);visibility:hidden;transition:transform .55s cubic-bezier(.2,.7,.2,1),visibility 0s .55s;display:flex;flex-direction:column}
+.read.open{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.read-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid rgba(236,227,211,.12)}
+.read-head h2{font:600 16px/1 var(--f-text);font-variant:small-caps;letter-spacing:.2em;margin:0;color:var(--lamp)}
+.read-head button{min-height:44px;padding:0 16px;font:500 13px/1 var(--f-ui);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:22px;cursor:pointer}
+.read-body{position:relative;overflow-y:auto;padding:18px max(20px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));-webkit-overflow-scrolling:touch}
+.read-body h3{font:600 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.14em;color:var(--dim);margin:28px 0 10px}
+.read-body h3:first-of-type{margin-top:6px}
+.read-body p{font:16.5px/1.72 var(--f-text);margin:0 0 14px;max-width:38ch;color:#d9cfbe}
+.read-body .beat{cursor:pointer;border-radius:3px;transition:background .4s,color .4s}
+.read-body .beat:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.read-body .beat.now{color:var(--ink);background:rgba(226,164,70,.16);box-shadow:0 0 0 2px rgba(226,164,70,.16)}
+.read-hint{font:12.5px/1.5 var(--f-ui);color:var(--dim);margin:0 0 6px}
+
+@media (prefers-reduced-motion:reduce){.lamp{animation:none}.bar,.cap,.read{transition:none}}
+</style>
+
+<main class="room" id="room">
+  <section class="stage" id="stage" aria-label="KALI, told as a film">
+    <canvas id="film" aria-hidden="true"></canvas>
+    <div class="shade" aria-hidden="true"></div>
+    <div class="tapper" id="tapper" aria-hidden="true"></div>
+    <div class="top">
+      <div class="ticks" id="ticks" role="progressbar" aria-label="Progress through the story" aria-valuemin="1" aria-valuemax="30" aria-valuenow="1"></div>
+    </div>
+    <div class="cap" id="cap" hidden><p id="capText" aria-live="polite"></p></div>
+    <div class="bar" id="bar">
+      <div class="time" aria-hidden="true"><span id="where"></span><span id="clock"></span></div>
+      <div class="buttons" role="toolbar" aria-label="Film controls">
+        <button id="bBack" type="button" aria-label="Previous shot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9.5 12z"/></svg></button>
+        <button id="bPlay" class="play" type="button" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true" id="iPlay"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <button id="bNext" type="button" aria-label="Next shot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l10.5-7z"/></svg></button>
+        <span class="gap"></span>
+        <button id="bSpeed" type="button" aria-label="Speed, 1 times. Change speed">1&times;</button>
+        <button id="bCap" type="button" aria-pressed="false" aria-label="Captions">CC</button>
+        <button id="bRead" type="button" aria-label="Read the text" aria-haspopup="dialog">Text</button>
+        <button class="info bar-info" type="button" aria-label="About this story" aria-haspopup="dialog">i</button>
+      </div>
+    </div>
+    <section class="read" id="read" role="dialog" aria-modal="true" aria-labelledby="readTitle">
+      <div class="read-head"><h2 id="readTitle">KALI</h2><button id="bClose" type="button">Back to the film</button></div>
+      <div class="read-body" id="readBody"><p class="read-hint">The text as written. Choose a passage to hear it from there.</p></div>
+    </section>
+    <section class="read about" id="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+      <div class="read-head"><h2 id="aboutTitle">About KALI</h2><button id="bAboutClose" type="button">Close</button></div>
+      <div class="read-body">
+        <p>This original short story is my retelling of a story my grandmother told me when I was a child. It is a love letter to the woman who shaped my character.</p>
+        <p class="how"><em>How it was made:</em> told by a synthetic voice (ElevenLabs), with pictures made for this telling and animated in the browser. Every spoken word was checked against the text, which is unchanged.</p>
+      </div>
+    </section>
+    <div class="card" id="start">
+      <canvas class="lampscene" aria-hidden="true"></canvas>
+      <button class="info" type="button" aria-label="About this story" aria-haspopup="dialog">i</button>
+      <div class="content">
+        <h1>KALI</h1>
+        <p class="by">an original short story by Krishna Somandepalli</p>
+        <p class="note">About seven and a half minutes.<br>Best at night, with headphones.</p>
+        <p class="note turn">Made for a wide screen: turn your phone sideways,<br>or watch <a href="../kali/">the upright film</a>.</p>
+        <button class="begin" id="bBegin" type="button">BEGIN</button><br>
+        <button class="alt" id="bReadFirst" type="button">or read it first</button>
+      </div>
+    </div>
+    <div class="card credits gone" id="end">
+      <canvas class="lampscene" aria-hidden="true"></canvas>
+      <button class="info" type="button" aria-label="About this story" aria-haspopup="dialog">i</button>
+      <div class="content">
+        <h1>KALI</h1>
+        <p class="dedication">For my grandmother</p>
+        <div class="roll">
+          <p>Written by <a href="https://krishnasomandepalli.com">Krishna Somandepalli</a></p>
+          <p>Voiced by ElevenLabs</p>
+          <p>Images created with OpenAI&rsquo;s ChatGPT, art-directed by Krishna Somandepalli</p>
+        </div>
+        <p class="pledge">The words are the author&rsquo;s, unchanged.</p>
+        <div class="row"><button id="bAgain" type="button">Watch again</button><button id="bReadEnd" type="button">Read it</button><a id="lHome" hidden>Between the Lines</a></div>
+      </div>
+    </div>
+  </section>
+  <noscript><p style="position:fixed;inset:auto 16px 16px;color:#ece3d3;font:15px/1.5 Georgia,serif">This film needs JavaScript. The story can be read on its own page.</p></noscript>
+</main>
+
+<script>
+/* ---------- KALI v2: one clock, one GPU picture ---------- */
+const SITE = {
+  homeUrl: null,
+};
+const TL = {
+ "totalSec": 449.94,
+ "beats": [
+  {
+   "n": 1,
+   "m": 1,
+   "p": 1,
+   "text": "My eyes grew wide as though seeking the comfort of my brow from as much amazement as much fear at my grandmother's voice.",
+   "dur": 8.56,
+   "hold": 1.1,
+   "start": 0.0
+  },
+  {
+   "n": 2,
+   "m": 1,
+   "p": 2,
+   "text": "\"Kali\", she said. \"Her skin darker than the deep night, eyes as red as the setting sun, a gushing river made hair, the very fury of nature bound human\", she sighed, \"Kali faced one final challenge\".",
+   "dur": 18.08,
+   "hold": 1.5,
+   "start": 9.66
+  },
+  {
+   "n": 3,
+   "m": 1,
+   "p": 3,
+   "text": "Quite a storyteller she was and oh, how the old woman loved metaphors.",
+   "dur": 6.24,
+   "hold": 0.6,
+   "start": 29.24
+  },
+  {
+   "n": 4,
+   "m": 1,
+   "p": 4,
+   "text": "The story was a bribe for getting me to eat my dinner and like all her stories, this one too was supernatural, mythical and fantasy filled.",
+   "dur": 10.08,
+   "hold": 1.0,
+   "start": 36.08
+  },
+  {
+   "n": 5,
+   "m": 1,
+   "p": 4,
+   "text": "The story must have begun along the lines of a demon-king ruling over the world and a prophecy-born Kali, the world's savior come to rescue them after much suffering.",
+   "dur": 11.6,
+   "hold": 0.8,
+   "start": 47.16
+  },
+  {
+   "n": 6,
+   "m": 2,
+   "p": 5,
+   "text": "\"Kali's final challenge was the King himself\", she continued. \"The King didn't look fearsome like what you would expect of a demon, in fact he looked very much human.",
+   "dur": 10.88,
+   "hold": 0.6,
+   "start": 59.56
+  },
+  {
+   "n": 7,
+   "m": 2,
+   "p": 5,
+   "text": "But Kali who could see beneath the mantle knew better; for this self-proclaimed king was a skilled sorcerer, the darkest and cruelest at that, a sorcerer who could live a thousand lives and not age a day, a tyrant who rejoiced at the suffering of the weak, how terrible..., that is very fearsome, no?\", she asked.",
+   "dur": 24.4,
+   "hold": 0.5,
+   "start": 71.04
+  },
+  {
+   "n": 8,
+   "m": 2,
+   "p": 5,
+   "text": "I blinked, nodded and looked on. It was her cue to keep going.",
+   "dur": 5.2,
+   "hold": 1.7,
+   "start": 95.94
+  },
+  {
+   "n": 9,
+   "m": 2,
+   "p": 6,
+   "text": "\"Kali was the supreme incarnate and no less extraordinary\", her voice now seemed to carry a certainty that mere grammar couldn't convey, \"Kali had a unique power, she could create anything just by thinking it, she herself was indeed a manifestation of the supreme thought\".",
+   "dur": 20.56,
+   "hold": 0.9,
+   "start": 102.84
+  },
+  {
+   "n": 10,
+   "m": 2,
+   "p": 6,
+   "text": "She paused, \"the silence between Kali and the king seemed to stretch forever, or perhaps the voices of their hostility were so loud that mere humans like us couldn't perceive.",
+   "dur": 12.08,
+   "hold": 2.1,
+   "start": 124.3
+  },
+  {
+   "n": 11,
+   "m": 2,
+   "p": 6,
+   "text": "As a wicked smile etched across his thin, pale lips, Kali knew it was past time to do what she must have done a long time ago - to end the life of this tyrant\".",
+   "dur": 12.64,
+   "hold": 1.9,
+   "start": 138.48
+  },
+  {
+   "n": 12,
+   "m": 3,
+   "p": 7,
+   "text": "My grandmother's ancient eyes glistened at something very distant, \"Kali knew the power of his sorcery, the magic that made him immune to earthly weapons was like nothing she had known to be possible, death was but a feeble servant of the king.",
+   "dur": 16.88,
+   "hold": 0.6,
+   "start": 153.02
+  },
+  {
+   "n": 13,
+   "m": 3,
+   "p": 7,
+   "text": "She closed her eyes in a calculating thought, muttered something strange under her breath, her eyes flew open and her whispers now seemed to be all around like they were always there, the wind around her wore a new face, wielding an unnatural power.",
+   "dur": 17.6,
+   "hold": 0.5,
+   "start": 170.5
+  },
+  {
+   "n": 14,
+   "m": 3,
+   "p": 7,
+   "text": "As though in response, the king's voice rose with every gust of the wind, speaking an ancient tongue long forgotten, his voice turned hoarse and an invisible dome seemed to form around him holding Kali at bay, the world around them seemed to wither as he drew his power from everything around.",
+   "dur": 20.88,
+   "hold": 0.45,
+   "start": 188.6
+  },
+  {
+   "n": 15,
+   "m": 3,
+   "p": 7,
+   "text": "Kali realized keeping at this might just as well lead to the destruction of life around her, she stopped for a brief moment, a quick thought crossed her mind, and a fierce weapon formed in thin air before her and fell into her waiting hands\".",
+   "dur": 15.84,
+   "hold": 0.7,
+   "start": 209.93
+  },
+  {
+   "n": 16,
+   "m": 3,
+   "p": 7,
+   "text": "My grandmother drew a deep breath, smiled and said, \"Oh, the weapon she conjured was magnificent, forged from the sinew of a very powerful being that existed before time itself - it could sever anything, physical or otherwise.",
+   "dur": 18.56,
+   "hold": 0.25,
+   "start": 226.47
+  },
+  {
+   "n": 17,
+   "m": 3,
+   "p": 7,
+   "text": "Before the king could even draw on his next breath, Kali swung her weapon in a wide arc at the foe cutting through his flesh, bone and the sorcery that bound him human, severing him into a million pieces as the field around her turned dark with his blood\".",
+   "dur": 17.84,
+   "hold": 2.6,
+   "start": 245.28
+  },
+  {
+   "n": 18,
+   "m": 4,
+   "p": 8,
+   "text": "I took a deep breath, but something told me it wasn't over yet and as if echoing my thoughts, my grandmother shook her head.",
+   "dur": 8.56,
+   "hold": 1.1,
+   "start": 265.72
+  },
+  {
+   "n": 19,
+   "m": 4,
+   "p": 9,
+   "text": "\"Oh, that wasn't the end of him, the king in his infinite guile may have anticipated this, for the anger, surprise and perhaps even despair in Kali's eyes spoke volumes of the horror that unfolded before her.",
+   "dur": 16.4,
+   "hold": 0.5,
+   "start": 275.38
+  },
+  {
+   "n": 20,
+   "m": 4,
+   "p": 9,
+   "text": "Every drop of the sorcerer's blood that was spilled seemed to have a will of its own drawing mass from nowhere and everywhere, each drop of the blood shaped itself to look like the king, it was like looking at the sorcerer in a million mirrors, only they weren't mere reflections.",
+   "dur": 18.96,
+   "hold": 0.45,
+   "start": 292.28
+  },
+  {
+   "n": 21,
+   "m": 4,
+   "p": 9,
+   "text": "The king's magic ran wild a million times over and there was only so much she could do against the overwhelming army of madmen closing in on her; she conjured up a shield and hoped it would hold. Kali was perplexed and knew there was very little time before her sanctuary would give way\".",
+   "dur": 18.96,
+   "hold": 1.3,
+   "start": 311.69
+  },
+  {
+   "n": 22,
+   "m": 4,
+   "p": 9,
+   "text": "My grandmother paused, ruffled my hair as though urging me not to despair.",
+   "dur": 5.28,
+   "hold": 0.8,
+   "start": 331.95
+  },
+  {
+   "n": 23,
+   "m": 4,
+   "p": 9,
+   "text": "She cracked her knuckles and said, \"Clarity dawned upon Kali as she realized that the king had perhaps cursed his own blood to cheat his death and she couldn't afford another cut at him, her thoughts roared like a raging ocean and the solution hit her like a tiny rock caught amidst the waves.",
+   "dur": 20.48,
+   "hold": 0.45,
+   "start": 338.03
+  },
+  {
+   "n": 24,
+   "m": 4,
+   "p": 9,
+   "text": "She had no time to lose. Kali began to grow towards the heavens stepping out of her shield, the enormity of her form could only be measured by the  fear reflected in a million eyes of the sorcerer. One of Kali's hand alone could block out the skies of a hundred worlds\".",
+   "dur": 19.6,
+   "hold": 0.7,
+   "start": 358.96
+  },
+  {
+   "n": 25,
+   "m": 4,
+   "p": 9,
+   "text": "The wonder in my eyes painted my grandmother's words with a smile, \"Like a giant net trapping a thousand trout, Kali grabbed at the whole encroaching army and swallowed them down her immense gut all in a single gulp.",
+   "dur": 15.2,
+   "hold": 0.5,
+   "start": 379.26
+  },
+  {
+   "n": 26,
+   "m": 4,
+   "p": 9,
+   "text": "You see, Kali was but Thought-made-human and she knew the king's sorcery would be lost in the abyss of her nature.",
+   "dur": 7.76,
+   "hold": 1.0,
+   "start": 394.96
+  },
+  {
+   "n": 27,
+   "m": 4,
+   "p": 9,
+   "text": "The duel was over just like that, the king's fall brought a great joy to the world. The magic he had woven that enslaved the world vanished with him.",
+   "dur": 10.56,
+   "hold": 1.7,
+   "start": 403.72
+  },
+  {
+   "n": 28,
+   "m": 4,
+   "p": 9,
+   "text": "The smell of freedom told Kali that her purpose there was fulfilled. She resumed her normal form, spared a fleeting glance around and stepped into the mists of air to become one with it like she was never there\".",
+   "dur": 14.24,
+   "hold": 2.4,
+   "start": 415.98
+  },
+  {
+   "n": 29,
+   "m": 5,
+   "p": 10,
+   "text": "My grandmother's wide grin announced the end of the story.",
+   "dur": 3.76,
+   "hold": 0.6,
+   "start": 432.62
+  },
+  {
+   "n": 30,
+   "m": 5,
+   "p": 11,
+   "text": "As I think, it was as much her success as much as Kali's for my dinner plate was clean; vegetables, greens and all gone.",
+   "dur": 8.96,
+   "hold": 4.0,
+   "start": 436.98
+  }
+ ],
+ "shots": [
+  {
+   "id": "01.1",
+   "beat": 1,
+   "img": "01-00",
+   "text": "My eyes grew wide as though seeking the comfort of my brow",
+   "say": 0.1,
+   "said": 3.82,
+   "direction": "Begin close on the child's listening face; keep the dinner context just outside the crop.",
+   "a": {
+    "z": 2.05,
+    "x": 62,
+    "y": 56
+   },
+   "b": {
+    "z": 2.25,
+    "x": 62,
+    "y": 56
+   },
+   "sa": {
+    "x": 62,
+    "y": 56,
+    "r": 0.1586,
+    "a": 0.9
+   },
+   "sb": {
+    "x": 62,
+    "y": 56,
+    "r": 0.2239,
+    "a": 0.88
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    -1.58,
+    0.22
+   ],
+   "until": 3.57
+  },
+  {
+   "id": "01.2",
+   "beat": 1,
+   "img": "01-00",
+   "text": "from as much amazement as much fear at my grandmother's voice.",
+   "say": 4.16,
+   "said": 8.16,
+   "direction": "Widen to grandmother and child. Let wonder and fear coexist rather than illustrating either literally.",
+   "a": {
+    "z": 2.25,
+    "x": 62,
+    "y": 56
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": {
+    "x": 62,
+    "y": 56,
+    "r": 0.2239,
+    "a": 0.88
+   },
+   "sb": {
+    "x": 50,
+    "y": 50,
+    "r": 1.7724,
+    "a": 0.0
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    3.57,
+    3.57
+   ],
+   "until": 9.12
+  },
+  {
+   "id": "02.1",
+   "beat": 2,
+   "img": "01-00",
+   "text": "\"Kali\", she said. \"",
+   "say": 9.72,
+   "said": 11.14,
+   "direction": "Stay with the storyteller as she names Kali.",
+   "a": {
+    "z": 1.05,
+    "x": 41,
+    "y": 44
+   },
+   "b": {
+    "z": 1.32,
+    "x": 36,
+    "y": 40
+   },
+   "sa": {
+    "x": 50,
+    "y": 50,
+    "r": 1.7724,
+    "a": 0.0
+   },
+   "sb": {
+    "x": 50,
+    "y": 50,
+    "r": 1.2,
+    "a": 0.0
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    9.12,
+    9.12
+   ],
+   "until": 10.94
+  },
+  {
+   "id": "02.2",
+   "beat": 2,
+   "img": "02-02",
+   "text": "Her skin darker than the deep night,",
+   "say": 11.76,
+   "said": 14.2,
+   "direction": "Let a near-black presence emerge from the room's darkness; a partial silhouette, not a beauty portrait.",
+   "a": {
+    "z": 1.12,
+    "x": 29,
+    "y": 45
+   },
+   "b": {
+    "z": 1.0,
+    "x": 28,
+    "y": 53
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.55,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    10.94,
+    11.88
+   ],
+   "until": 14.0
+  },
+  {
+   "id": "02.3",
+   "beat": 2,
+   "img": "02-00",
+   "text": "eyes as red as the setting sun,",
+   "say": 14.84,
+   "said": 17.28,
+   "direction": "Find the small red gaze within the dark shape.",
+   "a": {
+    "z": 1.55,
+    "x": 68,
+    "y": 28
+   },
+   "b": {
+    "z": 1.85,
+    "x": 67.5,
+    "y": 27
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    14.0,
+    14.96
+   ],
+   "until": 17.08
+  },
+  {
+   "id": "02.4",
+   "beat": 2,
+   "img": "02-04",
+   "text": "a gushing river made hair,",
+   "say": 17.86,
+   "said": 19.68,
+   "direction": "A close, flowing blue hair/current study; preserve the same drawn texture and silhouette language.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.12,
+    "x": 50,
+    "y": 44
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 1.0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    17.08,
+    17.98
+   ],
+   "until": 19.48
+  },
+  {
+   "id": "02.5",
+   "beat": 2,
+   "img": "02-00",
+   "text": "the very fury of nature bound human\", she sighed, \"",
+   "say": 20.16,
+   "said": 24.16,
+   "direction": "Reveal the full image: the imagined presence grows beyond the domestic frame.",
+   "a": {
+    "z": 1.28,
+    "x": 60,
+    "y": 38
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.75,
+   "lamp": 0.6,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    19.48,
+    20.28
+   ],
+   "until": 23.91
+  },
+  {
+   "id": "02.6",
+   "beat": 2,
+   "img": "02-00",
+   "text": "Kali faced one final challenge\".",
+   "say": 24.8,
+   "said": 27.5,
+   "direction": "Settle on the gaze; allow the final challenge to remain unseen.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.7,
+    "x": 67.5,
+    "y": 27.5
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    23.91,
+    23.91
+   ],
+   "until": 27.64
+  },
+  {
+   "id": "03.1",
+   "beat": 3,
+   "img": "03-00",
+   "text": "Quite a storyteller she was and oh, how the old woman loved metaphors.",
+   "say": 29.32,
+   "said": 34.82,
+   "direction": "Hold grandmother's knowing smile. One expressive portrait can carry this entire aside.",
+   "a": {
+    "z": 1.12,
+    "x": 41.6,
+    "y": 44
+   },
+   "b": {
+    "z": 1.18,
+    "x": 43.9,
+    "y": 40.0
+   },
+   "sa": {
+    "x": 42.5,
+    "y": 44,
+    "r": 0.3891,
+    "a": 0.45
+   },
+   "sb": {
+    "x": 44.99,
+    "y": 39.65,
+    "r": 0.4142,
+    "a": 0.4
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    27.64,
+    29.44
+   ],
+   "until": 35.36
+  },
+  {
+   "id": "04.1",
+   "beat": 4,
+   "img": "04-00",
+   "text": "The story was a bribe for getting me to eat my dinner and like all her stories,",
+   "say": 36.14,
+   "said": 41.02,
+   "direction": "Open on the dinner plate and the two figures; the story is still a domestic bargain.",
+   "a": {
+    "z": 1.6,
+    "x": 32.76,
+    "y": 68.05
+   },
+   "b": {
+    "z": 1.45,
+    "x": 32.76,
+    "y": 63.98
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    35.36,
+    36.26
+   ],
+   "until": 40.77
+  },
+  {
+   "id": "04.2",
+   "beat": 4,
+   "img": "04-00",
+   "text": "this one too was supernatural, mythical and fantasy filled.",
+   "say": 41.42,
+   "said": 45.56,
+   "direction": "Reveal the imagined blue presence above them; connect the room to the myth without cutting away too soon.",
+   "a": {
+    "z": 1.45,
+    "x": 32.76,
+    "y": 63.98
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.5,
+   "lamp": 0.8,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    40.77,
+    40.77
+   ],
+   "until": 45.48
+  },
+  {
+   "id": "05.1",
+   "beat": 5,
+   "img": "05-01",
+   "text": "The story must have begun along the lines of a demon-king ruling over the world",
+   "say": 47.16,
+   "said": 51.92,
+   "direction": "Establish the world under ordinary human tyranny: small constrained figures and oppressive architecture, keeping the king human.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.18,
+    "x": 60,
+    "y": 40
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    45.48,
+    47.28
+   ],
+   "until": 51.72
+  },
+  {
+   "id": "05.2",
+   "beat": 5,
+   "img": "05-00",
+   "text": "and a prophecy-born Kali, the world's savior come to rescue them after much suffering.",
+   "say": 52.36,
+   "said": 58.24,
+   "direction": "Reveal Kali's vast dark silhouette against that architecture; let scale carry the arrival.",
+   "a": {
+    "z": 1.35,
+    "x": 71.32,
+    "y": 43.89
+   },
+   "b": {
+    "z": 1.0,
+    "x": 63.98,
+    "y": 59.56
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    51.72,
+    52.48
+   ],
+   "until": 58.04
+  },
+  {
+   "id": "06.1",
+   "beat": 6,
+   "img": "01-00",
+   "text": "\"Kali's final challenge was the King himself\", she continued. \"",
+   "say": 59.6,
+   "said": 63.72,
+   "direction": "A brief return to the grandmother, cropped away from the plate to protect continuity.",
+   "a": {
+    "z": 1.5,
+    "x": 38,
+    "y": 40
+   },
+   "b": {
+    "z": 1.62,
+    "x": 38.5,
+    "y": 39
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    58.04,
+    59.72
+   ],
+   "until": 63.52
+  },
+  {
+   "id": "06.2",
+   "beat": 6,
+   "img": "06-00",
+   "text": "The King didn't look fearsome like what you would expect of a demon,",
+   "say": 64.26,
+   "said": 67.58,
+   "direction": "Reveal the small, deceptively ordinary human king in the immense chamber.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.08,
+    "x": 70,
+    "y": 49
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    63.52,
+    64.38
+   ],
+   "until": 67.33
+  },
+  {
+   "id": "06.3",
+   "beat": 6,
+   "img": "06-00",
+   "text": "in fact he looked very much human.",
+   "say": 68.16,
+   "said": 70.3,
+   "direction": "Move closer to his pale human face; avoid adding monstrous features.",
+   "a": {
+    "z": 1.08,
+    "x": 70,
+    "y": 49
+   },
+   "b": {
+    "z": 1.9,
+    "x": 71.4,
+    "y": 46.2
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    67.33,
+    67.33
+   ],
+   "until": 70.3
+  },
+  {
+   "id": "07.1",
+   "beat": 7,
+   "img": "07-00",
+   "text": "But Kali who could see beneath the mantle knew better; for this self-proclaimed king was a skilled sorcerer, the darkest and cruelest at that,",
+   "say": 71.08,
+   "said": 81.6,
+   "direction": "Hold the layered composition of Kali, king and his repeated human face; reveal the hidden threat gradually.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.1,
+    "x": 70,
+    "y": 45
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.45,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    70.3,
+    71.2
+   ],
+   "until": 81.35
+  },
+  {
+   "id": "07.2",
+   "beat": 7,
+   "img": "07-00",
+   "text": "a sorcerer who could live a thousand lives and not age a day,",
+   "say": 82.24,
+   "said": 86.66,
+   "direction": "A tighter view of the repeated, unchanged face suggests endurance.",
+   "a": {
+    "z": 1.1,
+    "x": 70,
+    "y": 45
+   },
+   "b": {
+    "z": 1.75,
+    "x": 74,
+    "y": 29
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.3,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    81.35,
+    81.35
+   ],
+   "until": 86.46
+  },
+  {
+   "id": "07.3",
+   "beat": 7,
+   "img": "07-03",
+   "text": "a tyrant who rejoiced at the suffering of the weak,",
+   "say": 87.259,
+   "said": 90.32,
+   "direction": "A human-scale consequence of his rule: constrained people beneath the same maroon architecture. No new villain design.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.15,
+    "x": 47.6,
+    "y": 43.8
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    86.46,
+    87.379
+   ],
+   "until": 90.12
+  },
+  {
+   "id": "07.4",
+   "beat": 7,
+   "img": "03-00",
+   "text": "how terrible..., that is very fearsome, no?\", she asked.",
+   "say": 91.0,
+   "said": 95.32,
+   "direction": "Return to grandmother's questioning look. The story invites the child back in.",
+   "a": {
+    "z": 1.2,
+    "x": 44.15,
+    "y": 39.63
+   },
+   "b": {
+    "z": 1.3,
+    "x": 45.03,
+    "y": 38.5
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    90.12,
+    91.12
+   ],
+   "until": 95.3
+  },
+  {
+   "id": "08.1",
+   "beat": 8,
+   "img": "08-00",
+   "text": "I blinked, nodded and looked on. It was her cue to keep going.",
+   "say": 96.08,
+   "said": 100.9,
+   "direction": "Hold the child's reaction for the full beat. Do not add a cut for each blink or nod.",
+   "a": {
+    "z": 1.22,
+    "x": 48.06,
+    "y": 50.49
+   },
+   "b": {
+    "z": 1.22,
+    "x": 48.06,
+    "y": 50.49
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    95.3,
+    96.2
+   ],
+   "until": 102.1
+  },
+  {
+   "id": "09.1",
+   "beat": 9,
+   "img": "12-00",
+   "text": "\"Kali was the supreme incarnate and no less extraordinary\", her voice now seemed to carry a certainty that mere grammar couldn't convey, \"",
+   "say": 102.88,
+   "said": 112.28,
+   "direction": "Use grandmother's eyes as the bridge into her certainty, cropping out the imagined king if needed.",
+   "a": {
+    "z": 1.7,
+    "x": 23.29,
+    "y": 48.95
+   },
+   "b": {
+    "z": 1.85,
+    "x": 22.97,
+    "y": 46.6
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    102.1,
+    103.0
+   ],
+   "until": 112.08
+  },
+  {
+   "id": "09.2",
+   "beat": 9,
+   "img": "09-00",
+   "text": "Kali had a unique power, she could create anything just by thinking it,",
+   "say": 112.94,
+   "said": 118.04,
+   "direction": "Open to Kali's gesture and the unfolding landscape.",
+   "a": {
+    "z": 1.3,
+    "x": 47.5,
+    "y": 47.6
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    112.08,
+    113.06
+   ],
+   "until": 117.84
+  },
+  {
+   "id": "09.3",
+   "beat": 9,
+   "img": "09-03",
+   "text": "she herself was indeed a manifestation of the supreme thought\".",
+   "say": 118.7,
+   "said": 123.14,
+   "direction": "An intermediate image where the same blue currents and dark silhouette become a landscape: thought becoming form, with no extra deity iconography.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.14,
+    "x": 40.4,
+    "y": 74
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 1.0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    117.84,
+    118.82
+   ],
+   "until": 123.4
+  },
+  {
+   "id": "10.1",
+   "beat": 10,
+   "img": "10-00",
+   "text": "She paused, \"the silence between Kali and the king seemed to stretch forever,",
+   "say": 124.38,
+   "said": 129.36,
+   "direction": "Hold the confrontation across the empty gap. Preserve the actual recorded pause rather than inventing a longer silence.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.25,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    123.4,
+    124.5
+   ],
+   "until": 129.24
+  },
+  {
+   "id": "10.2",
+   "beat": 10,
+   "img": "10-00",
+   "text": "or perhaps the voices of their hostility were so loud that mere humans like us couldn't perceive.",
+   "say": 130.14,
+   "said": 136.2,
+   "direction": "Move into the space between the figures; make the absence the subject.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.25,
+    "x": 52,
+    "y": 62
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.25,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    129.24,
+    129.24
+   ],
+   "until": 137.8
+  },
+  {
+   "id": "11.1",
+   "beat": 11,
+   "img": "11-00",
+   "text": "As a wicked smile etched across his thin, pale lips,",
+   "say": 138.58,
+   "said": 142.4,
+   "direction": "Begin on the king's small human smile.",
+   "a": {
+    "z": 2.2,
+    "x": 67,
+    "y": 36
+   },
+   "b": {
+    "z": 2.35,
+    "x": 67,
+    "y": 36
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.3,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    137.8,
+    138.7
+   ],
+   "until": 142.18
+  },
+  {
+   "id": "11.2",
+   "beat": 11,
+   "img": "11-00",
+   "text": "Kali knew it was past time to do what she must have done a long time ago - to end the life of this tyrant\".",
+   "say": 143.08,
+   "said": 150.86,
+   "direction": "Reveal Kali's answering profile and their opposing directions; allow the decision to settle.",
+   "a": {
+    "z": 2.35,
+    "x": 67,
+    "y": 36
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    142.18,
+    142.18
+   ],
+   "until": 151.42
+  },
+  {
+   "id": "12.1",
+   "beat": 12,
+   "img": "12-00",
+   "text": "My grandmother's ancient eyes glistened at something very distant, \"Kali knew the power of his sorcery,",
+   "say": 153.1,
+   "said": 160.04,
+   "direction": "Return to grandmother's distant eyes, then allow the king's presence in the composition to register.",
+   "a": {
+    "z": 1.35,
+    "x": 23.23,
+    "y": 39.72
+   },
+   "b": {
+    "z": 1.0,
+    "x": 26.95,
+    "y": 48.85
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    151.42,
+    153.22
+   ],
+   "until": 159.84
+  },
+  {
+   "id": "12.2",
+   "beat": 12,
+   "img": "12-02",
+   "text": "the magic that made him immune to earthly weapons was like nothing she had known to be possible,",
+   "say": 160.7,
+   "said": 165.98,
+   "direction": "A close view of the king held intact within taut maroon binding lines; suggest immunity without a literal explanatory diagram.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.25,
+    "x": 63,
+    "y": 52
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.5,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    159.84,
+    160.82
+   ],
+   "until": 165.78
+  },
+  {
+   "id": "12.3",
+   "beat": 12,
+   "img": "12-00",
+   "text": "death was but a feeble servant of the king.",
+   "say": 166.62,
+   "said": 169.46,
+   "direction": "Return to the human king's echo in the existing image; end on the imbalance of power.",
+   "a": {
+    "z": 2.1,
+    "x": 24.81,
+    "y": 18.6
+   },
+   "b": {
+    "z": 2.35,
+    "x": 24.93,
+    "y": 15.71
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0.7,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    165.78,
+    166.74
+   ],
+   "until": 169.26
+  },
+  {
+   "id": "13.1",
+   "beat": 13,
+   "img": "13-01",
+   "text": "She closed her eyes in a calculating thought, muttered something strange under her breath,",
+   "say": 170.58,
+   "said": 175.94,
+   "direction": "Kali's dark profile with eyes closed; blue strands held almost still before release.",
+   "a": {
+    "z": 1.15,
+    "x": 41.05,
+    "y": 44.15
+   },
+   "b": {
+    "z": 1.15,
+    "x": 41.05,
+    "y": 44.15
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.15,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    169.26,
+    170.7
+   ],
+   "until": 175.74
+  },
+  {
+   "id": "13.2",
+   "beat": 13,
+   "img": "13-00",
+   "text": "her eyes flew open",
+   "say": 176.54,
+   "said": 177.84,
+   "direction": "Reveal the small red eye within the existing composition.",
+   "a": {
+    "z": 1.8,
+    "x": 36,
+    "y": 38
+   },
+   "b": {
+    "z": 1.9,
+    "x": 36,
+    "y": 38
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.9,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    175.74,
+    176.66
+   ],
+   "until": 177.59
+  },
+  {
+   "id": "13.3",
+   "beat": 13,
+   "img": "13-00",
+   "text": "and her whispers now seemed to be all around like they were always there,",
+   "say": 178.22,
+   "said": 182.5,
+   "direction": "Open to the surrounding sky currents; the effect reaches beyond her body.",
+   "a": {
+    "z": 1.9,
+    "x": 36,
+    "y": 38
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 1.0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    177.59,
+    177.59
+   ],
+   "until": 182.3
+  },
+  {
+   "id": "13.4",
+   "beat": 13,
+   "img": "13-04",
+   "text": "the wind around her wore a new face, wielding an unnatural power.",
+   "say": 183.24,
+   "said": 187.96,
+   "direction": "Ground-level air moving through the terrain: the same drawn blue currents now changing the world around her.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.1,
+    "x": 34,
+    "y": 63
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 1.0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    182.3,
+    183.36
+   ],
+   "until": 187.76
+  },
+  {
+   "id": "14.1",
+   "beat": 14,
+   "img": "14-00",
+   "text": "As though in response, the king's voice rose with every gust of the wind, speaking an ancient tongue long forgotten, his voice turned hoarse and",
+   "say": 188.68,
+   "said": 199.14,
+   "direction": "Begin close to the human king's raised gesture and the enclosing curve.",
+   "a": {
+    "z": 1.65,
+    "x": 68.33,
+    "y": 60.26
+   },
+   "b": {
+    "z": 1.45,
+    "x": 67.4,
+    "y": 54.78
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    187.76,
+    188.8
+   ],
+   "until": 198.89
+  },
+  {
+   "id": "14.2",
+   "beat": 14,
+   "img": "14-00",
+   "text": "an invisible dome seemed to form around him holding Kali at bay,",
+   "say": 199.18,
+   "said": 203.6,
+   "direction": "Reveal the opposing forces and the full dome through displaced air and space.",
+   "a": {
+    "z": 1.45,
+    "x": 67.4,
+    "y": 54.78
+   },
+   "b": {
+    "z": 1.0,
+    "x": 62.1,
+    "y": 49.43
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    198.89,
+    198.89
+   ],
+   "until": 203.4
+  },
+  {
+   "id": "14.3",
+   "beat": 14,
+   "img": "14-03",
+   "text": "the world around them seemed to wither as he drew his power from everything around.",
+   "say": 204.38,
+   "said": 209.32,
+   "direction": "A close ground-level view of life losing colour and strength outside the dome; show the cost, not another magical emblem.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.15,
+    "x": 33,
+    "y": 61
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.3,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    203.4,
+    204.5
+   ],
+   "until": 209.12
+  },
+  {
+   "id": "15.1",
+   "beat": 15,
+   "img": "15-01",
+   "text": "Kali realized keeping at this might just as well lead to the destruction of life around her,",
+   "say": 210.01,
+   "said": 215.01,
+   "direction": "See the withering world from beside Kali; this image connects her choice to what is being lost.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.15,
+    "x": 60.7,
+    "y": 56
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    209.12,
+    210.13
+   ],
+   "until": 214.81
+  },
+  {
+   "id": "15.2",
+   "beat": 15,
+   "img": "15-00",
+   "text": "she stopped for a brief moment,",
+   "say": 215.61,
+   "said": 217.15,
+   "direction": "A held, quiet crop of her profile within the existing image.",
+   "a": {
+    "z": 1.8,
+    "x": 44.2,
+    "y": 30
+   },
+   "b": {
+    "z": 1.8,
+    "x": 44.2,
+    "y": 30
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.5,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    214.81,
+    215.73
+   ],
+   "until": 216.9
+  },
+  {
+   "id": "15.3",
+   "beat": 15,
+   "img": "15-00",
+   "text": "a quick thought crossed her mind,",
+   "say": 217.69,
+   "said": 219.33,
+   "direction": "Reveal the gathering weapon and the arc above her waiting hand.",
+   "a": {
+    "z": 1.8,
+    "x": 44.2,
+    "y": 30
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    216.9,
+    216.9
+   ],
+   "until": 219.08
+  },
+  {
+   "id": "15.4",
+   "beat": 15,
+   "img": "15-00",
+   "text": "and a fierce weapon formed in thin air before her and fell into her waiting hands\".",
+   "say": 219.81,
+   "said": 225.37,
+   "direction": "A closer crop of the weapon arriving in the hand; retain the fibrous, curved shape.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.7,
+    "x": 63,
+    "y": 46
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    219.08,
+    219.08
+   ],
+   "until": 225.17
+  },
+  {
+   "id": "16.1",
+   "beat": 16,
+   "img": "16-00",
+   "text": "My grandmother drew a deep breath, smiled and said, \"Oh, the weapon she conjured was magnificent,",
+   "say": 226.53,
+   "said": 234.03,
+   "direction": "Start with grandmother drawing breath; keep the child's listening presence at the edge.",
+   "a": {
+    "z": 1.55,
+    "x": 28.9,
+    "y": 52.65
+   },
+   "b": {
+    "z": 1.4,
+    "x": 29.4,
+    "y": 50.8
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    225.17,
+    226.65
+   ],
+   "until": 233.83
+  },
+  {
+   "id": "16.2",
+   "beat": 16,
+   "img": "16-02",
+   "text": "forged from the sinew of a very powerful being that existed before time itself -",
+   "say": 234.77,
+   "said": 240.35,
+   "direction": "A close study of the pale fibrous weapon suspended against deep blue-black space; suggest immense age through texture, not a newly invented creature.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.18,
+    "x": 55,
+    "y": 42
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    233.83,
+    234.89
+   ],
+   "until": 240.15
+  },
+  {
+   "id": "16.3",
+   "beat": 16,
+   "img": "16-00",
+   "text": "it could sever anything, physical or otherwise.",
+   "say": 241.11,
+   "said": 244.65,
+   "direction": "Return to the complete domestic-and-imagined composition; let its scale carry the claim.",
+   "a": {
+    "z": 1.1,
+    "x": 36.8,
+    "y": 39
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0.8,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    240.15,
+    241.23
+   ],
+   "until": 244.45
+  },
+  {
+   "id": "17.1",
+   "beat": 17,
+   "img": "17-01",
+   "text": "Before the king could even draw on his next breath,",
+   "say": 245.32,
+   "said": 248.14,
+   "direction": "A tense pre-strike image: ordinary human king below the still curved weapon; no impact yet.",
+   "a": {
+    "z": 1.0,
+    "x": 49.6,
+    "y": 55
+   },
+   "b": {
+    "z": 1.08,
+    "x": 54,
+    "y": 58
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.4,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    244.45,
+    245.44
+   ],
+   "until": 247.94
+  },
+  {
+   "id": "17.2",
+   "beat": 17,
+   "img": "17-00",
+   "text": "Kali swung her weapon in a wide arc at the foe",
+   "say": 248.6,
+   "said": 251.7,
+   "direction": "Reveal the existing sweeping arc at the action's release.",
+   "a": {
+    "z": 1.2,
+    "x": 36,
+    "y": 53
+   },
+   "b": {
+    "z": 1.05,
+    "x": 38,
+    "y": 56
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "flash",
+   "in": [
+    247.94,
+    248.72
+   ],
+   "until": 251.45
+  },
+  {
+   "id": "17.3",
+   "beat": 17,
+   "img": "17-00",
+   "text": "cutting through his flesh, bone and the sorcery that bound him human, severing him into a million pieces",
+   "say": 252.12,
+   "said": 259.12,
+   "direction": "Follow the curved bright stroke through maroon fragments; avoid adding anatomical gore.",
+   "a": {
+    "z": 1.05,
+    "x": 38,
+    "y": 56
+   },
+   "b": {
+    "z": 1.6,
+    "x": 50,
+    "y": 70
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.4,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    251.45,
+    251.45
+   ],
+   "until": 258.92
+  },
+  {
+   "id": "17.4",
+   "beat": 17,
+   "img": "17-04",
+   "text": "as the field around her turned dark with his blood\".",
+   "say": 259.52,
+   "said": 262.74,
+   "direction": "A quieter aftermath: maroon marks spreading across dark ground, with the threat not yet resolved.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.18,
+    "x": 55,
+    "y": 68
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": "ash",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    258.92,
+    259.64
+   ],
+   "until": 264.18
+  },
+  {
+   "id": "18.1",
+   "beat": 18,
+   "img": "18-00",
+   "text": "I took a deep breath, but something told me it wasn't over yet and as if echoing my thoughts,",
+   "say": 265.86,
+   "said": 272.06,
+   "direction": "Return to the child taking in what happened; preserve the domestic scale after the mythic strike.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.12,
+    "x": 51,
+    "y": 52
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    264.18,
+    265.98
+   ],
+   "until": 271.81
+  },
+  {
+   "id": "18.2",
+   "beat": 18,
+   "img": "18-00",
+   "text": "my grandmother shook her head.",
+   "say": 272.52,
+   "said": 274.02,
+   "direction": "Settle on grandmother's knowing face; hold the unresolved ending.",
+   "a": {
+    "z": 1.12,
+    "x": 51,
+    "y": 52
+   },
+   "b": {
+    "z": 1.8,
+    "x": 36.89,
+    "y": 42.36
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    271.81,
+    271.81
+   ],
+   "until": 274.82
+  },
+  {
+   "id": "19.1",
+   "beat": 19,
+   "img": "18-00",
+   "text": "\"Oh, that wasn't the end of him, the king in his infinite guile may have anticipated this,",
+   "say": 275.42,
+   "said": 281.98,
+   "direction": "Keep grandmother's warning glance for the opening reversal.",
+   "a": {
+    "z": 1.6,
+    "x": 37.45,
+    "y": 40.69
+   },
+   "b": {
+    "z": 1.7,
+    "x": 36.96,
+    "y": 40.66
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    274.82,
+    274.82
+   ],
+   "until": 281.78
+  },
+  {
+   "id": "19.2",
+   "beat": 19,
+   "img": "19-00",
+   "text": "for the anger, surprise and perhaps even despair in Kali's eyes spoke volumes of the horror that unfolded before her.",
+   "say": 282.56,
+   "said": 290.78,
+   "direction": "Reveal Kali's red gaze above the multiplying maroon world. Do not replace it with a conventionally pretty reaction portrait.",
+   "a": {
+    "z": 1.5,
+    "x": 59.1,
+    "y": 35.8
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    281.78,
+    282.68
+   ],
+   "until": 290.7
+  },
+  {
+   "id": "20.1",
+   "beat": 20,
+   "img": "20-01",
+   "text": "Every drop of the sorcerer's blood that was spilled seemed to have a will of its own drawing mass from nowhere and everywhere,",
+   "say": 292.38,
+   "said": 300.34,
+   "direction": "One small maroon drop against dark ground, carrying the visual seed of the threat.",
+   "a": {
+    "z": 1.0,
+    "x": 48.5,
+    "y": 50
+   },
+   "b": {
+    "z": 1.45,
+    "x": 42.4,
+    "y": 66.5
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    290.7,
+    292.5
+   ],
+   "until": 300.14
+  },
+  {
+   "id": "20.2",
+   "beat": 20,
+   "img": "20-02",
+   "text": "each drop of the blood shaped itself to look like the king,",
+   "say": 300.92,
+   "said": 304.36,
+   "direction": "An intermediate close view of the drop acquiring the king's ordinary human face and mantle; keep the process graphic and suggestive.",
+   "a": {
+    "z": 1.15,
+    "x": 54.7,
+    "y": 48.2
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    300.14,
+    301.04
+   ],
+   "until": 304.16
+  },
+  {
+   "id": "20.3",
+   "beat": 20,
+   "img": "20-00",
+   "text": "it was like looking at the sorcerer in a million mirrors, only they weren't mere reflections.",
+   "say": 304.92,
+   "said": 310.8,
+   "direction": "Reveal the field of repeated human kings; escalate from one to many.",
+   "a": {
+    "z": 1.3,
+    "x": 56.3,
+    "y": 63
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    304.16,
+    305.04
+   ],
+   "until": 310.75
+  },
+  {
+   "id": "21.1",
+   "beat": 21,
+   "img": "21-00",
+   "text": "The king's magic ran wild a million times over and there was only so much she could do against the overwhelming army of madmen closing in on her;",
+   "say": 311.73,
+   "said": 320.95,
+   "direction": "Establish the shield surrounded by the maroon crowd.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.08,
+    "x": 46,
+    "y": 45
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    310.75,
+    311.85
+   ],
+   "until": 320.7
+  },
+  {
+   "id": "21.2",
+   "beat": 21,
+   "img": "21-00",
+   "text": "she conjured up a shield and hoped it would hold.",
+   "say": 321.55,
+   "said": 324.27,
+   "direction": "Move closer to the blue boundary's tension, retaining both the crowd outside and Kali inside.",
+   "a": {
+    "z": 1.08,
+    "x": 46,
+    "y": 45
+   },
+   "b": {
+    "z": 1.45,
+    "x": 45,
+    "y": 43
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    320.7,
+    320.7
+   ],
+   "until": 324.02
+  },
+  {
+   "id": "21.3",
+   "beat": 21,
+   "img": "21-00",
+   "text": "Kali was perplexed and knew there was very little time before her sanctuary would give way\".",
+   "say": 324.87,
+   "said": 330.27,
+   "direction": "Tighten on the small trapped presence and the limited space; let the hold communicate the problem.",
+   "a": {
+    "z": 1.45,
+    "x": 45,
+    "y": 43
+   },
+   "b": {
+    "z": 1.9,
+    "x": 45,
+    "y": 44
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    324.02,
+    324.02
+   ],
+   "until": 330.37
+  },
+  {
+   "id": "22.1",
+   "beat": 22,
+   "img": "22-00",
+   "text": "My grandmother paused, ruffled my hair as though urging me not to despair.",
+   "say": 332.05,
+   "said": 336.97,
+   "direction": "Hold the reassuring touch and the child's gaze for the entire short beat. This is a release in visual density.",
+   "a": {
+    "z": 1.12,
+    "x": 50,
+    "y": 52
+   },
+   "b": {
+    "z": 1.12,
+    "x": 50,
+    "y": 52
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    330.37,
+    332.17
+   ],
+   "until": 337.49
+  },
+  {
+   "id": "23.1",
+   "beat": 23,
+   "img": "22-00",
+   "text": "She cracked her knuckles and said, \"",
+   "say": 338.09,
+   "said": 339.73,
+   "direction": "Stay briefly with grandmother after the reassuring touch; no literal knuckle illustration.",
+   "a": {
+    "z": 1.45,
+    "x": 38.5,
+    "y": 40
+   },
+   "b": {
+    "z": 1.5,
+    "x": 38.5,
+    "y": 40
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    337.49,
+    337.49
+   ],
+   "until": 339.53
+  },
+  {
+   "id": "23.2",
+   "beat": 23,
+   "img": "23-00",
+   "text": "Clarity dawned upon Kali as she realized that the king had perhaps cursed his own blood to cheat his death and she couldn't afford another cut at him,",
+   "say": 340.29,
+   "said": 350.01,
+   "direction": "Use the revised 23-00.png: steady red gaze, compressed maroon repetition and a pale opening ahead.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    339.53,
+    340.41
+   ],
+   "until": 349.81
+  },
+  {
+   "id": "23.3",
+   "beat": 23,
+   "img": "23-03",
+   "text": "her thoughts roared like a raging ocean",
+   "say": 350.73,
+   "said": 353.35,
+   "direction": "An intermediate composition where turbulent blue currents begin to organise around a quiet opening. Suggest thought finding order without a literal ocean or rock.",
+   "a": {
+    "z": 1.04,
+    "x": 33.5,
+    "y": 62
+   },
+   "b": {
+    "z": 1.04,
+    "x": 33.5,
+    "y": 62
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 1.0,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    349.81,
+    350.85
+   ],
+   "until": 353.15
+  },
+  {
+   "id": "23.4",
+   "beat": 23,
+   "img": "23-00",
+   "text": "and the solution hit her like a tiny rock caught amidst the waves.",
+   "say": 353.77,
+   "said": 358.07,
+   "direction": "Return to the pale opening within the revised image. End on clarity, not another gesture.",
+   "a": {
+    "z": 1.45,
+    "x": 66.3,
+    "y": 39
+   },
+   "b": {
+    "z": 1.15,
+    "x": 61.8,
+    "y": 53.9
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.7,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    353.15,
+    353.89
+   ],
+   "until": 358.06
+  },
+  {
+   "id": "24.1",
+   "beat": 24,
+   "img": "24-01",
+   "text": "She had no time to lose.",
+   "say": 359.04,
+   "said": 360.8,
+   "direction": "Begin beside normal-scale Kali within the shield; a low view establishes the starting size.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.5,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    358.06,
+    359.16
+   ],
+   "until": 360.6
+  },
+  {
+   "id": "24.2",
+   "beat": 24,
+   "img": "24-00",
+   "text": "Kali began to grow towards the heavens stepping out of her shield,",
+   "say": 361.48,
+   "said": 365.78,
+   "direction": "Reveal the approved immense hand and sky-spanning dark presence.",
+   "a": {
+    "z": 1.9,
+    "x": 44.4,
+    "y": 30
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    360.6,
+    361.6
+   ],
+   "until": 365.58
+  },
+  {
+   "id": "24.3",
+   "beat": 24,
+   "img": "24-03",
+   "text": "the enormity of her form could only be measured by the  fear reflected in a million eyes of the sorcerer.",
+   "say": 366.4,
+   "said": 372.78,
+   "direction": "Reverse the scale: tiny human faces below looking upward, with Kali extending beyond the frame.",
+   "a": {
+    "z": 1.1,
+    "x": 31.6,
+    "y": 45.4
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.6,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    365.58,
+    366.52
+   ],
+   "until": 372.58
+  },
+  {
+   "id": "24.4",
+   "beat": 24,
+   "img": "24-00",
+   "text": "One of Kali's hand alone could block out the skies of a hundred worlds\".",
+   "say": 373.32,
+   "said": 378.1,
+   "direction": "End on the existing hand eclipsing the sky; keep a sliver of the crowd as a scale reference.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    372.58,
+    373.44
+   ],
+   "until": 377.9
+  },
+  {
+   "id": "25.1",
+   "beat": 25,
+   "img": "08-00",
+   "text": "The wonder in my eyes painted my grandmother's words with a smile, \"",
+   "say": 379.32,
+   "said": 383.44,
+   "direction": "Use the child's wondering face, cropped away from the plate for continuity.",
+   "a": {
+    "z": 1.22,
+    "x": 48.06,
+    "y": 50.49
+   },
+   "b": {
+    "z": 1.3,
+    "x": 48.44,
+    "y": 50.26
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    377.9,
+    379.44
+   ],
+   "until": 383.24
+  },
+  {
+   "id": "25.2",
+   "beat": 25,
+   "img": "25-00",
+   "text": "Like a giant net trapping a thousand trout, Kali grabbed at the whole encroaching army",
+   "say": 383.48,
+   "said": 389.32,
+   "direction": "Reveal the existing encircling blue-dark form gathering the maroon crowd.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.12,
+    "x": 42.4,
+    "y": 43.6
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.9,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    383.24,
+    383.6
+   ],
+   "until": 389.12
+  },
+  {
+   "id": "25.3",
+   "beat": 25,
+   "img": "25-03",
+   "text": "and swallowed them down her immense gut all in a single gulp.",
+   "say": 389.7,
+   "said": 394.14,
+   "direction": "The gathered maroon multitude disappears into a deep, abstract blue-black interior. Keep it spatial and non-anatomical.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.3,
+    "x": 52.8,
+    "y": 45
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    389.12,
+    389.82
+   ],
+   "until": 394.04
+  },
+  {
+   "id": "26.1",
+   "beat": 26,
+   "img": "26-00",
+   "text": "You see, Kali was but Thought-made-human and",
+   "say": 395.02,
+   "said": 398.58,
+   "direction": "Hold the existing abyss as a space larger than the king's repetitions.",
+   "a": {
+    "z": 1.0,
+    "x": 60.73,
+    "y": 69.19
+   },
+   "b": {
+    "z": 1.0,
+    "x": 60.73,
+    "y": 69.19
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.9,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    394.04,
+    395.14
+   ],
+   "until": 398.33
+  },
+  {
+   "id": "26.2",
+   "beat": 26,
+   "img": "26-00",
+   "text": "she knew the king's sorcery would be lost in the abyss of her nature.",
+   "say": 398.64,
+   "said": 402.58,
+   "direction": "Move toward the small maroon traces disappearing into the blue-black depth.",
+   "a": {
+    "z": 1.0,
+    "x": 60.73,
+    "y": 69.19
+   },
+   "b": {
+    "z": 1.45,
+    "x": 66.11,
+    "y": 72.18
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.9,
+   "lamp": 0,
+   "motes": null,
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    398.33,
+    398.33
+   ],
+   "until": 402.38
+  },
+  {
+   "id": "27.1",
+   "beat": 27,
+   "img": "27-00",
+   "text": "The duel was over just like that, the king's fall brought a great joy to the world.",
+   "say": 403.76,
+   "said": 409.48,
+   "direction": "Open to the freed world and the brighter horizon; allow the change in space to register.",
+   "a": {
+    "z": 1.25,
+    "x": 40.3,
+    "y": 40.2
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.4,
+   "lamp": 0,
+   "motes": "light",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    402.38,
+    403.88
+   ],
+   "until": 409.28
+  },
+  {
+   "id": "27.2",
+   "beat": 27,
+   "img": "27-02",
+   "text": "The magic he had woven that enslaved the world vanished with him.",
+   "say": 410.08,
+   "said": 413.98,
+   "direction": "A close human-scale release: the maroon binding lines loosen and fall away into the same landscape.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.1,
+    "x": 55,
+    "y": 52
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.5,
+   "lamp": 0,
+   "motes": "light",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    409.28,
+    410.2
+   ],
+   "until": 415.06
+  },
+  {
+   "id": "28.1",
+   "beat": 28,
+   "img": "28-01",
+   "text": "The smell of freedom told Kali that her purpose there was fulfilled.",
+   "say": 416.04,
+   "said": 419.92,
+   "direction": "A quieter normal-scale presence amid open air: the aftermath of purpose fulfilled, before departure.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.15,
+    "x": 51.8,
+    "y": 53.5
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.4,
+   "lamp": 0,
+   "motes": "light",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    415.06,
+    416.16
+   ],
+   "until": 419.72
+  },
+  {
+   "id": "28.2",
+   "beat": 28,
+   "img": "28-00",
+   "text": "She resumed her normal form, spared a fleeting glance around",
+   "say": 420.64,
+   "said": 424.32,
+   "direction": "Use the existing figure already loosening into mist; a longer hold can carry the transition.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.1,
+    "x": 41.8,
+    "y": 41.3
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.8,
+   "lamp": 0,
+   "motes": "light",
+   "haze": [
+    0.0,
+    0.35
+   ],
+   "arrive": "ink",
+   "in": [
+    419.72,
+    420.76
+   ],
+   "until": 424.12
+  },
+  {
+   "id": "28.3",
+   "beat": 28,
+   "img": "28-03",
+   "text": "and stepped into the mists of air to become one with it like she was never there\".",
+   "say": 424.72,
+   "said": 429.8,
+   "direction": "The same landscape after Kali is gone, with only a trace of blue in the air. An absence image, not a second character design.",
+   "a": {
+    "z": 1.08,
+    "x": 53.8,
+    "y": 55
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0.25,
+   "lamp": 0,
+   "motes": "light",
+   "haze": null,
+   "arrive": "ink",
+   "in": [
+    424.12,
+    424.84
+   ],
+   "until": 431.02
+  },
+  {
+   "id": "29.1",
+   "beat": 29,
+   "img": "29-00",
+   "text": "My grandmother's wide grin announced the end of the story.",
+   "say": 432.7,
+   "said": 436.12,
+   "direction": "Hold grandmother's wide grin. Crop to her face so the older image's dinner detail does not contradict the clean-plate reveal.",
+   "a": {
+    "z": 1.55,
+    "x": 47.29,
+    "y": 33.78
+   },
+   "b": {
+    "z": 1.6,
+    "x": 47.3,
+    "y": 35.33
+   },
+   "sa": {
+    "x": 47.29,
+    "y": 33.78,
+    "r": 0.4779,
+    "a": 0.35
+   },
+   "sb": {
+    "x": 47.3,
+    "y": 33.83,
+    "r": 0.6017,
+    "a": 0.3
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "dip",
+   "in": [
+    431.02,
+    432.82
+   ],
+   "until": 436.28
+  },
+  {
+   "id": "30.1",
+   "beat": 30,
+   "img": "30-00",
+   "text": "As I think, it was as much her success as much as Kali's",
+   "say": 437.06,
+   "said": 440.64,
+   "direction": "Start on the child's recognition and grandmother's satisfied face.",
+   "a": {
+    "z": 1.5,
+    "x": 42.5,
+    "y": 42
+   },
+   "b": {
+    "z": 1.45,
+    "x": 47,
+    "y": 46
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "soft",
+   "in": [
+    436.28,
+    437.18
+   ],
+   "until": 440.39
+  },
+  {
+   "id": "30.2",
+   "beat": 30,
+   "img": "30-00",
+   "text": "for my dinner plate was clean;",
+   "say": 440.98,
+   "said": 442.54,
+   "direction": "Reveal the complete existing image and the clean plate: the domestic resolution answers the mythic one.",
+   "a": {
+    "z": 1.45,
+    "x": 47,
+    "y": 46
+   },
+   "b": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "sa": null,
+   "sb": null,
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    440.39,
+    440.39
+   ],
+   "until": 442.29
+  },
+  {
+   "id": "30.3",
+   "beat": 30,
+   "img": "30-00",
+   "text": "vegetables, greens and all gone.",
+   "say": 443.06,
+   "said": 445.62,
+   "direction": "End on the clean plate with the warm relationship still implied; no new final illustration is needed.",
+   "a": {
+    "z": 1.0,
+    "x": 50,
+    "y": 50
+   },
+   "b": {
+    "z": 1.65,
+    "x": 53.3,
+    "y": 77.5
+   },
+   "sa": null,
+   "sb": {
+    "x": 53.3,
+    "y": 80,
+    "r": 0.4104,
+    "a": 0.5
+   },
+   "flow": 0,
+   "lamp": 1,
+   "motes": "dust",
+   "haze": null,
+   "arrive": "move",
+   "in": [
+    442.29,
+    442.29
+   ],
+   "until": 449.94
+  }
+ ]
+};      // beats and 82 shots, in program seconds
+const MEDIA = null;      // null on the website (files in assets/)
+const MOVEMENTS = ["The telling begins","The king revealed","The weapon and the blood","The blood army","The plate is clean"];
+const ROMAN = ["I","II","III","IV","V"];
+const SPEEDS = [0.75, 1, 1.25, 1.5];
+const IMG_ASPECT = 16 / 9;     // the landscape pictures, 3840 x 2160 and 1920 x 1080
+
+const pad = (n) => String(n).padStart(2, "0");
+const SRC = {
+  img: (name) => MEDIA ? MEDIA.img[name] : `assets/img/${SIZE}/${name}.jpg`,
+  aud: (i) => MEDIA ? MEDIA.aud[i] : `assets/audio/${pad(i + 1)}.mp3`,
+};
+const $ = (id) => document.getElementById(id);
+const stage = $("stage"), canvas = $("film");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const BEATS = TL.beats, SHOTS = TL.shots;
+const lastBeatEnd = (i) => BEATS[i].start + BEATS[i].dur;
+
+/* ---------- easing and interpolation ---------- */
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const ease = (u) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(u, 0, 1));          // in-out sine: starts and lands at rest
+const lerp = (a, b, u) => a + (b - a) * u;
+const lerpCam = (a, b, u) => ({ z: lerp(a.z, b.z, u), x: lerp(a.x, b.x, u), y: lerp(a.y, b.y, u) });
+const lerpSpot = (a, b, u) => { a = a || { x: 50, y: 50, r: 1.2, a: 0 }; b = b || { x: 50, y: 50, r: 1.2, a: 0 }; return { x: lerp(a.x, b.x, u), y: lerp(a.y, b.y, u), r: lerp(a.r, b.r, u), a: lerp(a.a, b.a, u) }; };
+
+/* which shot is on screen at program time t, and how far its arrival has got */
+function shotAt(t) {
+  let k = 0;
+  for (let i = 0; i < SHOTS.length; i++) if (SHOTS[i].in[0] <= t) k = i; else break;
+  return k;
+}
+/* a shot's camera, light and motion at time t: it moves from its arrival until the next shot has fully arrived */
+function stateOf(k, t) {
+  const s = SHOTS[k], next = SHOTS[k + 1];
+  const t0 = s.in[0], t1 = next ? next.in[1] : TL.totalSec;
+  const u = reduce ? 0 : ease((t - t0) / Math.max(0.01, t1 - t0));
+  const cam = lerpCam(s.a, s.b, u);
+  const spot = lerpSpot(s.sa, s.sb, u);
+  const haze = s.haze ? lerp(s.haze[0], s.haze[1], u) : 0;
+  return { img: s.img, cam, spot, flow: reduce ? 0 : s.flow, lamp: reduce ? 0 : s.lamp, haze, motes: s.motes, seed: (k * 0.618) % 1 * 10 };
+}
+
+/* ---------- the picture: WebGL, with a plain 2D fallback ---------- */
+const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = vec2(p.x*.5+.5, .5-p.y*.5); gl_Position = vec4(p,0.,1.); }`;
+const FRAG = `
+precision highp float;
+varying vec2 v;
+uniform sampler2D tA, tB;
+uniform vec4 camA, camB;       // centre x, y and window w, h in picture units
+uniform vec4 spA, spB;         // spotlight x, y, radius, strength
+uniform vec4 fxA, fxB;         // flow, lamp, haze, seed
+uniform float mixP, mode;      // arrival progress; 0 none, 1 soft, 2 ink, 3 dip, 4 flash
+uniform float time, aspect, imgAspect;
+uniform vec4 motes;            // dust, ash, light, -
+float h1(float n){ n = fract(n*.1031); n *= n + 33.33; n *= n + n; return fract(n); }
+float h2(vec2 p){ vec3 p3 = fract(vec3(p.xyx)*.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y)*p3.z); }
+float vn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*f*(f*(f*6.-15.)+10.);
+  return mix(mix(h2(i),h2(i+vec2(1,0)),f.x), mix(h2(i+vec2(0,1)),h2(i+vec2(1,1)),f.x), f.y); }
+const mat2 ROT = mat2(.8, .6, -.6, .8);
+float fbm(vec2 p){ float s=0., a=.5; for(int i=0;i<3;i++){ s+=a*vn(p); p=ROT*p*2.03+17.1; a*=.5; } return s; }
+vec3 layer(sampler2D t, vec4 cam, vec4 sp, vec4 fx){
+  vec2 uv = cam.xy + (v-.5)*cam.zw;
+  vec3 c = texture2D(t, uv).rgb;
+  if (fx.x > 0.) {
+    // Kali's blue currents breathe: a slow flow-noise displacement, only where the picture is blue
+    float blue = smoothstep(.015, .16, c.b - max(c.r, c.g)*.92);
+    // gusts: the strength swells and falls on its own slow rhythm, differently across the picture
+    float gust = .35 + 1.25*smoothstep(.25, .85, vn(vec2(time*.21, fx.w*7.)) )
+               * (.6 + .4*vn(uv*1.3 + vec2(time*.05, fx.w)));
+    float ang = 6.2832*vn(vec2(time*.04, fx.w*3.1));
+    vec2 dir = vec2(cos(ang), sin(ang));
+    vec2 q = uv*(4. + 2.*vn(vec2(time*.03, fx.w)));
+    vec2 d = vec2(fbm(q + dir*time*.09), fbm(q + 9.7 - dir.yx*time*.07)) - .5;
+    vec3 c2 = texture2D(t, uv + d*.014*fx.x*gust*blue).rgb;
+    c = mix(c, c2, blue);
+    // light running along the strands in slow waves
+    float wave = sin(dot(uv, dir*vec2(9., 14.)) - time*(.9 + .6*gust) + 3.*fbm(q*1.4));
+    float glint = smoothstep(.55, 1., wave)*(.5 + .5*fbm(q*2.1 + time*.13));
+    c += blue*fx.x*(.05*(fbm(q*1.7 + time*.11) - .45) + .09*glint*gust)*vec3(.55,.8,1.);
+  }
+  if (fx.y > 0.) {
+    // the lamp: warm areas flicker very slightly, and the whole room breathes
+    float warm = smoothstep(.06, .35, c.r - c.b);
+    float fl = (vn(vec2(time*4.3, 1.)) *.6 + vn(vec2(time*11.1, 7.)) *.4) - .5;
+    c *= 1. + fx.y*(warm*fl*.11 + .025*sin(time*.8));
+  }
+  if (sp.w > 0.) {
+    // a pool of light: darkness outside it, a touch of warmth within
+    float d = length((uv - sp.xy)*vec2(imgAspect, 1.));
+    float f = smoothstep(sp.z, sp.z*1.9, d);
+    c *= 1. - sp.w*f;
+    c *= 1. + sp.w*.08*(1.-f)*vec3(1.,.9,.7);
+  }
+  if (fx.z > 0.) {
+    float m = fbm(uv*3. + vec2(time*.03, 0.));
+    c = mix(c, vec3(.93,.91,.86), fx.z*smoothstep(.25,.85,m));
+  }
+  return c;
+}
+void main(){
+  vec3 b = layer(tB, camB, spB, fxB);
+  vec3 col = b;
+  if (mode > .5 && mixP < 1.) {
+    vec3 a = layer(tA, camA, spA, fxA);
+    float p = clamp(mixP, 0., 1.);
+    if (mode < 1.5) col = mix(a, b, smoothstep(0.,1.,p));
+    else if (mode < 2.5) {
+      // ink bleed: the new picture soaks in along the paper's grain
+      float n = fbm(v*vec2(1.6, 1.6/aspect) + vec2(3.1, time*.02))*.7 + .3*(1.-v.y);
+      float q = smoothstep(0., 1., p);
+      float m = smoothstep(0., 1., clamp(q*1.6 - .3 + (n - .5)*.7, 0., 1.));
+      col = mix(a, b, m);
+      col *= 1. - .12*m*(1.-m)*4.;
+    } else if (mode < 3.5) {
+      col = mix(a, b, smoothstep(.38, .62, p)) * (1. - .93*sin(3.14159*p));
+    } else {
+      col = mix(a, b, step(.06, p));
+      col = mix(col, vec3(1., .96, .9), (1. - smoothstep(.0, 1., p))*.96);
+    }
+  }
+  // motes: dust in lamplight rises, ash in the myth falls, light drifts in the freed world
+  if (motes.x + motes.y + motes.z > 0.) {
+    vec2 sc = vec2(v.x*aspect, v.y);
+    float acc = 0.;
+    for (int i = 0; i < 26; i++) {
+      float fi = float(i), s = h1(fi*3.7+1.);
+      float sp = .012 + .02*h1(fi*5.1);
+      float y = fract(s*7.3 + (motes.y > 0. ? 1. : -1.)*time*sp);
+      float x = fract(h1(fi*1.9)*1. + .03*sin(time*.35 + fi));
+      vec2 pp = vec2(x*aspect, y);
+      float r = .0018 + .0035*h1(fi*9.2);
+      float tw = .55 + .45*sin(time*(1.1 + h1(fi)) + fi);
+      acc += tw*smoothstep(r, 0., length(sc - pp));
+    }
+    col += acc*(motes.x*vec3(1., .78, .45)*.55 + motes.y*vec3(.75,.72,.7)*.35 + motes.z*vec3(1.,.95,.85)*.45);
+  }
+  float g = h2(v*vec2(911.,577.) + floor(time*24.)*vec2(17.,31.)) - .5;
+  col += g*.035;
+  col *= mix(1., .82, smoothstep(.55, 1.05, length((v-.5)*vec2(aspect*1.6, 1.15))));
+  gl_FragColor = vec4(col, 1.);
+}`;
+
+const R = (() => {
+  // WebGL 2 where there is one: it can build mipmaps for the 16:9 pictures (WebGL 1 only for power-of-two
+  // sizes), so a large picture drawn smaller stays smooth instead of sparkling. The shader is GLSL ES 1.00,
+  // which both run.
+  const opts = { antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: false };
+  const gl = canvas.getContext("webgl2", opts) || canvas.getContext("webgl", opts);
+  if (!gl) return null;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+  let prog;
+  try { prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG)); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog)); }
+  catch (e) { console.warn("WebGL program failed; using 2D", e); return null; }
+  gl.useProgram(prog);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = {}; ["tA", "tB", "camA", "camB", "spA", "spB", "fxA", "fxB", "mixP", "mode", "time", "aspect", "imgAspect", "motes"].forEach((n) => U[n] = gl.getUniformLocation(prog, n));
+  gl.uniform1i(U.tA, 0); gl.uniform1i(U.tB, 1);
+  return { gl, U, mips: typeof WebGL2RenderingContext !== "undefined" && gl instanceof WebGL2RenderingContext, maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE) };
+})();
+const ctx2d = R ? null : canvas.getContext("2d");
+
+/* which pictures this screen gets: 3840 x 2160 when the stage is drawn wider than 1920 pixels by more
+   than a tenth (a laptop or desktop: a fine pointer) and the GPU takes textures that large; otherwise
+   1920 x 1080 (phones and tablets always: they have the least memory). ?size=2160 or ?size=1080 overrides. */
+const SIZE = (() => {
+  const asked = new URLSearchParams(location.search).get("size");
+  if (asked === "2160" || asked === "1080") return asked;
+  const long = Math.max(screen.width, screen.height) * Math.min(window.devicePixelRatio || 1, 2);
+  const fine = !matchMedia("(pointer: coarse)").matches;
+  return fine && long > 1920 * 1.1 && (!R || R.maxTex >= 3840) ? "2160" : "1080";
+})();
+const KEEP = SIZE === "2160" ? 7 : 9;   // pictures kept on the GPU: about 44 MB each at 2160 with mipmaps
+
+/* textures: decoded pictures kept on the GPU, the nearest few only */
+const pics = new Map();   // name -> { img, tex, ready }
+function want(name) {
+  if (pics.has(name)) return pics.get(name);
+  const rec = { img: new Image(), tex: null, ready: false, used: performance.now() };
+  rec.img.decoding = "async";
+  rec.img.onload = () => {
+    rec.ready = true;
+    if (R) { const gl = R.gl; rec.tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, rec.tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, R.mips ? gl.LINEAR_MIPMAP_LINEAR : gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, rec.img);
+      if (R.mips) gl.generateMipmap(gl.TEXTURE_2D); }
+  };
+  rec.img.src = SRC.img(name);
+  pics.set(name, rec);
+  return rec;
+}
+function prefetch(k) {
+  const names = new Set();
+  for (let i = Math.max(0, k - 1); i < Math.min(SHOTS.length, k + 6); i++) names.add(SHOTS[i].img);
+  names.forEach((n) => { const r = want(n); r.used = performance.now(); });
+  if (pics.size > KEEP) {   // let go of pictures far behind
+    [...pics.entries()].filter(([n]) => !names.has(n)).sort((a, b) => a[1].used - b[1].used).slice(0, pics.size - KEEP)
+      .forEach(([n, r]) => { if (R && r.tex) R.gl.deleteTexture(r.tex); pics.delete(n); });
+  }
+}
+
+/* the window onto the picture for a camera, kept inside the picture */
+function windowFor(cam) {
+  const va = canvas.width / canvas.height;
+  const fw = va < IMG_ASPECT ? va / IMG_ASPECT : 1, fh = va < IMG_ASPECT ? 1 : IMG_ASPECT / va;
+  const w = fw / cam.z, h = fh / cam.z;
+  return [clamp(cam.x / 100, w / 2, 1 - w / 2), clamp(cam.y / 100, h / 2, 1 - h / 2), w, h];
+}
+const MODE = { move: 0, soft: 1, ink: 2, dip: 3, flash: 4 };
+const MOTES = { dust: [1, 0, 0], ash: [0, 1, 0], light: [0, 0, 1] };
+let lastDrawn = null;
+function draw(t, now) {
+  let k = shotAt(t);
+  const s = SHOTS[k];
+  let p = s.in[1] > s.in[0] ? clamp((t - s.in[0]) / (s.in[1] - s.in[0]), 0, 1) : 1;
+  let cur = stateOf(k, t), prev = k > 0 ? stateOf(k - 1, t) : null;
+  let mode = p < 1 && prev ? MODE[s.arrive] : 0;
+  if (reduce && mode) mode = 1;
+  // never show a picture that is not decoded yet: hold the last good one
+  const recB = want(cur.img), recA = prev ? want(prev.img) : null;
+  if (!recB.ready) { if (recA && recA.ready) { cur = prev; mode = 0; } else return; }
+  if (mode && !(recA && recA.ready)) mode = 0;
+  // motes cross-fade with the pictures
+  const mB = MOTES[cur.motes] || [0, 0, 0], mA = prev ? (MOTES[prev.motes] || [0, 0, 0]) : mB;
+  const mp = mode ? smooth(p) : 1;
+  const motes = reduce ? [0, 0, 0] : [0, 1, 2].map((i) => lerp(mA[i], mB[i], mp));
+  if (R) {
+    const { gl, U } = R;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, want(cur.img).tex);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, mode ? recA.tex : want(cur.img).tex);
+    gl.uniform4fv(U.camB, windowFor(cur.cam)); gl.uniform4fv(U.camA, mode ? windowFor(prev.cam) : windowFor(cur.cam));
+    gl.uniform4f(U.spB, cur.spot.x / 100, cur.spot.y / 100, cur.spot.r, cur.spot.a);
+    const ps = mode ? prev.spot : cur.spot; gl.uniform4f(U.spA, ps.x / 100, ps.y / 100, ps.r, ps.a);
+    gl.uniform4f(U.fxB, cur.flow, cur.lamp, cur.haze, cur.seed);
+    gl.uniform4f(U.fxA, mode ? prev.flow : 0, mode ? prev.lamp : 0, mode ? prev.haze : 0, mode ? prev.seed : 0);
+    gl.uniform1f(U.mixP, p); gl.uniform1f(U.mode, mode);
+    gl.uniform1f(U.time, now / 1000); gl.uniform1f(U.aspect, canvas.width / canvas.height); gl.uniform1f(U.imgAspect, IMG_ASPECT);
+    gl.uniform4f(U.motes, motes[0], motes[1], motes[2], 0);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  } else {
+    const W = canvas.width, H = canvas.height, put = (rec, cam, alpha) => {
+      const [cx, cy, w, h] = windowFor(cam), iw = rec.img.naturalWidth, ih = rec.img.naturalHeight;
+      ctx2d.globalAlpha = alpha; ctx2d.drawImage(rec.img, (cx - w / 2) * iw, (cy - h / 2) * ih, w * iw, h * ih, 0, 0, W, H);
+    };
+    ctx2d.fillStyle = "#000"; ctx2d.fillRect(0, 0, W, H);
+    if (mode) put(recA, prev.cam, 1);
+    put(recB, cur.cam, mode ? smooth(p) : 1);
+    ctx2d.globalAlpha = 1;
+  }
+  lastDrawn = k;
+}
+function smooth(x) { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); }
+
+/* resolution adapts to the device: drop it when frames run slow, raise it again when there is room */
+let quality = 1, slowFrames = 0, fastFrames = 0;
+function adapt(dtMs) {
+  if (dtMs > 26 && dtMs < 250) { slowFrames++; fastFrames = 0; } else if (dtMs < 18) { fastFrames++; slowFrames = Math.max(0, slowFrames - 1); }
+  if (slowFrames > 20 && quality > 0.5) { quality = Math.max(0.5, quality * 0.8); slowFrames = 0; }
+  if (fastFrames > 240 && quality < 1) { quality = Math.min(1, quality * 1.12); fastFrames = 0; }
+}
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2) * quality;
+  const r = canvas.getBoundingClientRect();
+  const w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
+  if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+}
+addEventListener("resize", resize);
+
+/* ---------- the clock: narration leads, the picture follows ---------- */
+const audio = new Audio(); audio.preload = "auto"; audio.playsInline = true;
+if ("preservesPitch" in audio) audio.preservesPitch = true; else if ("webkitPreservesPitch" in audio) audio.webkitPreservesPitch = true;
+let rate = Number(store.get("kali-speed")) || 1; if (!SPEEDS.includes(rate)) rate = 1;
+let T = SHOTS[0].in[0];       // program time, seconds
+let phase = "idle";           // idle | lead | clip | hold | end
+let playing = -1;             // beat whose clip is loaded
+let paused = false, started = false;
+let lastNow = performance.now();
+
+function beatAt(t) { let i = 0; for (let k = 0; k < BEATS.length; k++) if (BEATS[k].start <= t + 1e-6) i = k; return i; }
+/* Safari (iPhone, iPad) only lets a page start sound inside the tap itself; the first clip starts ~1.7 s later,
+   after the opening fade. So the tap "unlocks" the audio element by playing a quarter second of silence
+   through it, and every clip then plays through the same, now-unlocked element. Safari grants the element
+   when play() is called inside the tap, so it counts as unlocked at once. It never touches a clip that is
+   playing. (Unlocking with the first clip itself, muted, leaked its opening words on iPad.) */
+const SILENCE = "data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YdAHAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==";
+let unlocked = false;
+function unlockAudio() {
+  if (unlocked || phase === "clip") return;
+  try {
+    audio.src = SILENCE;
+    const p = audio.play();
+    if (p && p.catch) p.catch(() => {});
+    unlocked = true;
+  } catch (e) {}
+}
+function speak(i) {
+  playing = i; phase = "clip";
+  audio.src = SRC.aud(i); audio.playbackRate = rate;
+  const p = audio.play(); if (p && p.catch) p.catch(() => setPaused(true));
+  mediaMeta(i);
+  if (!MEDIA && BEATS[i + 1]) { const a = new Audio(); a.preload = "auto"; a.src = SRC.aud(i + 1); }
+}
+function tick(now) {
+  const dt = Math.min(1.0, (now - lastNow) / 1000); lastNow = now;
+  if (!started || paused || phase === "end" || phase === "idle") return;
+  if (phase === "clip") {
+    const target = BEATS[playing].start + (audio.currentTime || 0);
+    T += dt * rate;
+    const err = target - T;
+    if (Math.abs(err) > 0.3) T = target; else T += err * 0.12;     // follow the voice smoothly
+    if (audio.ended) { phase = "hold"; T = Math.max(T, lastBeatEnd(playing)); }
+  } else if (phase === "hold" || phase === "lead") {
+    T += dt * rate;
+    const nextI = phase === "lead" ? playing : playing + 1;
+    if (nextI >= BEATS.length) { if (T >= TL.totalSec) finish(); }
+    else if (T >= BEATS[nextI].start) { T = BEATS[nextI].start; speak(nextI); }
+  }
+}
+audio.addEventListener("ended", () => { if (phase === "clip") { phase = "hold"; T = Math.max(T, lastBeatEnd(playing)); } });
+
+/* jump to a beat (buttons, the text); the picture arrives softly */
+function seekBeat(i) {
+  i = clamp(i, 0, BEATS.length - 1);
+  audio.pause();
+  playing = i; phase = "lead";
+  T = Math.max(BEATS[i].start - 0.6, 0) ; if (i === 0) T = SHOTS[0].in[0];
+  paused && setPaused(false);
+  showChrome();
+}
+
+function finish() { phase = "end"; audio.pause(); releaseWake(); setTimeout(() => { $("end").classList.remove("gone"); $("bAgain").focus({ preventScroll: true }); }, 900); }
+
+/* ---------- interface ---------- */
+const ticks = [];
+MOVEMENTS.forEach((_, mi) => {
+  const g = document.createElement("div"); g.className = "mvt";
+  const mine = BEATS.filter((b) => b.m === mi + 1);
+  g.style.setProperty("--w", mine.reduce((s, b) => s + b.dur, 0).toFixed(1));
+  mine.forEach((b) => { const t = document.createElement("div"); t.className = "tick"; t.style.setProperty("--d", b.dur); const i = document.createElement("i"); t.appendChild(i); g.appendChild(t); ticks[b.n - 1] = i; });
+  $("ticks").appendChild(g);
+});
+const spans = [];
+(function buildReading() {
+  const body = $("readBody"); let mv = 0, para = 0, p = null;
+  BEATS.forEach((b, i) => {
+    if (b.m !== mv) { mv = b.m; const h = document.createElement("h3"); h.textContent = `${ROMAN[mv - 1]} \u00b7 ${MOVEMENTS[mv - 1]}`; body.appendChild(h); }
+    if (b.p !== para) { para = b.p; p = document.createElement("p"); body.appendChild(p); } else p.appendChild(document.createTextNode(" "));
+    const s = document.createElement("span"); s.className = "beat"; s.textContent = b.text.trim(); s.tabIndex = 0; s.setAttribute("role", "button");
+    s.setAttribute("aria-label", `Play from: ${b.text.trim().slice(0, 60)}`);
+    const jump = () => { unlockAudio(); closeRead(false); if (!started) begin(i); else seekBeat(i); };
+    s.addEventListener("click", jump);
+    s.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(); } });
+    p.appendChild(s); spans.push(s);
+  });
+})();
+if (SITE.homeUrl) { const a = $("lHome"); a.href = SITE.homeUrl; a.hidden = false; }
+
+const fmt = (s) => { s = Math.max(0, s); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`; };
+let shownCap = -1, shownBeat = -1;
+function ui() {
+  const bi = beatAt(Math.max(0, T));
+  BEATS.forEach((b, i) => { const f = i < bi ? 1 : i > bi ? 0 : clamp((T - b.start) / b.dur, 0, 1); ticks[i].style.transform = `scaleX(${f})`; });
+  $("where").textContent = `${ROMAN[BEATS[bi].m - 1]} \u00b7 ${bi + 1} of 30`;
+  $("clock").textContent = `${fmt(T)} / ${fmt(TL.totalSec)}`;
+  if (bi !== shownBeat) { shownBeat = bi; spans.forEach((s, k) => { s.classList.toggle("now", k === bi); if (k === bi) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); });
+    $("ticks").setAttribute("aria-valuenow", String(bi + 1)); $("ticks").setAttribute("aria-valuetext", `Beat ${bi + 1} of 30, ${MOVEMENTS[BEATS[bi].m - 1]}`); }
+  // captions follow the phrases now: each shot's words, from when they are spoken
+  let ci = -1; for (let k = 0; k < SHOTS.length; k++) if (SHOTS[k].say - 0.15 <= T) ci = k; else break;
+  if (ci !== shownCap && ci >= 0) { shownCap = ci; const capP = $("capText"); capP.style.opacity = 0; setTimeout(() => { capP.textContent = SHOTS[ci].text; capP.style.opacity = .9; }, 160); }
+}
+
+let prevFrame = performance.now();
+function frame(now) {
+  adapt(now - prevFrame); prevFrame = now;
+  resize();
+  tick(now);
+  const k = shotAt(T);
+  prefetch(k);
+  draw(T, now);
+  if (started) ui();
+  requestAnimationFrame(frame);
+}
+// when the screen is off or the tab hidden, keep the story moving between beats
+setInterval(() => { if (document.hidden) tick(performance.now()); }, 200);
+
+function setPaused(v) {
+  paused = v; stage.classList.toggle("paused", v);
+  $("bPlay").setAttribute("aria-label", v ? "Play" : "Pause");
+  $("iPlay").innerHTML = v ? '<path d="M7 5v14l12-7z"/>' : '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
+  if ("mediaSession" in navigator) navigator.mediaSession.playbackState = v ? "paused" : "playing";
+  if (v) { audio.pause(); releaseWake(); showChrome(true); }
+  else if (started) { lastNow = performance.now(); if (phase === "clip" && audio.paused && !audio.ended) { const p = audio.play(); if (p && p.catch) p.catch(() => {}); } holdWake(); showChrome(); }
+}
+function setSpeed(r) {
+  rate = r; audio.playbackRate = r; store.set("kali-speed", String(r));
+  $("bSpeed").innerHTML = `${r === 1 ? "1" : String(r).replace(/^0/, "")}&times;`;
+  $("bSpeed").setAttribute("aria-label", `Speed, ${r} times. Change speed`);
+}
+$("bSpeed").addEventListener("click", () => { setSpeed(SPEEDS[(SPEEDS.indexOf(rate) + 1) % SPEEDS.length]); showChrome(); });
+setSpeed(rate);
+
+let chromeT = null;
+function showChrome(stay) { stage.classList.remove("chrome-off"); clearTimeout(chromeT); if (!stay && started && !paused) chromeT = setTimeout(() => { if (!stage.contains(document.activeElement) || document.activeElement === document.body) stage.classList.add("chrome-off"); }, 3200); }
+let lastPointer = "mouse";
+$("tapper").addEventListener("pointerdown", (e) => { lastPointer = e.pointerType || "mouse"; });
+$("tapper").addEventListener("click", () => {
+  if (!started) return;
+  if (lastPointer === "mouse") { setPaused(!paused); showChrome(); return; }
+  if (stage.classList.contains("chrome-off")) showChrome(); else stage.classList.add("chrome-off");
+});
+stage.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") showChrome(); });
+stage.addEventListener("focusin", () => showChrome(true));
+stage.addEventListener("focusout", () => showChrome());
+$("bPlay").addEventListener("click", () => { if (paused) unlockAudio(); setPaused(!paused); });
+$("bNext").addEventListener("click", () => { seekBeat(beatAt(Math.max(0, T)) + 1); });
+$("bBack").addEventListener("click", () => { const bi = beatAt(Math.max(0, T)); seekBeat(T - BEATS[bi].start > 2 ? bi : bi - 1); });
+document.addEventListener("keydown", (e) => {
+  if ($("read").classList.contains("open")) { if (e.key === "Escape") closeRead(true); return; }
+  if (!started) return;
+  if (e.key === " " || e.key === "k") { e.preventDefault(); setPaused(!paused); }
+  else if (e.key === "ArrowRight") $("bNext").click();
+  else if (e.key === "ArrowLeft") $("bBack").click();
+  else if (e.key === "c") $("bCap").click();
+  else if (e.key === ">" || e.key === "]") setSpeed(SPEEDS[Math.min(SPEEDS.length - 1, SPEEDS.indexOf(rate) + 1)]);
+  else if (e.key === "<" || e.key === "[") setSpeed(SPEEDS[Math.max(0, SPEEDS.indexOf(rate) - 1)]);
+  else return;
+  showChrome();
+});
+
+function setCaps(v) { $("cap").hidden = !v; $("bCap").setAttribute("aria-pressed", String(v)); store.set("kali-captions", v ? "1" : "0"); }
+$("bCap").addEventListener("click", () => { setCaps($("cap").hidden); showChrome(); });
+setCaps(store.get("kali-captions") === "1");
+let wasPaused = false, returnFocus = null;
+function openRead() { returnFocus = document.activeElement; wasPaused = paused; if (started) setPaused(true); $("read").classList.add("open"); setTimeout(() => { $("bClose").focus({ preventScroll: true }); const s = spans[beatAt(Math.max(0, T))], body = $("readBody"); if (s && started) body.scrollTop = Math.max(0, s.offsetTop - body.clientHeight / 2); }, 60); }
+function closeRead(resume) { $("read").classList.remove("open"); if (resume && started && !wasPaused) setPaused(false); (returnFocus || $("bRead")).focus?.({ preventScroll: true }); }
+$("bRead").addEventListener("click", openRead);
+$("bReadFirst").addEventListener("click", openRead);
+$("bClose").addEventListener("click", () => closeRead(true));
+$("read").addEventListener("keydown", (e) => { if (e.key !== "Tab") return; const f = [...$("read").querySelectorAll("button, .beat")]; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } });
+
+function mediaMeta(i) {
+  if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
+  const s = SHOTS.find((x) => x.beat === i + 1);
+  navigator.mediaSession.metadata = new MediaMetadata({ title: `KALI \u00b7 ${MOVEMENTS[BEATS[i].m - 1]}`, artist: "Krishna Somandepalli", album: "Between the Lines", artwork: [{ src: SRC.img(s.img), sizes: SIZE === "2160" ? "3840x2160" : "1920x1080", type: "image/jpeg" }] });
+}
+if ("mediaSession" in navigator) {
+  const h = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch (e) {} };
+  h("play", () => setPaused(false)); h("pause", () => setPaused(true));
+  h("nexttrack", () => $("bNext").click()); h("previoustrack", () => $("bBack").click());
+}
+let wake = null;
+async function holdWake() { try { if (!wake && navigator.wakeLock) { wake = await navigator.wakeLock.request("screen"); wake.addEventListener("release", () => { wake = null; }); } } catch (e) { wake = null; } }
+function releaseWake() { try { wake?.release(); } catch (e) {} wake = null; }
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && started && !paused && phase !== "end") holdWake(); });
+
+function begin(at) {
+  started = true; stage.classList.add("started"); $("start").classList.add("gone"); holdWake();
+  lastNow = performance.now();
+  if (at) seekBeat(at); else { playing = 0; phase = "lead"; T = SHOTS[0].in[0]; }
+  showChrome();
+}
+$("bBegin").addEventListener("click", () => { unlockAudio(); begin(0); });
+$("bAgain").addEventListener("click", () => { unlockAudio(); $("end").classList.add("gone"); holdWake(); playing = 0; phase = "lead"; T = SHOTS[0].in[0]; lastNow = performance.now(); setPaused(false); });
+$("bReadEnd").addEventListener("click", () => { wasPaused = true; openRead(); });
+
+/* ---------- the lamp on the opening and closing cards: 00 in the bottom-left corner, motes rising from its flame ---------- */
+(function lampScenes() {
+  const FLAME = [0.388, 0.658];          // the flame's centre in the landscape 00 (centroid of its warm light, red > 200, measured)
+  const lamp = new Image(); lamp.decoding = "async"; lamp.src = SRC.img("00");
+  const scenes = [...document.querySelectorAll(".lampscene")].map((c) => ({ c, ctx: c.getContext("2d"), card: c.parentElement, off: null, w: 0, h: 0, motes: [], last: 0 }));
+  function layout(s) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), r = s.c.getBoundingClientRect();
+    const w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
+    if (w === s.w && h === s.h && s.off) return;
+    s.c.width = s.w = w; s.c.height = s.h = h; s.dpr = dpr;
+    if (!lamp.complete || !lamp.naturalWidth) { s.off = null; return; }
+    // the lamp, about two-thirds of the screen tall, its flame low in the left corner
+    const lh = Math.min(h * 0.6, w * 1.2), lw = lh * lamp.naturalWidth / lamp.naturalHeight;
+    s.fx = w * 0.22; s.fy = h * 0.845; s.lh = lh;
+    const x = s.fx - FLAME[0] * lw, y = s.fy - FLAME[1] * lh;
+    const off = document.createElement("canvas"); off.width = w; off.height = h;
+    const o = off.getContext("2d");
+    o.drawImage(lamp, x, y, lw, lh);
+    // its edges dissolve into the dark of the card: no picture-in-a-box
+    o.globalCompositeOperation = "destination-in";
+    const g = o.createRadialGradient(s.fx, s.fy - lh * 0.12, lh * 0.08, s.fx, s.fy - lh * 0.12, lh * 0.56);
+    g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(0.55, "rgba(0,0,0,.75)"); g.addColorStop(1, "rgba(0,0,0,0)");
+    o.fillStyle = g; o.fillRect(0, 0, w, h);
+    s.off = off;
+  }
+  function noise(t, k) { return 0.5 + 0.3 * Math.sin(t * 7.1 + k) * Math.sin(t * 3.3 + k * 2.1) + 0.2 * Math.sin(t * 17.3 + k * 0.7); }
+  function draw(s, now) {
+    layout(s);
+    const { ctx, w, h } = s; const t = now / 1000, dt = s.last ? Math.min(0.1, (now - s.last) / 1000) : 0; s.last = now;
+    ctx.clearRect(0, 0, w, h);
+    if (!s.off) return;
+    const fl = reduce ? 0.5 : noise(t, 1);
+    ctx.globalAlpha = 0.86 + 0.14 * fl; ctx.drawImage(s.off, 0, 0); ctx.globalAlpha = 1;
+    // the flame's warmth breathes
+    ctx.globalCompositeOperation = "lighter";
+    const gl = ctx.createRadialGradient(s.fx, s.fy - s.lh * 0.04, 0, s.fx, s.fy - s.lh * 0.04, s.lh * 0.22);
+    gl.addColorStop(0, `rgba(255,190,90,${0.16 + 0.1 * fl})`); gl.addColorStop(1, "rgba(255,160,60,0)");
+    ctx.fillStyle = gl; ctx.fillRect(0, 0, w, h);
+    if (!reduce) {
+      // motes rise from the flame, drifting the way it leans (right), wavering, twinkling, fading
+      const d = s.dpr;
+      if (s.motes.length < 46 && Math.random() < dt * 7) s.motes.push({ x: s.fx + (Math.random() - 0.4) * s.lh * 0.06, y: s.fy - s.lh * (0.02 + Math.random() * 0.06),
+        vx: (4 + Math.random() * 10) * d, vy: -(16 + Math.random() * 26) * d, ph: Math.random() * 6.28, r: (0.8 + Math.random() * 1.6) * d, age: 0, life: 4 + Math.random() * 6 });
+      for (const m of s.motes) {
+        m.age += dt; m.x += (m.vx + Math.sin(t * 1.3 + m.ph) * 7 * d) * dt; m.y += m.vy * dt; m.vy *= 1 - 0.04 * dt;
+        const a = Math.min(1, m.age / 0.8) * Math.max(0, 1 - m.age / m.life) * (0.55 + 0.45 * Math.sin(t * (2 + m.ph) + m.ph));
+        const g2 = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 3);
+        g2.addColorStop(0, `rgba(255,226,150,${0.9 * a})`); g2.addColorStop(1, "rgba(255,200,110,0)");
+        ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(m.x, m.y, m.r * 3, 0, 6.2832); ctx.fill();
+      }
+      s.motes = s.motes.filter((m) => m.age < m.life && m.y > -20);
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+  lamp.onload = () => scenes.forEach((s) => { s.w = 0; });
+  (function loop(now) {
+    for (const s of scenes) if (!s.card.classList.contains("gone")) draw(s, now);
+    requestAnimationFrame(loop);
+  })(performance.now());
+})();
+
+/* ---------- about this story ---------- */
+let aboutWasPaused = false, aboutReturn = null;
+function openAbout() { aboutReturn = document.activeElement; aboutWasPaused = paused; if (started) setPaused(true); $("about").classList.add("open"); setTimeout(() => $("bAboutClose").focus({ preventScroll: true }), 60); }
+function closeAbout() { $("about").classList.remove("open"); if (started && !aboutWasPaused && phase !== "end") setPaused(false); aboutReturn?.focus?.({ preventScroll: true }); }
+document.querySelectorAll("button.info").forEach((b) => b.addEventListener("click", openAbout));
+$("bAboutClose").addEventListener("click", closeAbout);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("about").classList.contains("open")) closeAbout(); }, true);
+
+/* read-only hooks for automated checks */
+window.__kali = { peek(t) { T = t; }, get quality() { return quality; }, get t() { return T; }, get phase() { return phase; }, get shot() { return SHOTS[shotAt(T)].id; }, gl: Boolean(R), seekBeat };
+
+/* behind the title card: the first shot, already in its pool of light */
+T = SHOTS[0].in[1];
+stage.classList.add("chrome-off");
+$("bBegin").focus({ preventScroll: true });
+requestAnimationFrame((n) => { lastNow = n; frame(n); });
+
+</script>
+
+</body>
+</html>
