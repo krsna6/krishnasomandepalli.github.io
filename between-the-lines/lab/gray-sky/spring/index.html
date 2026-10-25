@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#07080a">
+<title>Gray sky · spring study</title>
+<link rel="stylesheet" href="../shell.css">
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="cap" id="cap" aria-live="off"></div>
+<div class="bar"><button id="bPlay" type="button">Play</button><button id="bRestart" type="button">Restart</button><button id="bCap" type="button">Words: on</button></div>
+<div class="start" id="start"><div><h1>Study · spring</h1><h2>Gray sky</h2><p>A coil that her voice presses, word by word. About a minute, with sound.</p><button id="begin" type="button">Begin</button></div></div>
+<script type="module">
+/*
+ * The spring: one coil, alone at night. Physics, not animation: the coil is a slinky-like chain of masses
+ * (axial waves run along it, its turns bunching and spreading; lateral waves bend it), stepped at 240 Hz
+ * up to her voice's clock. Each word pushes it, from the voice's own measures, normalised to this take's range:
+ *   loudness (p10..p95 -> 0..1)  how hard (to the power 1.6, so quiet words barely stir it and loud ones strike)
+ *   pitch    (p10..p90 -> 0..1)  where along the coil the push lands (low left, high right)
+ *   pitch slope                  which way the push runs along the coil (rising: right, falling: left)
+ *   length of the word           how wide the push is
+ * Every "hope" winds it tighter (its resting length shrinks; a damped spring carries it there, overshooting a
+ * little), "...shall pass." lets some of that go, "Hope..." after the silence is a single pluck, and the last
+ * line damps it to rest, still wound. The blue in the light rises on each hope and fades.
+ */
+import * as THREE from "../three.module.min.js";
+import { VOICE, runStudy } from "../shell.js";
+
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x07080a);
+scene.fog = new THREE.Fog(0x07080a, 7, 16);
+const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+
+// ---- an environment for the metal to reflect: a dark room, a warm softbox, a cool panel
+{
+  const env = new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.SphereGeometry(20, 32, 16), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.012, 0.013, 0.016), side: THREE.BackSide })));
+  const box = new THREE.Mesh(new THREE.PlaneGeometry(10, 6), new THREE.MeshBasicMaterial({ color: new THREE.Color(3.2, 2.5, 1.7), side: THREE.DoubleSide }));
+  box.position.set(-6, 7, 5); box.lookAt(0, 0, 0); env.add(box);
+  const cool = new THREE.Mesh(new THREE.PlaneGeometry(6, 10), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.35, 0.55, 1.1), side: THREE.DoubleSide }));
+  cool.position.set(8, 2, -4); cool.lookAt(0, 0, 0); env.add(cool);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(env, 0.02).texture;
+}
+
+const key = new THREE.DirectionalLight(0xffe2b8, 2.4);
+key.position.set(-3, 6, 3);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -4, right: 4, top: 3, bottom: -3, near: 1, far: 15 });
+key.shadow.radius = 6;
+key.shadow.bias = -0.0004;
+scene.add(key);
+const rim = new THREE.DirectionalLight(0x6f9cff, 0.25);
+rim.position.set(4, 1.5, -4);
+scene.add(rim);
+scene.add(new THREE.AmbientLight(0xffffff, 0.04));
+
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: 0x0c0d0f, roughness: 0.82, metalness: 0 }));
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.95;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// ---- the coil's physics
+const M = 160;                 // masses along the coil
+const DT = 1 / 240;            // fixed step
+const LENGTH = 4.2;            // at rest, world units
+const KA = 6400, KL = 2500, KR = 4; // axial stiffness, lateral tension, lateral restoring pull (all per unit mass)
+const CA0 = 1.2, CL0 = 1.0;    // damping
+const u = new Float64Array(M), uv = new Float64Array(M);   // axial displacement, velocity
+const y = new Float64Array(M), yv = new Float64Array(M);   // lateral (up)
+const z = new Float64Array(M), zv = new Float64Array(M);   // lateral (toward the viewer)
+const fu = new Float64Array(M), fy = new Float64Array(M), fz = new Float64Array(M);
+let simT, scale, scaleV, scaleTarget, glow, nextEvent;
+
+// the moments the text itself sets: every hope winds it; "pass." releases; "Hope..." plucks; the last line rests it
+const W = VOICE.words;
+const iLastHope = W.findIndex((w) => w.t.startsWith("Hope..."));
+const iPass = W.findIndex((w) => w.t === "pass.");
+const iRest = iLastHope + 1;
+const events = [];
+W.forEach((w, i) => {
+  if (w.hope && i !== iLastHope) events.push({ t: w.s, kind: "wind" });
+});
+events.push({ t: W[iPass].s, kind: "release" });
+events.push({ t: W[iLastHope].s, kind: "pluck" });
+events.sort((a, b) => a.t - b.t);
+const restFrom = W[iRest].s;
+
+function reset() {
+  u.fill(0); uv.fill(0); y.fill(0); yv.fill(0); z.fill(0); zv.fill(0);
+  simT = 0; scale = 1; scaleV = 0; scaleTarget = 1; glow = 0; nextEvent = 0;
+}
+
+const gauss = (i, c, s) => Math.exp(-0.5 * ((i - c) / s) ** 2);
+
+function step() {
+  const t = simT;
+  // events at word starts
+  while (nextEvent < events.length && events[nextEvent].t <= t) {
+    const e = events[nextEvent++];
+    if (e.kind === "wind") { scaleTarget = Math.max(0.42, scaleTarget * 0.86); glow = Math.min(1, glow + 0.6); }
+    if (e.kind === "release") scaleTarget += (1 - scaleTarget) * 0.4;
+    if (e.kind === "pluck") {
+      for (let i = 1; i < M - 1; i++) { const g = gauss(i, (M - 1) * 0.5, 9); yv[i] += 2.4 * g; zv[i] += 0.8 * g; }
+      glow = Math.min(1, glow + 0.8);
+    }
+  }
+  // the words she is saying now push it
+  fu.fill(0); fy.fill(0); fz.fill(0);
+  for (const w of W) {
+    if (w.s > t) break;
+    if (t > w.e) continue;
+    const L = Math.pow(w.L, 1.6);
+    const P = w.P ?? 0.5;
+    const c = (0.1 + 0.8 * P) * (M - 1);
+    const sig = 4 + 14 * Math.min(1, (w.e - w.s) / 0.6);
+    const dir = (w.S ?? 1) >= 0 ? 1 : -1;
+    for (let i = 1; i < M - 1; i++) {
+      const g = gauss(i, c, sig);
+      fu[i] += 1.6 * L * dir * g;
+      fy[i] += 3.5 * L * g;
+      fz[i] += 2.5 * (P - 0.5) * L * g;
+    }
+  }
+  // the last line brings it to rest
+  const settle = t < restFrom ? 1 : 1 + 5 * Math.min(1, (t - restFrom) / 4);
+  const CA = CA0 * settle, CL = CL0 * settle;
+  // discrete wave equations, per node: waves run sqrt(K) nodes a second (axial 80, lateral 50)
+  for (let i = 1; i < M - 1; i++) {
+    uv[i] += DT * (KA * (u[i + 1] - 2 * u[i] + u[i - 1]) - CA * uv[i] + fu[i]);
+    yv[i] += DT * (KL * (y[i + 1] - 2 * y[i] + y[i - 1]) - KR * y[i] - CL * yv[i] + fy[i]);
+    zv[i] += DT * (KL * (z[i + 1] - 2 * z[i] + z[i - 1]) - KR * z[i] - CL * zv[i] + fz[i]);
+  }
+  for (let i = 1; i < M - 1; i++) { u[i] += DT * uv[i]; y[i] += DT * yv[i]; z[i] += DT * zv[i]; }
+  // its resting length follows the winding like a damped spring (a little overshoot)
+  scaleV += DT * (40 * (scaleTarget - scale) - 5 * scaleV);
+  scale += DT * scaleV;
+  glow *= Math.exp(-DT / 2.5);
+  simT += DT;
+}
+
+function stepTo(T) {
+  if (T < simT - 1e-6) reset();
+  let n = 0;
+  while (simT + DT <= T && n++ < 2400) step();
+}
+
+// ---- the coil's shape: a helix laid along the chain, drawn as a lit tube
+const TURNS = 34, SEG = 40, RADIUS = 0.3, WIRE = 0.018, RS = 10;
+const K = TURNS * SEG + 1;
+const pos = new Float32Array(K * (RS + 1) * 3), nor = new Float32Array(K * (RS + 1) * 3);
+const idx = [];
+for (let j = 0; j < K - 1; j++) for (let r = 0; r < RS; r++) {
+  const a = j * (RS + 1) + r, b = (j + 1) * (RS + 1) + r;
+  idx.push(a, b, a + 1, b, b + 1, a + 1);
+}
+const geo = new THREE.BufferGeometry();
+geo.setAttribute("position", new THREE.BufferAttribute(pos, 3).setUsage(THREE.DynamicDrawUsage));
+geo.setAttribute("normal", new THREE.BufferAttribute(nor, 3).setUsage(THREE.DynamicDrawUsage));
+geo.setIndex(idx);
+const coil = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ color: 0xd9b27a, metalness: 1, roughness: 0.26, clearcoat: 0.4, clearcoatRoughness: 0.3 }));
+coil.castShadow = true;
+coil.frustumCulled = false;
+scene.add(coil);
+
+const C = new Float32Array(K * 3), RD = new Float32Array(K * 3);
+const sample = (arr, f) => { const i = Math.min(M - 2, Math.floor(f)); const a = f - i; return arr[i] * (1 - a) + arr[i + 1] * a; };
+function shape() {
+  for (let j = 0; j < K; j++) {
+    const s = j / (K - 1), f = s * (M - 1);
+    const th = 2 * Math.PI * TURNS * s;
+    const ca = Math.cos(th), sa = Math.sin(th);
+    C[j * 3] = (s - 0.5) * LENGTH * scale + sample(u, f);
+    C[j * 3 + 1] = RADIUS * ca + sample(y, f);
+    C[j * 3 + 2] = RADIUS * sa + sample(z, f);
+    RD[j * 3] = 0; RD[j * 3 + 1] = ca; RD[j * 3 + 2] = sa;
+  }
+  const t = new THREE.Vector3(), n = new THREE.Vector3(), b = new THREE.Vector3(), d = new THREE.Vector3();
+  for (let j = 0; j < K; j++) {
+    const j0 = Math.max(0, j - 1), j1 = Math.min(K - 1, j + 1);
+    t.set(C[j1 * 3] - C[j0 * 3], C[j1 * 3 + 1] - C[j0 * 3 + 1], C[j1 * 3 + 2] - C[j0 * 3 + 2]).normalize();
+    n.set(RD[j * 3], RD[j * 3 + 1], RD[j * 3 + 2]);
+    n.addScaledVector(t, -n.dot(t)).normalize();
+    b.crossVectors(t, n);
+    for (let r = 0; r <= RS; r++) {
+      const ph = (r / RS) * Math.PI * 2;
+      d.copy(n).multiplyScalar(Math.cos(ph)).addScaledVector(b, Math.sin(ph));
+      const k = (j * (RS + 1) + r) * 3;
+      pos[k] = C[j * 3] + WIRE * d.x; pos[k + 1] = C[j * 3 + 1] + WIRE * d.y; pos[k + 2] = C[j * 3 + 2] + WIRE * d.z;
+      nor[k] = d.x; nor[k + 1] = d.y; nor[k + 2] = d.z;
+    }
+  }
+  geo.attributes.position.needsUpdate = true;
+  geo.attributes.normal.needsUpdate = true;
+}
+
+let aspect = 1;
+function resize(w, h) {
+  renderer.setSize(w, h, false);
+  aspect = w / h;
+  camera.aspect = aspect;
+  camera.updateProjectionMatrix();
+}
+function render(T) {
+  shape();
+  rim.intensity = 0.25 + 1.6 * glow;
+  // keep the whole coil in frame at any aspect, with a slow drift
+  const vf = THREE.MathUtils.degToRad(camera.fov);
+  const hf = 2 * Math.atan(Math.tan(vf / 2) * aspect);
+  const D = Math.max(4.6, (LENGTH / 2 + 0.7) / Math.tan(hf / 2));
+  const a = 0.32 + 0.12 * Math.sin(T * 0.07);
+  camera.position.set(Math.sin(a) * D, 0.85 + 0.15 * Math.sin(T * 0.05), Math.cos(a) * D);
+  camera.lookAt(0, -0.05, 0);
+  renderer.render(scene, camera);
+}
+
+window.__study = { reset, stepTo, render, resize, state: () => ({ simT, scale, maxU: Math.max(...u.map(Math.abs)), maxY: Math.max(...y.map(Math.abs)), maxZ: Math.max(...z.map(Math.abs)) }) };
+runStudy(window.__study);
+</script>
+</body>
+</html>
