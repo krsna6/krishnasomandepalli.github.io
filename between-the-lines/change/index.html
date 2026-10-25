@@ -2805,6 +2805,8 @@ function keepFor(k) {
   const keep = new Set([...beatsNeeding(DATA.beats, k), ...beatsNeeding(DATA.beats, k + 1)]);
   for (const i of [...decoded.keys()]) if (!keep.has(i)) { decoded.delete(i); have.delete(i); }
   keep.forEach((i) => plateImage(i).catch(() => {}));
+  // the next beat's morph fields too, so her voice never waits at a beat's first word
+  if (k + 1 < B.length) bringFields(k + 1).catch(() => {});
 }
 const fieldsOf = new Map(); // beat -> its morph fields, decoded
 const bringFields = (k) => fieldsOf.has(k) ? Promise.resolve(fieldsOf.get(k)) : Promise.all((B[k].morphs ?? []).map((m) => (m ? new Promise((ok, no) => { const im = new Image(); im.onload = () => ok({ image: im, scale: m.scale }); im.onerror = no; im.src = m.image; }) : null))).then((fs) => { fieldsOf.set(k, fs); return fs; });
@@ -2930,6 +2932,7 @@ async function seek(k, go) {
 async function waitFor(k) {
   busy = true;
   audio.pause();
+  audio.currentTime = B[k].offset; // she starts the beat again from its first word
   status("Loading the painting…");
   try { await prepare(k); } catch (e) { status("A painting did not load. Check the connection and press play."); busy = false; setPlaying(false); return; }
   status("");
