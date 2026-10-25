@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#07080a">
+<title>Gray sky · sand study</title>
+<link rel="stylesheet" href="../shell.css">
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="cap" id="cap" aria-live="off"></div>
+<div class="bar"><button id="bPlay" type="button">Play</button><button id="bRestart" type="button">Restart</button><button id="bCap" type="button">Words: on</button></div>
+<div class="start" id="start"><div><h1>Study · sand</h1><h2>Gray sky</h2><p>Sand her voice lifts, word by word, into a beam of light. About a minute, with sound.</p><button id="begin" type="button">Begin</button></div></div>
+<script type="module">
+/*
+ * The sand: a dune of grains in the dark under one beam of light, simulated on the graphics card
+ * (65,536 grains on a phone, 147,456 elsewhere), stepped at 120 Hz up to her voice's clock.
+ * Each word lifts grains, from the voice's own measures, normalised to this take's range:
+ *   loudness (p10..p95 -> 0..1)  how high it throws them (to the power 1.4) and how many go up
+ *   pitch    (p10..p90 -> 0..1)  where along the dune it lifts (low left, high right)
+ *   pitch slope                  which way the plume swirls
+ *   length of the word           how wide the plume is
+ * Grains at rest stay where they lie until a word lifts them; aloft they feel gravity, air and a soft
+ * swirling wind, and where they land they stay, so the dune keeps a memory of what was said.
+ * Every "hope" lightens the air (gravity eases, the wind rises): more and more stays suspended.
+ * "...shall pass." lets half of it go; "Hope...", after the silence, throws one tall thin plume;
+ * at "distraction" the air gives out and everything comes down.
+ */
+import * as THREE from "../three.module.min.js";
+import { VOICE, runStudy } from "../shell.js";
+
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+renderer.setClearColor(0x07080a, 1);
+const gl = renderer.getContext();
+const FLOAT_OK = renderer.capabilities.isWebGL2 && !!gl.getExtension("EXT_color_buffer_float");
+const SIDE = matchMedia("(pointer: coarse)").matches ? 256 : 384;
+const N = SIDE * SIDE;
+
+// ---- the simulation's state: positions (xyz, w = 1 at rest) and velocities (xyz, w = the grain's own random)
+const rtOpts = { type: FLOAT_OK ? THREE.FloatType : THREE.HalfFloatType, format: THREE.RGBAFormat, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, depthBuffer: false, stencilBuffer: false };
+let pos = [new THREE.WebGLRenderTarget(SIDE, SIDE, rtOpts), new THREE.WebGLRenderTarget(SIDE, SIDE, rtOpts)];
+let vel = [new THREE.WebGLRenderTarget(SIDE, SIDE, rtOpts), new THREE.WebGLRenderTarget(SIDE, SIDE, rtOpts)];
+
+// the dune at the start: a long low drift, denser in the middle; every grain at rest
+function mulberry(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const P0 = new Float32Array(N * 4), V0 = new Float32Array(N * 4);
+{
+  const R = mulberry(20261025);
+  for (let i = 0; i < N; i++) {
+    const g = () => (R() + R() + R() - 1.5) / 1.5;      // a soft bell
+    const x = g() * 3.2, z = g() * 1.0;
+    const top = 0.42 * Math.exp(-(x * x) / 5 - (z * z) / 0.8);
+    P0[i * 4] = x; P0[i * 4 + 1] = top * Math.pow(R(), 0.6) + 0.004; P0[i * 4 + 2] = z; P0[i * 4 + 3] = 1;
+    V0[i * 4 + 3] = R();
+  }
+}
+const initPos = new THREE.DataTexture(P0, SIDE, SIDE, THREE.RGBAFormat, THREE.FloatType); initPos.needsUpdate = true;
+const initVel = new THREE.DataTexture(V0, SIDE, SIDE, THREE.RGBAFormat, THREE.FloatType); initVel.needsUpdate = true;
+
+const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const quadScene = new THREE.Scene();
+const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2));
+quadScene.add(quad);
+const VS = "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }";
+const copyMat = new THREE.ShaderMaterial({ uniforms: { t: { value: null } }, vertexShader: VS, fragmentShader: "uniform sampler2D t; varying vec2 vUv; void main(){ gl_FragColor = texture2D(t, vUv); }" });
+
+const IMP = 4; // at most this many words at once
+const velMat = new THREE.ShaderMaterial({
+  uniforms: {
+    tPos: { value: null }, tVel: { value: null }, dt: { value: 1 / 120 }, time: { value: 0 },
+    suspend: { value: 0 }, nImp: { value: 0 },
+    imp: { value: Array.from({ length: IMP }, () => new THREE.Vector4()) },   // x, z, radius, strength
+    impB: { value: Array.from({ length: IMP }, () => new THREE.Vector4()) },  // swirl, share lifted, word id, start
+  },
+  vertexShader: VS,
+  fragmentShader: `
+    precision highp float;
+    uniform sampler2D tPos, tVel; uniform float dt, time, suspend; uniform int nImp;
+    uniform vec4 imp[${IMP}], impB[${IMP}];
+    varying vec2 vUv;
+    float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+    // a soft swirling wind: the curl of a few slow sine fields (divergence-free, so the dust curls and drifts)
+    vec3 wind(vec3 p, float t){
+      float a = 0.9, b = 1.3;
+      vec3 w;
+      w.x = sin(p.y * b + t * 0.31) * cos(p.z * a - t * 0.23) + 0.5 * sin(p.y * 2.7 - t * 0.5);
+      w.y = sin(p.z * a + t * 0.27) * cos(p.x * 0.6 + t * 0.19) * 0.6;
+      w.z = sin(p.x * a - t * 0.21) * cos(p.y * b + t * 0.29);
+      return w;
+    }
+    void main(){
+      vec4 P = texture2D(tPos, vUv), V = texture2D(tVel, vUv);
+      vec3 p = P.xyz, v = V.xyz; float rest = P.w, seed = V.w;
+      // the words she is saying lift grains near where they land
+      for (int k = 0; k < ${IMP}; k++) {
+        if (k >= nImp) break;
+        vec2 d = p.xz - imp[k].xy;
+        float r = imp[k].z, dist = length(d);
+        if (dist < r && rest > 0.5) {   // a word lifts grains that lie still: one throw each
+          float share = impB[k].y;
+          if (hash(vec2(seed * 91.7, impB[k].z)) < share) {
+            float f = pow(1.0 - dist / r, 0.6) * imp[k].w * (0.55 + 0.45 * hash(vec2(seed, impB[k].z + 3.1)));
+            // each grain leaves in its own direction (no rings): mostly up, a little out, swirling one way
+            float ang = 6.2831853 * hash(vec2(seed * 7.3, impB[k].z + 1.7));
+            vec2 own = vec2(cos(ang), sin(ang));
+            vec2 out2 = dist > 1e-4 ? d / dist : own;
+            vec2 tang = vec2(-out2.y, out2.x) * impB[k].x;
+            float up = 0.7 + 0.6 * hash(vec2(seed * 3.1, impB[k].z + 5.3));
+            v = vec3((own * 0.3 + tang * 0.3) * f * 0.4, f * up);
+            rest = 0.0;
+          }
+        }
+      }
+      if (rest < 0.5) {
+        float G = 2.4 * (1.0 - 0.9 * suspend);
+        v.y -= G * dt;
+        v += wind(p, time) * (0.35 + 1.8 * suspend) * dt;
+        v.y += suspend * 1.6 * max(0.0, wind(p + 3.7, time * 0.7).y + 0.45) * dt;
+        // hope holds them up: while the air is light, grains drift toward a band above the dune and hang there
+        v.y += suspend * (1.15 + 0.45 * sin(seed * 40.0) - p.y) * 1.6 * dt;
+        v.xz -= p.xz * vec2(0.05, 0.12) * (0.3 + suspend) * dt;   // and the drift stays over the dune
+        v *= exp(-0.9 * dt);
+      } else v = vec3(0.0);
+      gl_FragColor = vec4(v, seed);
+    }`,
+});
+const posMat = new THREE.ShaderMaterial({
+  uniforms: { tPos: { value: null }, tVel: { value: null }, dt: { value: 1 / 120 } },
+  vertexShader: VS,
+  fragmentShader: `
+    precision highp float;
+    uniform sampler2D tPos, tVel; uniform float dt; varying vec2 vUv;
+    void main(){
+      vec4 P = texture2D(tPos, vUv), V = texture2D(tVel, vUv);
+      vec3 p = P.xyz; float rest = P.w;
+      if (dot(V.xyz, V.xyz) > 0.0) rest = 0.0;
+      if (rest < 0.5) {
+        p += V.xyz * dt;
+        float ground = 0.004 + 0.06 * V.w;          // where it lands: a thin layer, each grain its own height
+        if (p.y <= ground && V.y <= 0.0) { p.y = ground; rest = 1.0; }
+        p.xz = clamp(p.xz, vec2(-7.0, -4.0), vec2(7.0, 4.0));
+      }
+      gl_FragColor = vec4(p, rest);
+    }`,
+});
+
+function pass(mat, target) { quad.material = mat; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); renderer.setRenderTarget(null); }
+
+// ---- the words, and the moments the text sets
+const W = VOICE.words;
+const iLastHope = W.findIndex((w) => w.t.startsWith("Hope..."));
+const iPass = W.findIndex((w) => w.t === "pass.");
+const iFall = W.findIndex((w, i) => i > iLastHope && w.t.startsWith("distraction"));
+const DT = 1 / 120;
+let simT, suspend, target, tau, nextHope;
+const hopeTimes = W.filter((w, i) => w.hope && i !== iLastHope).map((w) => w.s);
+
+function reset() {
+  copyMat.uniforms.t.value = initPos; pass(copyMat, pos[0]);
+  copyMat.uniforms.t.value = initVel; pass(copyMat, vel[0]);
+  simT = 0; suspend = 0; target = 0; tau = 1.4; nextHope = 0;
+}
+
+function step() {
+  const t = simT;
+  while (nextHope < hopeTimes.length && hopeTimes[nextHope] <= t) { target = Math.min(1, target + 0.2); nextHope++; }
+  if (t >= W[iPass].s && t < W[iPass].s + DT) target *= 0.5;
+  if (t >= W[iFall].s) { target = 0; tau = 0.5; }
+  suspend += (target - suspend) * (1 - Math.exp(-DT / tau));
+
+  const act = [];
+  W.forEach((w, i) => { if (w.s <= t && t <= w.e && act.length < IMP) act.push([w, i]); });
+  const u = velMat.uniforms;
+  u.nImp.value = act.length;
+  act.forEach(([w, i], k) => {
+    const L = Math.pow(w.L, 1.4);
+    const P = w.P ?? 0.5;
+    const plume = i === iLastHope;
+    const x = (P - 0.5) * 5.2;
+    const z = ((Math.sin(i * 12.9898) * 43758.5453) % 1) * 0.9;
+    const r = plume ? 0.3 : 0.6 + 1.0 * Math.min(1, (w.e - w.s) / 0.6);
+    const strength = plume ? 4.2 : 1.1 + 2.4 * L;   // a throw, in units a second: about 0.25 to 2 high
+    u.imp.value[k].set(plume ? 0 : x, plume ? 0 : z, r, strength);
+    u.impB.value[k].set((w.S ?? 1) >= 0 ? 1 : -1, plume ? 0.9 : 0.35 + 0.55 * L, i + 0.5, w.s);
+  });
+  u.tPos.value = pos[0].texture; u.tVel.value = vel[0].texture; u.time.value = t; u.suspend.value = suspend;
+  pass(velMat, vel[1]);
+  posMat.uniforms.tPos.value = pos[0].texture; posMat.uniforms.tVel.value = vel[1].texture;
+  pass(posMat, pos[1]);
+  pos = [pos[1], pos[0]]; vel = [vel[1], vel[0]];
+  simT += DT;
+}
+function stepTo(T) {
+  if (T < simT - 1e-6) reset();
+  let n = 0;
+  while (simT + DT <= T && n++ < 12) step();   // at most 12 steps a frame; a slow device trails, it never jumps
+}
+
+// ---- drawing: each grain a point of dust, lit by one beam from the upper left
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
+const refs = new Float32Array(N * 2);
+for (let i = 0; i < N; i++) { refs[i * 2] = ((i % SIDE) + 0.5) / SIDE; refs[i * 2 + 1] = (Math.floor(i / SIDE) + 0.5) / SIDE; }
+const pg = new THREE.BufferGeometry();
+pg.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
+pg.setAttribute("ref", new THREE.BufferAttribute(refs, 2));
+const dustMat = new THREE.ShaderMaterial({
+  uniforms: { tPos: { value: null }, size: { value: 1 }, dpr: { value: 1 } },
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  vertexShader: `
+    uniform sampler2D tPos; uniform float size, dpr; attribute vec2 ref; varying vec3 vCol; varying float vA;
+    void main(){
+      vec4 P = texture2D(tPos, ref);
+      vec3 p = P.xyz;
+      vec4 mv = modelViewMatrix * vec4(p, 1.0);
+      gl_Position = projectionMatrix * mv;
+      // the beam: from the upper left, through a point above the dune
+      vec3 dir = normalize(vec3(0.55, -1.0, 0.2)), o = vec3(-0.2, 0.9, 0.0);
+      vec3 q = p - o; float along = dot(q, dir); float d2 = dot(q, q) - along * along;
+      float beam = exp(-d2 / 1.1);
+      float air = 1.0 - P.w;
+      vec3 cool = vec3(0.32, 0.38, 0.5), warm = vec3(1.0, 0.8, 0.55);
+      vCol = mix(cool, warm, beam) * (0.09 + 0.55 * air + beam * (0.12 + 0.6 * air));
+      vA = 0.75;
+      gl_PointSize = size * dpr * (1.0 + 0.6 * air) / -mv.z;
+    }`,
+  fragmentShader: `
+    varying vec3 vCol; varying float vA;
+    void main(){ vec2 c = gl_PointCoord - 0.5; float r = dot(c, c); if (r > 0.25) discard; gl_FragColor = vec4(vCol, vA * (1.0 - r * 3.2)); }`,
+});
+const dust = new THREE.Points(pg, dustMat);
+dust.frustumCulled = false;
+scene.add(dust);
+
+let aspect = 1;
+function resize(w, h) {
+  renderer.setSize(w, h, false);
+  aspect = w / h;
+  camera.aspect = aspect; camera.updateProjectionMatrix();
+  dustMat.uniforms.dpr.value = renderer.getPixelRatio();
+  dustMat.uniforms.size.value = SIDE === 256 ? 9 : 7;
+}
+function render(T) {
+  const vf = THREE.MathUtils.degToRad(camera.fov);
+  const hf = 2 * Math.atan(Math.tan(vf / 2) * aspect);
+  const D = Math.max(5.2, 3.6 / Math.tan(hf / 2));
+  const a = -0.18 + 0.1 * Math.sin(T * 0.06);
+  camera.position.set(Math.sin(a) * D, 2.5 + 0.1 * Math.sin(T * 0.045), Math.cos(a) * D);
+  camera.lookAt(0, 0.45, 0);
+  dustMat.uniforms.tPos.value = pos[0].texture;
+  renderer.setRenderTarget(null);
+  renderer.render(scene, camera);
+}
+
+window.__study = { reset, stepTo, render, resize, state: () => ({ simT, suspend: +suspend.toFixed(3), float: FLOAT_OK ? 1 : 0, side: SIDE }) };
+runStudy(window.__study);
+</script>
+</body>
+</html>

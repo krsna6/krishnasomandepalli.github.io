@@ -1,0 +1,21 @@
+/* The Gray sky studies: the canvas fills the screen; a quiet caption and three small controls sit over it. */
+:root{--night:#07080a;--ink:#ece7de;--dim:rgba(236,231,222,.38);--gold:#e2a446;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--night);color:var(--ink);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.cap{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom,0px));width:min(92vw,820px);text-align:center;
+  font:300 clamp(15px,2.1vw,20px)/1.5 Georgia,"Times New Roman",serif;color:var(--dim);pointer-events:none;text-wrap:balance;transition:opacity .4s}
+.cap span{transition:color .18s ease,text-shadow .18s ease}
+.cap span.said{color:rgba(236,231,222,.72)}
+.cap span.now{color:#fff;text-shadow:0 0 14px rgba(226,164,70,.55)}
+.cap.off{opacity:0}
+.bar{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:10px}
+.bar button,.start button{font:500 13px/1 system-ui,sans-serif;letter-spacing:.04em;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:10px 16px;cursor:pointer}
+.bar button:hover{background:rgba(255,255,255,.12)}
+.start{position:fixed;inset:0;display:grid;place-items:center;text-align:center;background:var(--night);z-index:2;padding:24px}
+.start h1{font:400 14px/1 system-ui,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin:0 0 10px}
+.start h2{font:300 clamp(26px,5vw,40px)/1.2 Georgia,serif;margin:0 0 8px}
+.start p{color:var(--dim);margin:0 0 26px;font-size:14px}
+.start button{padding:14px 26px;font-size:14px;border-color:rgba(226,164,70,.6)}
+.gone{display:none}
