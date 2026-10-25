@@ -45,12 +45,13 @@ header{text-align:center}
   padding:.9em .5em .9em calc(.5em + .36em)}
 /* "THE" is drawn, not typeset: Michroma's own T, H and E (their outlines are rectangles; these are those
    rectangles, at the same advance and spacing as the letters around them), so the bars can move. The T's bar,
-   the H's bar and the E's middle bar rise in turn and settle, quietly, like the dots of someone typing. */
+   the H's bar and the E's middle bar rise and fall in turn, like the dots of someone typing: each on its own
+   slow rhythm (1.7, 2.1, 2.5 s) and height, so the three drift in and out of step and never repeat exactly. */
 .mark .the{width:3.9570em;height:0.75em;vertical-align:baseline;fill:var(--gold);overflow:visible}
-.mark .the .b{animation:bar 2s cubic-bezier(.45,0,.55,1) infinite}
-.mark .the .b2{animation-delay:.22s}
-.mark .the .b3{animation-delay:.44s}
-@keyframes bar{0%,50%,100%{transform:translateY(0);opacity:1}22%{transform:translateY(-230px);opacity:.62}}
+.mark .the .b{animation:bob 1.7s cubic-bezier(.37,0,.63,1) 0s infinite alternate;--lift:-230px}
+.mark .the .b2{--lift:-185px;animation-duration:2.1s;animation-delay:-.55s}
+.mark .the .b3{--lift:-210px;animation-duration:2.5s;animation-delay:-1.15s}
+@keyframes bob{from{transform:translateY(0);opacity:1}to{transform:translateY(var(--lift));opacity:.66}}
 @media (prefers-reduced-motion:reduce){.mark .the .b{animation:none}}
 .kind{margin:22px 0 0;white-space:nowrap;font:400 clamp(9px,calc((100vw - 48px) / 34),11px)/1 var(--f-mark);letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
 .line{margin:30px auto 0;max-width:34ch;font-size:clamp(17px,2vw,20px);font-weight:300;line-height:1.6;color:#d8d2c7;text-wrap:balance}
