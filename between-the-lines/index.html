@@ -7,71 +7,91 @@
 <meta name="description" content="Experiments in storytelling by Krishna Somandepalli.">
 <meta name="author" content="Krishna Somandepalli">
 <link rel="canonical" href="https://krishnasomandepalli.com/between-the-lines/">
-<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0f0f0f">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Between the Lines">
 <meta property="og:description" content="Experiments in storytelling by Krishna Somandepalli.">
 <meta property="og:url" content="https://krishnasomandepalli.com/between-the-lines/">
 <meta property="og:image" content="https://krishnasomandepalli.com/between-the-lines/assets/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/michroma.woff" as="font" type="font/woff" crossorigin>
 <style>
-/* Between the Lines: the homepage's own theme (its colours, type, cards and links), so the two read as one site. */
+/* Between the Lines. The mark: the name in Michroma, wide and spaced, held between two rules, with "the" in lamp gold.
+   The B|L monogram (Syne ExtraBold outlines, gold bar) is the icon and signs the footer. Night ground, as in the films. */
+@font-face{font-family:"Michroma";font-display:swap;src:url("assets/fonts/michroma.woff") format("woff")}
 :root{
-  --accent-color:#003366; /* Deep Navy, as on the homepage */
-  --link-hover:#800020;   /* Burgundy, as on the homepage */
-  --bg-color:#ffffff;
-  --text-color:#333333;
-  --muted:#62666b;
-  --border-color:#e9ecef;
-  --card-border:#e3e6ea;
+  --night:#0f0f0f;
+  --ink:#f3efe7;
+  --dim:#a39d92;
+  --gold:#e2a446;
+  --rule:rgba(243,239,231,.7);
+  --hair:#2b2a28;
+  --f-mark:"Michroma",system-ui,sans-serif;
+  --f-text:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--bg-color);color:var(--text-color);line-height:1.6;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  padding:calc(3rem + env(safe-area-inset-top,0px)) max(1.25rem,env(safe-area-inset-right,0px)) calc(3rem + env(safe-area-inset-bottom,0px)) max(1.25rem,env(safe-area-inset-left,0px))}
+html{background:var(--night)}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--f-text);line-height:1.6;
+  padding:calc(64px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px))}
 main{max-width:1080px;margin:0 auto}
-header{text-align:center;margin-bottom:2.5rem}
-h1{color:var(--accent-color);font-size:clamp(1.9rem,4.5vw,2.6rem);font-weight:700;line-height:1.2;margin:0}
-.kind{color:var(--muted);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin:.6rem 0 0}
-.line{font-size:clamp(1.05rem,1.8vw,1.2rem);max-width:36ch;margin:1.4rem auto 0;text-wrap:balance}
-.stories{list-style:none;margin:0;padding:0;display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
+
+header{text-align:center}
+/* The mark scales with the screen so it never wraps: its width is about 22 of its own letters. */
+.mark{display:inline-block;font-size:clamp(12px,calc((100vw - 48px) / 23),26px);margin:0}
+.mark::before,.mark::after{content:"";display:block;height:1px;background:var(--rule)}
+.mark span{display:block;white-space:nowrap;font:400 1em/1 var(--f-mark);letter-spacing:.36em;text-transform:uppercase;
+  padding:.9em .5em .9em calc(.5em + .36em)}
+.mark i{font-style:normal;color:var(--gold)}
+.kind{margin:22px 0 0;white-space:nowrap;font:400 clamp(9px,calc((100vw - 48px) / 34),11px)/1 var(--f-mark);letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.line{margin:30px auto 0;max-width:34ch;font-size:clamp(17px,2vw,20px);font-weight:300;line-height:1.6;color:#d8d2c7;text-wrap:balance}
+
+.stories{list-style:none;margin:56px 0 0;padding:0;display:grid;gap:40px 28px;grid-template-columns:minmax(0,1fr)}
 @media (min-width:760px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.story a{display:block;height:100%;background:#fff;border:1px solid var(--card-border);border-radius:18px;overflow:hidden;color:inherit;text-decoration:none;
-  transition:border-color .2s ease,box-shadow .2s ease}
-.story a:hover,.story a:focus-visible{border-color:rgba(128,0,32,.35);box-shadow:0 6px 24px rgba(0,0,0,.08)}
-.story a:focus-visible{outline:2px solid var(--accent-color);outline-offset:3px}
-.story img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#0b0907}
-.story .text{padding:1.1rem 1.5rem 1.35rem}
-.story h2{color:#222;font-size:1.35rem;font-weight:700;line-height:1.35;margin:0}
-.story a:hover h2{color:var(--link-hover)}
-.story p{margin:.35rem 0 0;color:var(--muted);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
-footer{text-align:center;font-size:.8rem;color:#666;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border-color)}
-footer a{color:var(--text-color);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,51,102,.3);transition:color .2s ease,border-color .2s ease}
-footer a:hover{color:var(--link-hover);border-bottom-color:var(--link-hover)}
+.story a{display:block;color:inherit;text-decoration:none}
+.story .pic{display:block;aspect-ratio:16/9;overflow:hidden;border-radius:2px;background:#000}
+.story img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9);transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1.2s ease}
+.story a:hover img,.story a:focus-visible img{transform:scale(1.025);filter:brightness(1)}
+.story h2{margin:18px 0 0;font:400 17px/1.2 var(--f-mark);letter-spacing:.2em;text-transform:uppercase;transition:color .2s ease}
+.story a:hover h2,.story a:focus-visible h2{color:var(--gold)}
+.story p{margin:6px 0 0;font-size:14px;color:var(--dim)}
+.story a:focus-visible{outline:1px solid var(--gold);outline-offset:8px}
+
+footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--hair);display:flex;align-items:center;justify-content:center;gap:14px;font-size:13px;color:var(--dim)}
+footer svg{width:30px;height:auto;display:block}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(226,164,70,.4);transition:color .2s ease,border-color .2s ease}
+footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.story img,.story h2{transition:none}}
 </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>Between the Lines</h1>
+    <h1 class="mark"><span>Between <i>the</i> Lines</span></h1>
     <p class="kind">experiments in storytelling</p>
     <p class="line">More than the story, I'm amazed by the storyteller. A voice pours life into a story.</p>
   </header>
   <ul class="stories">
     <li class="story">
       <a href="kali/">
-        <img src="assets/kali.jpg" width="1200" height="675" alt="Kali's dark hand spread across the sky above an army of kings">
-        <div class="text"><h2>KALI</h2><p>a short story · 7½ min</p></div>
+        <span class="pic"><img src="assets/kali.jpg" width="1200" height="675" alt="Kali's dark hand spread across the sky above an army of kings"></span>
+        <h2>KALI</h2>
+        <p>a short story · 7½ min</p>
       </a>
     </li>
     <li class="story">
       <a href="change/">
-        <img src="assets/change.jpg" width="1200" height="675" alt="Two worlds painted in gold and blue under two yellow suns" loading="lazy">
-        <div class="text"><h2>Change</h2><p>a space-opera essay · 3½ min</p></div>
+        <span class="pic"><img src="assets/change.jpg" width="1200" height="675" alt="Two worlds painted in gold and blue under two yellow suns" loading="lazy"></span>
+        <h2>Change</h2>
+        <p>a space-opera essay · 3½ min</p>
       </a>
     </li>
   </ul>
-  <footer><a href="/">Krishna Somandepalli</a></footer>
+  <footer>
+    <svg viewBox="0 -78 2423 806" aria-hidden="true"><g fill="#f3efe7"><path d="M70 650V10H700Q894 10 986.0 48.0Q1078 86 1078 180Q1078 240 1038.5 272.0Q999 304 925.5 316.5Q852 329 749 332L757 324Q832 324 896.0 328.0Q960 332 1008.0 346.0Q1056 360 1083.0 389.0Q1110 418 1110 469Q1110 531 1066.0 571.0Q1022 611 941.0 630.5Q860 650 750 650ZM320 462H750Q803 462 826.5 452.0Q850 442 850 420Q850 405 839.5 396.0Q829 387 807.0 382.5Q785 378 750 378H320ZM320 282H708Q761 282 784.5 272.0Q808 262 808 240Q808 217 784.5 207.5Q761 198 708 198H320Z"/><path d="M1840 10V460H2423V650H1590V10Z"/></g><rect x="1300" y="-78" width="60" height="806" fill="#e2a446"/></svg>
+    <span>&copy; 2026 <a href="/">Krishna Somandepalli</a></span>
+  </footer>
 </main>
 </body>
 </html>
