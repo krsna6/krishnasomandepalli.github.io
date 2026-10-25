@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050506">
+<title>Gray sky · inside the coil</title>
+<link rel="stylesheet" href="../shell.css">
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="cap" id="cap" aria-live="off"></div>
+<div class="bar"><button id="bPlay" type="button">Play</button><button id="bRestart" type="button">Restart</button><button id="bCap" type="button">Words: on</button></div>
+<div class="start" id="start"><div><h1>Study · inside the coil</h1><h2>Gray sky</h2><p>You travel through a coil her voice moves, word by word. About a minute, with sound.</p><button id="begin" type="button">Begin</button></div></div>
+<script type="module">
+/*
+ * Inside the coil. You travel down the middle of an endless brass coil, a lantern beside you, and far ahead
+ * a light you never reach. The coil is physics, not animation: a chain of masses along its length (waves of
+ * compression run along it, its walls bend and ripple), stepped at 240 Hz up to her voice's clock. The GPU
+ * lays the wire along that chain each frame (the chain is uploaded as a texture; the vertex shader builds
+ * the helix, its frame and the wire around it), so the whole tunnel fills any screen at full detail.
+ * Each word moves it, from the voice's own measures, normalised to this take's range:
+ *   loudness (p10..p95 -> 0..1)  how hard (to the power 1.5)
+ *   pitch    (p10..p90 -> 0..1)  which side of the tunnel bulges (around the circle), and how far ahead
+ *   pitch slope                  which way the compression runs (rising: away from you, falling: toward you)
+ *   length of the word           how long a stretch of coil it moves
+ * Every "hope" tightens the coil around you (its turns close up, its radius narrows) and brightens the far
+ * light; "...shall pass." loosens it; "Hope...", after the silence, sends one ring of compression racing away
+ * down the tunnel; at "distraction" the far light goes out, and the last line brings you, and it, to rest.
+ */
+import * as THREE from "../three.module.min.js";
+import { VOICE, runStudy } from "../shell.js";
+import { createPost } from "../post.js";
+
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+const post = createPost(renderer, { bloom: 0.7, threshold: 0.9, grain: 0.045, vignette: 0.6, exposure: 1.0, tint: [1.0, 0.97, 0.92] });
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0, 0, 0);
+const camera = new THREE.PerspectiveCamera(62, 1, 0.02, 80);
+
+// ---- the chain: nodes along the coil's axis, 0.1 apart, from behind the start to beyond the end of the journey
+const SP = 0.1, A0 = -6, M = 900;              // node spacing, first node's axial position, node count (to 84)
+const DT = 1 / 240;
+const KA = 2500, KL = 900, KR = 6;               // per node: axial stiffness, lateral tension, pull back to centre
+const u = new Float32Array(M), uv = new Float32Array(M);    // axial displacement and velocity
+const lx = new Float32Array(M), lxv = new Float32Array(M);  // lateral x
+const ly = new Float32Array(M), lyv = new Float32Array(M);  // lateral y
+const tex = new Float32Array(M * 4);
+const chain = new THREE.DataTexture(tex, M, 1, THREE.RGBAFormat, THREE.FloatType);
+chain.minFilter = chain.magFilter = THREE.NearestFilter;
+
+const W = VOICE.words;
+const iLastHope = W.findIndex((w) => w.t.startsWith("Hope..."));
+const iPass = W.findIndex((w) => w.t === "pass.");
+const iOut = W.findIndex((w, i) => i > iLastHope && w.t.startsWith("distraction"));
+const iRest = iLastHope + 1;
+const events = [];
+W.forEach((w, i) => { if (w.hope && i !== iLastHope) events.push({ t: w.s, kind: "tighten" }); });
+events.push({ t: W[iPass].s, kind: "loosen" }, { t: W[iLastHope].s, kind: "ring" }, { t: W[iOut].s, kind: "out" });
+events.sort((a, b) => a.t - b.t);
+const END = VOICE.durationSec;
+
+let simT, camA, speed, tight, tightV, tightTarget, far, farTarget, nextEvent;
+function reset() {
+  u.fill(0); uv.fill(0); lx.fill(0); lxv.fill(0); ly.fill(0); lyv.fill(0);
+  simT = 0; camA = 0; speed = 0.42; tight = 1; tightV = 0; tightTarget = 1; far = 0.15; farTarget = 0.15; nextEvent = 0;
+}
+const node = (a) => (a - A0) / SP;
+
+function step() {
+  const t = simT;
+  while (nextEvent < events.length && events[nextEvent].t <= t) {
+    const e = events[nextEvent++];
+    if (e.kind === "tighten") { tightTarget = Math.max(0.5, tightTarget * 0.88); farTarget = Math.min(1.6, farTarget + 0.26); }
+    if (e.kind === "loosen") tightTarget += (1 - tightTarget) * 0.45;
+    if (e.kind === "ring") { const c = node(camA + 1.2); for (let i = 1; i < M - 1; i++) uv[i] -= 3.2 * Math.exp(-0.5 * ((i - c) / 3) ** 2); farTarget += 0.4; }
+    if (e.kind === "out") farTarget = 0;
+  }
+  // the words she is saying now
+  for (const w of W) {
+    if (w.s > t) break;
+    if (t > w.e) continue;
+    const L = Math.pow(w.L, 1.5), P = w.P ?? 0.5;
+    const c = node(camA + 2.5 + 7 * P);
+    const sig = (0.4 + 1.2 * Math.min(1, (w.e - w.s) / 0.6)) / SP;
+    const dir = (w.S ?? 1) >= 0 ? -1 : 1;           // rising pushes away from you (along -z)
+    const ang = 2 * Math.PI * P + 0.6;
+    const ca = Math.cos(ang), sa = Math.sin(ang);
+    const i0 = Math.max(1, Math.floor(c - 3 * sig)), i1 = Math.min(M - 2, Math.ceil(c + 3 * sig));
+    for (let i = i0; i <= i1; i++) {
+      const g = Math.exp(-0.5 * ((i - c) / sig) ** 2);
+      uv[i] += DT * 2.2 * L * dir * g;
+      lxv[i] += DT * 3.2 * L * ca * g;
+      lyv[i] += DT * 3.2 * L * sa * g;
+    }
+  }
+  const settle = t < W[iRest].s ? 1 : 1 + 6 * Math.min(1, (t - W[iRest].s) / 4);
+  const CA = 0.9 * settle, CL = 1.1 * settle;
+  for (let i = 1; i < M - 1; i++) {
+    uv[i] += DT * (KA * (u[i + 1] - 2 * u[i] + u[i - 1]) - CA * uv[i]);
+    lxv[i] += DT * (KL * (lx[i + 1] - 2 * lx[i] + lx[i - 1]) - KR * lx[i] - CL * lxv[i]);
+    lyv[i] += DT * (KL * (ly[i + 1] - 2 * ly[i] + ly[i - 1]) - KR * ly[i] - CL * lyv[i]);
+  }
+  for (let i = 1; i < M - 1; i++) { u[i] += DT * uv[i]; lx[i] += DT * lxv[i]; ly[i] += DT * lyv[i]; }
+  tightV += DT * (30 * (tightTarget - tight) - 4.5 * tightV);
+  tight += DT * tightV;
+  far += (farTarget - far) * (1 - Math.exp(-DT / (farTarget === 0 ? 0.9 : 1.6)));
+  // you travel on, slowing in the long silence and coming to rest with the last line
+  const target = t > W[iRest].s ? 0 : (t > W[iPass].e && t < W[iLastHope].s) ? 0.12 : 0.42;
+  speed += (target - speed) * (1 - Math.exp(-DT / 1.2));
+  camA += speed * DT;
+  simT += DT;
+}
+function stepTo(T) {
+  if (T < simT - 1e-6) reset();
+  let n = 0;
+  while (simT + DT <= T && n++ < 2400) step();
+}
+
+// ---- the wire: a static grid in (position along the coil, angle around the wire); the GPU does the rest
+const PITCH = 0.17, R0 = 1.3, WIRE = 0.03;
+const SEG = 40, TURNS = 210, RS = 8;           // the visible stretch: 210 turns (about 36 units ahead)
+const K = TURNS * SEG + 1;
+const sAttr = new Float32Array(K * (RS + 1) * 2);
+const index = [];
+for (let j = 0; j < K; j++) for (let r = 0; r <= RS; r++) { const k = (j * (RS + 1) + r) * 2; sAttr[k] = j / SEG; sAttr[k + 1] = (r / RS) * Math.PI * 2; }
+for (let j = 0; j < K - 1; j++) for (let r = 0; r < RS; r++) { const a = j * (RS + 1) + r, b = (j + 1) * (RS + 1) + r; index.push(a, b, a + 1, b, b + 1, a + 1); }
+const geo = new THREE.BufferGeometry();
+geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(K * (RS + 1) * 3), 3));
+geo.setAttribute("sp", new THREE.BufferAttribute(sAttr, 2));
+geo.setIndex(index);
+
+const mat = new THREE.ShaderMaterial({
+  uniforms: {
+    chain: { value: chain }, M: { value: M }, A0: { value: A0 }, SP: { value: SP },
+    aStart: { value: 0 }, camA: { value: 0 }, tight: { value: 1 }, pitch: { value: PITCH }, R0: { value: R0 }, wire: { value: WIRE },
+    lantern: { value: new THREE.Vector3() }, farPos: { value: new THREE.Vector3() }, far: { value: 0 }, eye: { value: new THREE.Vector3() },
+  },
+  vertexShader: `
+    precision highp float;
+    uniform sampler2D chain; uniform float M, A0, SP, aStart, camA, tight, pitch, R0, wire;
+    attribute vec2 sp;
+    varying vec3 vPos, vNor; varying float vA;
+    vec3 node(float a){
+      float f = clamp((a - A0) / SP, 0.0, M - 2.0); float i = floor(f); float t = f - i;
+      vec3 p = mix(texelFetch(chain, ivec2(int(i), 0), 0).xyz, texelFetch(chain, ivec2(int(i) + 1, 0), 0).xyz, t);
+      return p;   // x: axial displacement, y, z: lateral
+    }
+    vec3 coil(float a){
+      vec3 d = node(a);
+      float th = 6.2831853 * a / pitch;
+      float R = R0 * (0.62 + 0.38 * tight);
+      float z = camA + (a + d.x - camA) * tight;      // tightening closes the turns up, measured from you
+      return vec3(R * cos(th) + d.y, R * sin(th) + d.z, -z);
+    }
+    void main(){
+      float a = aStart + sp.x * pitch;
+      float e = pitch / 40.0;
+      vec3 C = coil(a), T = normalize(coil(a + e) - coil(a - e));
+      float th = 6.2831853 * a / pitch;
+      vec3 N = vec3(cos(th), sin(th), 0.0); N = normalize(N - T * dot(N, T));
+      vec3 B = cross(T, N);
+      vec3 d = cos(sp.y) * N + sin(sp.y) * B;
+      vPos = C + wire * d; vNor = d; vA = a;
+      gl_Position = projectionMatrix * viewMatrix * vec4(vPos, 1.0);
+    }`,
+  fragmentShader: `
+    precision highp float;
+    uniform vec3 lantern, farPos, eye; uniform float far;
+    varying vec3 vPos, vNor; varying float vA;
+    void main(){
+      vec3 n = normalize(vNor), v = normalize(eye - vPos);
+      vec3 brass = vec3(0.95, 0.68, 0.38);
+      // the lantern beside you: warm, falling off with distance
+      vec3 Ld = lantern - vPos; float dl = length(Ld); vec3 l = Ld / dl;
+      float att = 1.0 / (1.0 + 1.4 * dl * dl);
+      vec3 h = normalize(l + v);
+      vec3 col = brass * brass * (0.04 + 0.8 * max(dot(n, l), 0.0)) * att * 1.3;
+      col += brass * pow(max(dot(n, h), 0.0), 80.0) * att * 3.0;
+      // the far light, ahead: cooler, blue-gold, brighter with each hope
+      vec3 Fd = farPos - vPos; float df = length(Fd); vec3 fl = Fd / df;
+      float fatt = far / (1.0 + 0.012 * df * df);
+      vec3 hf = normalize(fl + v);
+      vec3 farCol = vec3(0.55, 0.7, 1.0);
+      col += (brass * brass * 0.25 * max(dot(n, fl), 0.0) + farCol * pow(max(dot(n, hf), 0.0), 50.0) * 1.6) * fatt;
+      // a faint cool sheen at grazing angles, and the dark swallowing the distance
+      col += vec3(0.012, 0.018, 0.03) * pow(1.0 - max(dot(n, v), 0.0), 3.0);
+      float dist = length(vPos - eye);
+      col *= exp(-0.16 * dist);
+      gl_FragColor = vec4(col, 1.0);
+    }`,
+});
+const wireMesh = new THREE.Mesh(geo, mat);
+wireMesh.frustumCulled = false;
+scene.add(wireMesh);
+
+// the far light itself: a soft glow you can see, deep in the tunnel
+const glowMat = new THREE.ShaderMaterial({
+  uniforms: { far: { value: 0 } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  fragmentShader: "uniform float far; varying vec2 vUv; void main(){ float r = length(vUv - 0.5) * 2.0; float g = (exp(-r * r * 40.0) * 1.5 + exp(-r * r * 9.0) * 0.25) * far; gl_FragColor = vec4(vec3(0.75, 0.85, 1.0) * g, 1.0); }",
+});
+const glow = new THREE.Mesh(new THREE.PlaneGeometry(4, 4), glowMat);
+scene.add(glow);
+
+let aspect = 1;
+function resize(w, h) {
+  renderer.setSize(w, h, false);
+  post.setSize(w, h);
+  aspect = w / h;
+  camera.aspect = aspect;
+  camera.fov = aspect < 1 ? 74 : 62;           // a taller view on a phone held upright
+  camera.updateProjectionMatrix();
+}
+function render(T) {
+  for (let i = 0; i < M; i++) { tex[i * 4] = u[i]; tex[i * 4 + 1] = lx[i]; tex[i * 4 + 2] = ly[i]; }
+  chain.needsUpdate = true;
+  const U = mat.uniforms;
+  U.camA.value = camA; U.tight.value = tight;
+  U.aStart.value = Math.floor((camA - 2) / PITCH) * PITCH;
+  // you sit a little off the axis and drift, so the walls pass at different distances (parallax)
+  const ex = 0.32 * Math.sin(T * 0.11) + 0.12, ey = -0.18 + 0.12 * Math.sin(T * 0.07 + 1);
+  camera.position.set(ex, ey, -camA);
+  camera.lookAt(ex * 0.3 + 0.15 * Math.sin(T * 0.05), ey * 0.3, -camA - 6);
+  U.eye.value.copy(camera.position);
+  U.lantern.value.set(ex + 0.35, ey + 0.25, -camA - 0.4);
+  U.farPos.value.set(0, 0, -camA - 26);
+  U.far.value = far;
+  glow.position.set(0, 0, -camA - 30); glow.lookAt(camera.position);
+  glowMat.uniforms.far.value = far;
+  post.render(scene, camera, T);
+}
+
+window.__study = { reset, stepTo, render, resize, state: () => ({ simT, camA: +camA.toFixed(2), tight: +tight.toFixed(3), far: +far.toFixed(2) }) };
+runStudy(window.__study);
+</script>
+</body>
+</html>
