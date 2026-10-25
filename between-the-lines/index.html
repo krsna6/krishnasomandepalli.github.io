@@ -7,52 +7,47 @@
 <meta name="description" content="Experiments in storytelling by Krishna Somandepalli.">
 <meta name="author" content="Krishna Somandepalli">
 <link rel="canonical" href="https://krishnasomandepalli.com/between-the-lines/">
-<meta name="theme-color" content="#0b0907">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Between the Lines">
 <meta property="og:description" content="Experiments in storytelling by Krishna Somandepalli.">
 <meta property="og:url" content="https://krishnasomandepalli.com/between-the-lines/">
 <meta property="og:image" content="https://krishnasomandepalli.com/between-the-lines/assets/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="kali/assets/fonts/literata-latin-normal.woff" as="font" type="font/woff" crossorigin>
 <style>
-/* Between the Lines: the title, one line, and the stories as large pictures. The night ground and the
-   lamp gold of the films themselves; KALI's Literata (its font files, reused). */
-@font-face{font-family:"Literata";font-style:normal;font-weight:200 900;font-display:swap;src:url("kali/assets/fonts/literata-latin-normal.woff") format("woff")}
-@font-face{font-family:"Literata";font-style:italic;font-weight:200 900;font-display:swap;src:url("kali/assets/fonts/literata-latin-italic.woff") format("woff")}
+/* Between the Lines: the homepage's own theme (its colours, type, cards and links), so the two read as one site. */
 :root{
-  --night:#0b0907;
-  --ink:#ece3d3;
-  --dim:#a99e8b;
-  --lamp:#e2a446;
-  --line:rgba(236,227,211,.16);
-  --f-text:"Literata",Georgia,"Times New Roman",serif;
-  --f-ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  color-scheme:dark;
+  --accent-color:#003366; /* Deep Navy, as on the homepage */
+  --link-hover:#800020;   /* Burgundy, as on the homepage */
+  --bg-color:#ffffff;
+  --text-color:#333333;
+  --muted:#62666b;
+  --border-color:#e9ecef;
+  --card-border:#e3e6ea;
 }
-*{box-sizing:border-box}
-html{background:var(--night)}
-body{margin:0;background:var(--night);color:var(--ink);font-family:var(--f-text);
-  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));
-  padding-block:calc(56px + env(safe-area-inset-top,0px)) calc(56px + env(safe-area-inset-bottom,0px))}
-main{max-width:1180px;margin:0 auto;display:grid;gap:56px}
-header{display:grid;gap:14px;justify-items:center;text-align:center}
-h1{font:600 clamp(30px,6vw,56px)/1.1 var(--f-text);font-variant:small-caps;letter-spacing:.24em;margin:0 0 0 .24em;text-wrap:balance}
-.kind{font:500 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.3em;color:var(--lamp);margin:0 0 0 .3em}
-.line{font:italic 300 clamp(17px,2.1vw,21px)/1.6 var(--f-text);color:#d9cfbe;max-width:34ch;margin:14px 0 0;text-wrap:balance}
-.stories{list-style:none;margin:0;padding:0;display:grid;gap:40px 28px;grid-template-columns:minmax(0,1fr)}
-@media (min-width:820px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.story a{display:grid;gap:14px;color:inherit;text-decoration:none}
-.story .pic{display:block;aspect-ratio:16/9;max-width:100%;overflow:hidden;border-radius:6px;background:#000;box-shadow:0 0 0 1px var(--line)}
-.story img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1.2s ease;filter:brightness(.92)}
-.story a:hover img,.story a:focus-visible img{transform:scale(1.025);filter:brightness(1)}
-.story h2{font:600 clamp(22px,2.6vw,28px)/1.1 var(--f-text);font-variant:small-caps;letter-spacing:.2em;margin:0}
-.story p{margin:0;font:italic 300 16px/1.4 var(--f-text);color:var(--dim)}
-.story a:focus-visible{outline:2px solid var(--lamp);outline-offset:6px;border-radius:6px}
-footer{text-align:center;font:13px/1.6 var(--f-ui);color:var(--dim)}
-footer a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(226,164,70,.45);text-underline-offset:3px}
-footer a:hover{text-decoration-color:var(--lamp)}
-@media (prefers-reduced-motion:reduce){.story img{transition:none}}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg-color);color:var(--text-color);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:calc(3rem + env(safe-area-inset-top,0px)) max(1.25rem,env(safe-area-inset-right,0px)) calc(3rem + env(safe-area-inset-bottom,0px)) max(1.25rem,env(safe-area-inset-left,0px))}
+main{max-width:1080px;margin:0 auto}
+header{text-align:center;margin-bottom:2.5rem}
+h1{color:var(--accent-color);font-size:clamp(1.9rem,4.5vw,2.6rem);font-weight:700;line-height:1.2;margin:0}
+.kind{color:var(--muted);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin:.6rem 0 0}
+.line{font-size:clamp(1.05rem,1.8vw,1.2rem);max-width:36ch;margin:1.4rem auto 0;text-wrap:balance}
+.stories{list-style:none;margin:0;padding:0;display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:760px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.story a{display:block;height:100%;background:#fff;border:1px solid var(--card-border);border-radius:18px;overflow:hidden;color:inherit;text-decoration:none;
+  transition:border-color .2s ease,box-shadow .2s ease}
+.story a:hover,.story a:focus-visible{border-color:rgba(128,0,32,.35);box-shadow:0 6px 24px rgba(0,0,0,.08)}
+.story a:focus-visible{outline:2px solid var(--accent-color);outline-offset:3px}
+.story img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#0b0907}
+.story .text{padding:1.1rem 1.5rem 1.35rem}
+.story h2{color:#222;font-size:1.35rem;font-weight:700;line-height:1.35;margin:0}
+.story a:hover h2{color:var(--link-hover)}
+.story p{margin:.35rem 0 0;color:var(--muted);font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+footer{text-align:center;font-size:.8rem;color:#666;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border-color)}
+footer a{color:var(--text-color);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,51,102,.3);transition:color .2s ease,border-color .2s ease}
+footer a:hover{color:var(--link-hover);border-bottom-color:var(--link-hover)}
 </style>
 </head>
 <body>
@@ -65,16 +60,14 @@ footer a:hover{text-decoration-color:var(--lamp)}
   <ul class="stories">
     <li class="story">
       <a href="kali/">
-        <span class="pic"><img src="assets/kali.jpg" width="1200" height="675" alt="Kali's dark hand spread across the sky above an army of kings"></span>
-        <h2>KALI</h2>
-        <p>a short story · 7½ minutes</p>
+        <img src="assets/kali.jpg" width="1200" height="675" alt="Kali's dark hand spread across the sky above an army of kings">
+        <div class="text"><h2>KALI</h2><p>a short story · 7½ min</p></div>
       </a>
     </li>
     <li class="story">
       <a href="change/">
-        <span class="pic"><img src="assets/change.jpg" width="1200" height="675" alt="Two worlds painted in gold and blue under two yellow suns" loading="lazy"></span>
-        <h2>Change</h2>
-        <p>a space-opera essay · 3½ minutes</p>
+        <img src="assets/change.jpg" width="1200" height="675" alt="Two worlds painted in gold and blue under two yellow suns" loading="lazy">
+        <div class="text"><h2>Change</h2><p>a space-opera essay · 3½ min</p></div>
       </a>
     </li>
   </ul>
