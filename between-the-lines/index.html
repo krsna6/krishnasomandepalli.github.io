@@ -91,12 +91,12 @@ footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
     caret.className = "caret"; rest.className = "rest"; rest.textContent = text;
     for (const s of [typed, caret, rest]) s.setAttribute("aria-hidden", "true");
     el.replaceChildren(typed, caret, rest);
-    let n = 0, t = 300;                  // first keystroke 300 ms, each next 7% quicker, to a floor of 80 ms
+    let n = 0, t = 260;                  // first keystroke 260 ms, each next 3% quicker, to a floor of 130 ms
     const key = () => {
       n++;
       typed.textContent = text.slice(0, n);
       rest.textContent = text.slice(n);
-      if (n < text.length) { setTimeout(key, t); t = Math.max(80, t * 0.93); }
+      if (n < text.length) { setTimeout(key, t); t = Math.max(130, t * 0.97); }
       else caret.classList.add("done");  // blink three times, then go
     };
     setTimeout(key, 500);
