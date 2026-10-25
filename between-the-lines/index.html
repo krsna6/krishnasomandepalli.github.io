@@ -43,7 +43,15 @@ header{text-align:center}
 .mark::before,.mark::after{content:"";display:block;height:1px;background:var(--rule)}
 .mark span{display:block;white-space:nowrap;font:400 1em/1 var(--f-mark);letter-spacing:.36em;text-transform:uppercase;
   padding:.9em .5em .9em calc(.5em + .36em)}
-.mark i{font-style:normal;color:var(--gold)}
+/* "THE" is drawn, not typeset: Michroma's own T, H and E (their outlines are rectangles; these are those
+   rectangles, at the same advance and spacing as the letters around them), so the bars can move. The T's bar,
+   the H's bar and the E's middle bar rise in turn and settle, quietly, like the dots of someone typing. */
+.mark .the{width:3.9570em;height:0.75em;vertical-align:baseline;fill:var(--gold);overflow:visible}
+.mark .the .b{animation:bar 2s cubic-bezier(.45,0,.55,1) infinite}
+.mark .the .b2{animation-delay:.22s}
+.mark .the .b3{animation-delay:.44s}
+@keyframes bar{0%,50%,100%{transform:translateY(0);opacity:1}22%{transform:translateY(-230px);opacity:.62}}
+@media (prefers-reduced-motion:reduce){.mark .the .b{animation:none}}
 .kind{margin:22px 0 0;white-space:nowrap;font:400 clamp(9px,calc((100vw - 48px) / 34),11px)/1 var(--f-mark);letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
 .line{margin:30px auto 0;max-width:34ch;font-size:clamp(17px,2vw,20px);font-weight:300;line-height:1.6;color:#d8d2c7;text-wrap:balance}
 
@@ -74,7 +82,7 @@ footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
 <body>
 <main>
   <header>
-    <h1 class="mark"><span>Between <i>the</i> Lines</span></h1>
+    <h1 class="mark" aria-label="Between the Lines"><span>Between <svg class="the" viewBox="0 0 8103.84 1536" aria-hidden="true"><rect class="b b1" x="94" y="0" width="1728" height="160"/><rect x="862" y="160" width="192" height="1376"/><rect x="2849.28" y="0" width="192" height="1536"/><rect x="4449.28" y="0" width="192" height="1536"/><rect class="b b2" x="3041.28" y="672" width="1408" height="160"/><rect x="5766.56" y="0" width="192" height="1536"/><rect x="5958.56" y="0" width="1316" height="160"/><rect class="b b3" x="5958.56" y="672" width="1261" height="160"/><rect x="5958.56" y="1376" width="1344" height="160"/></svg> Lines</span></h1>
     <p class="kind">experiments in storytelling</p>
     <p class="line">More than the story, I'm amazed by the storyteller. A voice pours life into a story.</p>
   </header>
