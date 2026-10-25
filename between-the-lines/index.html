@@ -62,6 +62,12 @@ footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--hair);display
 footer svg{width:30px;height:auto;display:block}
 footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(226,164,70,.4);transition:color .2s ease,border-color .2s ease}
 footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+/* The subtitle types itself out, slow at first and quickening, a gold caret after the last key struck.
+   The untyped rest is laid out but hidden, so the line never shifts. Without script, or with reduced motion, it simply shows. */
+.kind .rest{visibility:hidden}
+.kind .caret{display:inline-block;width:0;height:1.25em;margin-right:-1px;vertical-align:-.2em;border-left:1px solid var(--gold)}
+.kind .caret.done{animation:blink 1.1s steps(1) 3 forwards}
+@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.story img,.story h2{transition:none}}
 </style>
 </head>
@@ -72,6 +78,30 @@ footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
     <p class="kind">experiments in storytelling</p>
     <p class="line">More than the story, I'm amazed by the storyteller. A voice pours life into a story.</p>
   </header>
+  <script>
+  (() => {
+    // type "experiments in storytelling": each keystroke a little quicker than the last
+    const el = document.querySelector(".kind");
+    if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const text = el.textContent;
+    el.setAttribute("aria-label", text);
+    const typed = document.createElement("span");
+    const caret = document.createElement("span");
+    const rest = document.createElement("span");
+    caret.className = "caret"; rest.className = "rest"; rest.textContent = text;
+    for (const s of [typed, caret, rest]) s.setAttribute("aria-hidden", "true");
+    el.replaceChildren(typed, caret, rest);
+    let n = 0, t = 170;                  // first keystroke 170 ms, each next 12% quicker, to a floor of 32 ms
+    const key = () => {
+      n++;
+      typed.textContent = text.slice(0, n);
+      rest.textContent = text.slice(n);
+      if (n < text.length) { setTimeout(key, t); t = Math.max(32, t * 0.88); }
+      else caret.classList.add("done");  // blink three times, then go
+    };
+    setTimeout(key, 500);
+  })();
+  </script>
   <ul class="stories">
     <li class="story">
       <a href="kali/">
