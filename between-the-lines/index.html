@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Between the Lines · Krishna Somandepalli</title>
+<meta name="description" content="Experiments in storytelling by Krishna Somandepalli.">
+<meta name="author" content="Krishna Somandepalli">
+<link rel="canonical" href="https://krishnasomandepalli.com/between-the-lines/">
+<meta name="theme-color" content="#0b0907">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Between the Lines">
+<meta property="og:description" content="Experiments in storytelling by Krishna Somandepalli.">
+<meta property="og:url" content="https://krishnasomandepalli.com/between-the-lines/">
+<meta property="og:image" content="https://krishnasomandepalli.com/between-the-lines/assets/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="kali/assets/fonts/literata-latin-normal.woff" as="font" type="font/woff" crossorigin>
+<style>
+/* Between the Lines: the title, one line, and the stories as large pictures. The night ground and the
+   lamp gold of the films themselves; KALI's Literata (its font files, reused). */
+@font-face{font-family:"Literata";font-style:normal;font-weight:200 900;font-display:swap;src:url("kali/assets/fonts/literata-latin-normal.woff") format("woff")}
+@font-face{font-family:"Literata";font-style:italic;font-weight:200 900;font-display:swap;src:url("kali/assets/fonts/literata-latin-italic.woff") format("woff")}
+:root{
+  --night:#0b0907;
+  --ink:#ece3d3;
+  --dim:#a99e8b;
+  --lamp:#e2a446;
+  --line:rgba(236,227,211,.16);
+  --f-text:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--night)}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--f-text);
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));
+  padding-block:calc(56px + env(safe-area-inset-top,0px)) calc(56px + env(safe-area-inset-bottom,0px))}
+main{max-width:1180px;margin:0 auto;display:grid;gap:56px}
+header{display:grid;gap:14px;justify-items:center;text-align:center}
+h1{font:600 clamp(30px,6vw,56px)/1.1 var(--f-text);font-variant:small-caps;letter-spacing:.24em;margin:0 0 0 .24em;text-wrap:balance}
+.kind{font:500 13px/1 var(--f-text);font-variant:small-caps;letter-spacing:.3em;color:var(--lamp);margin:0 0 0 .3em}
+.line{font:italic 300 clamp(17px,2.1vw,21px)/1.6 var(--f-text);color:#d9cfbe;max-width:34ch;margin:14px 0 0;text-wrap:balance}
+.stories{list-style:none;margin:0;padding:0;display:grid;gap:40px 28px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:820px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.story a{display:grid;gap:14px;color:inherit;text-decoration:none}
+.story .pic{display:block;aspect-ratio:16/9;max-width:100%;overflow:hidden;border-radius:6px;background:#000;box-shadow:0 0 0 1px var(--line)}
+.story img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1.2s ease;filter:brightness(.92)}
+.story a:hover img,.story a:focus-visible img{transform:scale(1.025);filter:brightness(1)}
+.story h2{font:600 clamp(22px,2.6vw,28px)/1.1 var(--f-text);font-variant:small-caps;letter-spacing:.2em;margin:0}
+.story p{margin:0;font:italic 300 16px/1.4 var(--f-text);color:var(--dim)}
+.story a:focus-visible{outline:2px solid var(--lamp);outline-offset:6px;border-radius:6px}
+footer{text-align:center;font:13px/1.6 var(--f-ui);color:var(--dim)}
+footer a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(226,164,70,.45);text-underline-offset:3px}
+footer a:hover{text-decoration-color:var(--lamp)}
+@media (prefers-reduced-motion:reduce){.story img{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Between the Lines</h1>
+    <p class="kind">experiments in storytelling</p>
+    <p class="line">More than the story, I'm amazed by the storyteller. A voice pours life into a story.</p>
+  </header>
+  <ul class="stories">
+    <li class="story">
+      <a href="kali/">
+        <span class="pic"><img src="assets/kali.jpg" width="1200" height="675" alt="Kali's dark hand spread across the sky above an army of kings"></span>
+        <h2>KALI</h2>
+        <p>a short story · 7½ minutes</p>
+      </a>
+    </li>
+    <li class="story">
+      <a href="change/">
+        <span class="pic"><img src="assets/change.jpg" width="1200" height="675" alt="Two worlds painted in gold and blue under two yellow suns" loading="lazy"></span>
+        <h2>Change</h2>
+        <p>a space-opera essay · 3½ minutes</p>
+      </a>
+    </li>
+  </ul>
+  <footer><a href="/">Krishna Somandepalli</a></footer>
+</main>
+</body>
+</html>
