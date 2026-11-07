@@ -1,0 +1,14 @@
+# Checks Werk's data whenever it changes (see m/AGENTS.md). A failure names the entry to fix.
+name: werk-validate
+on:
+  push:
+    paths: ["m/data/**", "tools/werk/**"]
+  pull_request:
+    paths: ["m/data/**", "tools/werk/**"]
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tools/werk/validate.mjs
