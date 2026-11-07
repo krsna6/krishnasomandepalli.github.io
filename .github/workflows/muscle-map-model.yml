@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:                       # runs when the scripts change on this branch (a branch's workflow can't be started by hand)
     branches: [muscle-map-tools]
-    paths: ["tools/muscle-map/*.py", ".github/workflows/muscle-map-model.yml"]
+    paths: ["tools/muscle-map/export.py", ".github/workflows/muscle-map-model.yml"]
 permissions:
   contents: write
 jobs:
@@ -22,16 +22,11 @@ jobs:
           timeout 300 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxi6 libxkbcommon0 libsm6 libxrender1 libxxf86vm1 libxfixes3 libgl1 libegl1 || true
           git clone -q --depth 1 https://github.com/Z-Anatomy/Models-of-human-anatomy za
           unzip -q za/Z-Anatomy.zip -d za/x
-      - name: Inventory
+      - name: Export for the web
         run: |
-          mkdir -p tools/muscle-map/out
-          /usr/bin/time -v ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out --inventory-only > tools/muscle-map/out/inventory-run.log 2>&1 || echo "exit $?" >> tools/muscle-map/out/inventory-run.log
-          tail -30 tools/muscle-map/out/inventory-run.log
+          mkdir -p tools/muscle-map/web
+          /usr/bin/time -v ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/export.py -- tools/muscle-map/web > tools/muscle-map/web/export-run.log 2>&1 || echo "exit $?" >> tools/muscle-map/web/export-run.log
+          grep -E "kept|exported|done|Error|error|Maximum resident|Elapsed|exit" tools/muscle-map/web/export-run.log | tail -20
+          ls -la tools/muscle-map/web
           git config user.name "muscle-map-bot"; git config user.email "actions@users.noreply.github.com"
-          git add tools/muscle-map/out && git commit -qm "Muscle map: atlas inventory (run ${{ github.run_id }})" && git push -q || true
-      - name: Render
-        run: |
-          free -m
-          /usr/bin/time -v ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out > tools/muscle-map/out/render-run.log 2>&1 || echo "exit $?" >> tools/muscle-map/out/render-run.log
-          tail -30 tools/muscle-map/out/render-run.log
-          git add tools/muscle-map/out && git commit -qm "Muscle map: test render (run ${{ github.run_id }})" && git pull -q --rebase && git push -q || true
+          git add tools/muscle-map/web && git commit -qm "Muscle map: web export of the atlas's muscles and skeleton (run ${{ github.run_id }})" && git push -q || true
