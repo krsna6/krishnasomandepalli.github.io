@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#eceef1">
+<title>Muscle map</title>
+<style>
+/* Muscle map (mock). An anatomical figure in clay grey, the trained muscles heated orange to red by a week of
+   training. The anatomy is the Z-Anatomy atlas (from BodyParts3D), shown as it is: nothing is redrawn. */
+:root{
+  --ground:#eceef1; --ink:#1d2126; --dim:#6b7380; --line:#d5d9df; --card:#ffffff;
+  --hot:#d7351f; --warm:#ee8a5a;
+  --f:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ground);color:var(--ink);font-family:var(--f);overflow:hidden;-webkit-tap-highlight-color:transparent}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.top{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));pointer-events:none}
+.title h1{margin:0;font:800 15px/1 var(--f);letter-spacing:.16em;text-transform:uppercase}
+.title p{margin:6px 0 0;font-size:12px;color:var(--dim)}
+.sample{display:inline-block;margin-top:8px;font:600 10.5px/1 var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--hot);border:1px solid currentColor;border-radius:3px;padding:4px 6px}
+.card{pointer-events:none;min-width:150px;max-width:220px;background:var(--card);box-shadow:0 6px 24px rgba(20,24,30,.12);text-align:center;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+.card.on{opacity:1;transform:none}
+.card h2{margin:0;background:var(--hot);color:#fff;font:800 14px/1 var(--f);letter-spacing:.14em;text-transform:uppercase;padding:9px 12px}
+.card ul{list-style:none;margin:0;padding:9px 12px 4px;font:600 11.5px/1.5 var(--f);letter-spacing:.08em;text-transform:uppercase}
+.card li.lit{color:var(--hot)}
+.card .sets{padding:0 12px 10px;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:10px;justify-items:center}
+.days{display:flex;gap:4px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:4px}
+.days button{font:600 12px/1 var(--f);color:var(--dim);background:none;border:0;border-radius:999px;padding:9px 10px;min-width:40px;cursor:pointer}
+.days button.done{color:var(--ink)}
+.days button.cur{background:var(--ink);color:#fff}
+.days button.trained::after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--hot);margin:4px auto 0}
+.days button.cur.trained::after{background:#fff}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.btn{font:600 12.5px/1 var(--f);color:var(--ink);background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:999px;padding:10px 16px;cursor:pointer}
+.btn:focus-visible,.days button:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.legend{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+.legend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#cfd1d4,#f0b08c 25%,#ea6a43 60%,#b8141c)}
+.session{font-size:12px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px}
+.session b{color:var(--ink);font-weight:600}
+.loading{position:fixed;inset:0;display:grid;place-items:center;font-size:13px;color:var(--dim);pointer-events:none}
+.credit{position:fixed;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(4px + env(safe-area-inset-bottom,0px));font-size:9.5px;color:#9aa1ab}
+.credit a{color:inherit}
+@media (max-width:520px){.days button{min-width:34px;padding:9px 6px}.legend i{width:80px}.card{min-width:130px}}
+</style>
+<script type="importmap">{"imports":{"three":"./m/three.module.min.js","three/addons/":"./m/addons/"}}</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="loading" id="loading">Loading the anatomy…</div>
+<div class="top">
+  <div class="title"><h1>Muscle map</h1><p id="weekLabel">Week of Nov 2</p><span class="sample">Sample week · mock</span></div>
+  <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
+</div>
+<div class="bottom">
+  <div class="session" id="session"></div>
+  <div class="days" id="days" role="group" aria-label="Day of the week"></div>
+  <div class="row">
+    <button class="btn" id="bPlay" type="button">▶ Play the week</button>
+    <button class="btn" id="bTurn" type="button">Turn around</button>
+    <div class="legend"><span>0</span><i></i><span>12+ sets</span></div>
+  </div>
+</div>
+<div class="credit">Anatomy: <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> from BodyParts3D (DBCLS), CC BY-SA 4.0</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+// ---------------------------------------------------------------- the sample week (mock data)
+// Weekly load per muscle is counted the way coaches count it: hard sets, a prime mover's set as 1,
+// a synergist's as 0.5, a stabiliser's as 0.25. Names are the atlas's own anatomical parts.
+const TRI = ["Long head of triceps brachii", "Lateral head of triceps brachii", "Medial head of triceps brachii"];
+const BI = ["Long head of biceps brachii", "Short head of biceps brachii"];
+const QUADS = ["Vastus lateralis muscle", "Vastus medialis muscle", "Vastus intermedius muscle"];
+const HAMS = ["Long head of biceps femoris", "Semitendinosus muscle", "Semimembranosus muscle"];
+const EXERCISES = {
+  "Bench press": { primary: ["Sternocostal head of pectoralis major muscle", "(Abdominal part of pectoralis major muscle)"], synergist: ["Clavicular head of pectoralis major muscle", "Clavicular part of deltoid muscle", ...TRI], stabiliser: ["Serratus anterior muscle"] },
+  "Overhead press": { primary: ["Clavicular part of deltoid muscle", "Acromial part of deltoid muscle"], synergist: [...TRI, "Clavicular head of pectoralis major muscle", "Descending part of trapezius muscle", "Serratus anterior muscle"], stabiliser: [] },
+  "Triceps pushdown": { primary: TRI, synergist: [], stabiliser: [] },
+  "Pull-up": { primary: ["Latissimus dorsi muscle"], synergist: ["Teres major muscle", ...BI, "Brachialis muscle", "Ascending part of trapezius muscle", "Rhomboid major muscle", "Rhomboid minor muscle"], stabiliser: [] },
+  "Barbell row": { primary: ["Latissimus dorsi muscle", "Transverse part of trapezius muscle", "Rhomboid major muscle", "Rhomboid minor muscle", "Scapular spinal part of deltoid muscle"], synergist: [...BI, "Brachialis muscle", "Teres major muscle"], stabiliser: [] },
+  "Biceps curl": { primary: [...BI, "Brachialis muscle"], synergist: ["Brachioradialis muscle"], stabiliser: [] },
+  "Back squat": { primary: [...QUADS, "Gluteus maximus muscle"], synergist: ["Rectus femoris muscle", "Adductor magnus"], stabiliser: [] },
+  "Romanian deadlift": { primary: [...HAMS, "Gluteus maximus muscle"], synergist: ["Adductor magnus"], stabiliser: [] },
+  "Calf raise": { primary: ["Medial head of gastrocnemius", "Lateral head of gastrocnemius"], synergist: ["Soleus muscle"], stabiliser: [] },
+};
+const WEEK = [
+  { day: "Mon", log: [["Bench press", 4, "8 @ 185"], ["Overhead press", 3, "8 @ 115"], ["Triceps pushdown", 3, "12"]] },
+  { day: "Tue", log: [] },
+  { day: "Wed", log: [["Pull-up", 4, "8"], ["Barbell row", 3, "10 @ 155"], ["Biceps curl", 3, "12 @ 35"]] },
+  { day: "Thu", log: [] },
+  { day: "Fri", log: [["Back squat", 4, "6 @ 245"], ["Romanian deadlift", 3, "8 @ 205"], ["Calf raise", 3, "15"]] },
+  { day: "Sat", log: [] },
+  { day: "Sun", log: [] },
+];
+// what a coach would call each part (the card shows the group and its parts, as in an atlas)
+const GROUPS = [
+  ["Chest", ["Clavicular head of pectoralis major muscle", "Sternocostal head of pectoralis major muscle", "(Abdominal part of pectoralis major muscle)"]],
+  ["Shoulders", ["Clavicular part of deltoid muscle", "Acromial part of deltoid muscle", "Scapular spinal part of deltoid muscle"]],
+  ["Triceps", TRI], ["Biceps", [...BI, "Brachialis muscle"]], ["Forearm", ["Brachioradialis muscle"]],
+  ["Lats", ["Latissimus dorsi muscle", "Teres major muscle"]],
+  ["Traps", ["Descending part of trapezius muscle", "Transverse part of trapezius muscle", "Ascending part of trapezius muscle"]],
+  ["Rhomboids", ["Rhomboid major muscle", "Rhomboid minor muscle"]], ["Serratus", ["Serratus anterior muscle"]],
+  ["Quads", [...QUADS, "Rectus femoris muscle"]], ["Hamstrings", HAMS], ["Glutes", ["Gluteus maximus muscle", "Gluteus medius muscle", "Gluteus minimus muscle"]],
+  ["Adductors", ["Adductor magnus", "Adductor longus", "Adductor brevis"]],
+  ["Calves", ["Medial head of gastrocnemius", "Lateral head of gastrocnemius", "Soleus muscle"]],
+];
+const groupOf = new Map(); for (const [g, parts] of GROUPS) for (const p of parts) groupOf.set(p, g);
+const ROLE = { primary: 1, synergist: 0.5, stabiliser: 0.25 };
+// sets per part, cumulative through each day of the week
+function setsThrough(d) {
+  const s = new Map();
+  for (let i = 0; i <= d; i++) for (const [ex, sets] of WEEK[i].log) for (const [role, parts] of Object.entries(EXERCISES[ex]))
+    for (const p of parts) s.set(p, (s.get(p) || 0) + sets * ROLE[role]);
+  return s;
+}
+const trainedOn = (d) => { const s = new Set(); for (const [ex] of WEEK[d].log) for (const [role, parts] of Object.entries(EXERCISES[ex])) if (role !== "stabiliser") parts.forEach((p) => s.add(p)); return s; };
+
+// ---------------------------------------------------------------- the scene
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xeceef1);
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.22;
+const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(-1.2, 2.4, 2.2); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.5); fill.position.set(1.5, 1.0, -2.0); scene.add(fill);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa0aa, 0.25));
+const camera = new THREE.PerspectiveCamera(28, 1, 0.05, 30);
+// ambient occlusion darkens the grooves between muscles, which is what makes them read as separate
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ao = new GTAOPass(scene, camera, 2, 2);
+ao.updateGtaoMaterial({ radius: 0.035, distanceExponent: 1.4, thickness: 1.2, scale: 1.25, samples: 16 });
+ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 16 });
+composer.addPass(ao);
+composer.addPass(new OutputPass());
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
+controls.minDistance = 0.8; controls.maxDistance = 7;
+
+const CLAY = new THREE.MeshStandardMaterial({ color: 0xb4b7bc, roughness: 0.55, metalness: 0 });
+const TENDON = new THREE.MeshStandardMaterial({ color: 0xf3f2ee, roughness: 0.4, metalness: 0 });
+const BONE = new THREE.MeshStandardMaterial({ color: 0xe2ddd2, roughness: 0.7, metalness: 0 });
+const HIDE = /Bursa|Fascia|Articular capsule|Ligament|Cartilage/;
+const SHEATH = /^(External abdominal oblique|Internal abdominal oblique|Transversus abdominis) muscle/;
+// deep layers no one can see from outside, which only flicker through the layer above
+const DEEP = /^(Internal abdominal oblique|Transversus abdominis|Innermost intercostal|Internal intercostal) muscle/;
+
+const parts = new Map();   // base name -> [{ mesh, side }] (muscle-material primitives only)
+const pick = [];           // meshes the pointer can hit
+const loader = new GLTFLoader();
+const draco = new DRACOLoader(); draco.setDecoderPath("./m/draco/");
+loader.setDRACOLoader(draco);
+
+function base(name) { return name.replace(/\.(l|r)$/, ""); }
+// the glTF loader strips dots and spaces from node names; the manifest gives back the atlas's own names
+const sanitize = (n) => n.replace(/\s/g, "_").replace(/[\[\]\.:\/]/g, "");
+let ORIGINAL = new Map(), MUSCLE_NAMES = new Set();
+function addModel(gltf, kind) {
+  gltf.scene.traverse((o) => {
+    if (!o.isMesh) return;
+    // a node with two materials comes in as a group of meshes; the object's name is on the group
+    const key = ORIGINAL.has(o.name) ? o.name : o.parent?.name;
+    const name = ORIGINAL.get(key) || key || o.name;
+    const matName = o.material?.name || "";
+    if (kind === "muscles" && (HIDE.test(matName) || DEEP.test(name))) { o.visible = false; return; }
+    if (kind === "skeleton") { if (MUSCLE_NAMES.has(name)) { o.visible = false; return; } o.material = BONE; return; }
+    // the abdominal wall's aponeuroses (the rectus sheath) lie over rectus abdominis and over each other; atlas plates
+    // show rectus itself, so the sheath's tendon layers are left out, and the muscles of the wall stay
+    if (matName === "Tendon" && SHEATH.test(name)) { o.visible = false; return; }
+    if (matName === "Tendon") { o.material = TENDON; return; }
+    o.material = CLAY.clone();
+    const b = base(name);
+    if (!parts.has(b)) parts.set(b, []);
+    parts.get(b).push(o);
+    o.userData.part = b;
+    pick.push(o);
+  });
+  scene.add(gltf.scene);
+}
+
+// heat: 0 sets -> clay, then warm orange to deep red at 12 sets or more
+const STOPS = [[0, 0xb4b7bc], [0.25, 0xf0b08c], [0.6, 0xea6a43], [1, 0xb8141c]].map(([t, c]) => [t, new THREE.Color(c)]);
+function heat(sets) {
+  const t = Math.min(1, sets / 12);
+  if (sets <= 0) return STOPS[0][1].clone();
+  for (let i = 1; i < STOPS.length; i++) if (t <= STOPS[i][0]) {
+    const [t0, c0] = STOPS[i - 1], [t1, c1] = STOPS[i];
+    return c0.clone().lerp(c1, (t - t0) / (t1 - t0));
+  }
+  return STOPS[STOPS.length - 1][1].clone();
+}
+
+let day = 6, playing = false, playT = 0, fresh = new Set();
+const daysEl = document.getElementById("days");
+WEEK.forEach((w, i) => {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = w.day;
+  if (w.log.length) b.classList.add("trained");
+  b.addEventListener("click", () => { stopPlay(); setDay(i); });
+  daysEl.appendChild(b);
+});
+function setDay(d) {
+  day = d;
+  [...daysEl.children].forEach((b, i) => { b.classList.toggle("cur", i === d); b.classList.toggle("done", i < d); });
+  const sets = setsThrough(d);
+  fresh = trainedOn(d);
+  for (const [b, meshes] of parts) {
+    const c = heat(sets.get(b) || 0);
+    for (const m of meshes) { m.material.color.copy(c); m.userData.sets = sets.get(b) || 0; }
+  }
+  const log = WEEK[d].log;
+  document.getElementById("session").innerHTML = log.length
+    ? `<b>${WEEK[d].day}</b> · ` + log.map(([ex, s, r]) => `${ex} ${s}×${r}`).join(" · ")
+    : `<b>${WEEK[d].day}</b> · rest`;
+  if (hovered) showCard(hovered);
+}
+
+// ---- the card: the coach's group and its parts, as in an atlas
+const card = document.getElementById("card");
+let hovered = null;
+function showCard(b) {
+  const g = groupOf.get(b);
+  const list = g ? GROUPS.find(([n]) => n === g)[1] : [b];
+  const sets = setsThrough(day);
+  document.getElementById("cardTitle").textContent = g || "Muscle";
+  const ul = document.getElementById("cardParts"); ul.replaceChildren();
+  for (const p of list) {
+    const li = document.createElement("li");
+    li.textContent = p.replace(/[()]/g, "").replace(/ muscle$/, "").replace(/ of (pectoralis major|deltoid|trapezius)( muscle)?/, "").replace(/ of (biceps brachii|triceps brachii|biceps femoris|gastrocnemius)/, "");
+    if (p === b) li.classList.add("lit");
+    ul.appendChild(li);
+  }
+  const total = list.reduce((a, p) => a + (sets.get(p) || 0), 0);
+  document.getElementById("cardSets").textContent = `${(sets.get(b) || 0).toFixed(1)} sets this week · ${b.replace(/[()]/g, "")}`;
+  void total;
+  card.classList.add("on");
+}
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+let downAt = null;
+canvas.addEventListener("pointerdown", (e) => { downAt = [e.clientX, e.clientY]; });
+canvas.addEventListener("pointerup", (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;   // a tap, not a turn
+  ptr.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(pick, false)[0];
+  hovered = hit ? hit.object.userData.part : null;
+  if (hovered) showCard(hovered); else card.classList.remove("on");
+});
+
+// ---- play the week: a day every 1.2 s; the day's trained muscles pulse
+const bPlay = document.getElementById("bPlay");
+function stopPlay() { playing = false; bPlay.textContent = "▶ Play the week"; }
+bPlay.addEventListener("click", () => {
+  if (playing) return stopPlay();
+  playing = true; playT = 0; bPlay.textContent = "❚❚ Pause"; setDay(0);
+});
+let facing = 1, turnTo = null;
+document.getElementById("bTurn").addEventListener("click", () => { facing *= -1; turnTo = facing; });
+
+let H = 1.71, CY = 0.86;
+function frame() {
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false);
+  composer.setPixelRatio(renderer.getPixelRatio());
+  composer.setSize(w, h);
+  camera.aspect = w / h;
+  // fit the whole figure, with room for the controls below
+  // the figure fits the band between the title and the controls (about 90 px above, 190 px below)
+  const vfov = THREE.MathUtils.degToRad(camera.fov);
+  const top = 90, bottom = 190, band = Math.max(0.4, (h - top - bottom) / h);
+  const needH = H * 1.04 / band, needW = 0.72 * 1.12;
+  const dist = Math.max(needH / (2 * Math.tan(vfov / 2)), needW / (2 * Math.tan(vfov / 2) * camera.aspect));
+  // shift the view so the band's middle, not the screen's, holds the figure
+  camera.setViewOffset(w, h, 0, (bottom - top) / 2, w, h);
+  camera.updateProjectionMatrix();
+  return dist;
+}
+let dist = frame();
+function placeCamera() {
+  dist = frame();
+  camera.position.set(0, CY + 0.02, dist * facing);
+  controls.target.set(0, CY - 0.05, 0);
+  controls.update();
+}
+addEventListener("resize", () => { const d = camera.position.distanceTo(controls.target); const nd = frame(); camera.position.sub(controls.target).multiplyScalar(nd / d).add(controls.target); });
+
+const clock = new THREE.Clock();
+function tick() {
+  if (window.__freeze) { requestAnimationFrame(tick); return; }   // (the test harness renders single frames)
+  const dt = clock.getDelta(), t = clock.elapsedTime;
+  if (playing) { playT += dt; const d = Math.min(6, Math.floor(playT / 1.2)); if (d !== day) setDay(d); if (playT > 7.2) stopPlay(); }
+  if (turnTo !== null) {
+    // swing round to face front or back
+    const off = camera.position.clone().sub(controls.target);
+    const a = Math.atan2(off.x, off.z), goal = turnTo > 0 ? 0 : Math.PI;
+    let da = ((goal - a + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+    const step = Math.sign(da) * Math.min(Math.abs(da), dt * 4);
+    off.applyAxisAngle(new THREE.Vector3(0, 1, 0), step);
+    camera.position.copy(controls.target).add(off);
+    if (Math.abs(da) < 0.01) turnTo = null;
+  }
+  // the day's work glows a little, breathing
+  const pulse = 0.5 + 0.5 * Math.sin(t * 3.2);
+  for (const [b, meshes] of parts) {
+    const e = fresh.has(b) ? 0.10 + 0.12 * pulse : 0;
+    for (const m of meshes) m.material.emissive.setRGB(e, e * 0.25, e * 0.1);
+  }
+  controls.update();
+  composer.render();
+  requestAnimationFrame(tick);
+}
+
+Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), fetch("./m/model/manifest.json").then((r) => r.json())]).then(([mu, sk, man]) => {
+  ORIGINAL = new Map([...man.muscles, ...man.skeleton].map((o) => [sanitize(o.name), o.name]));
+  MUSCLE_NAMES = new Set(man.muscles.map((o) => o.name));
+  addModel(sk, "skeleton");
+  addModel(mu, "muscles");
+  const box = new THREE.Box3().setFromObject(mu.scene);
+  H = box.max.y - box.min.y; CY = (box.max.y + box.min.y) / 2;
+  const missing = [...new Set(Object.values(EXERCISES).flatMap((e) => Object.values(e).flat()))].filter((p) => !parts.has(p));
+  if (missing.length) console.warn("parts not in the atlas:", missing);
+  window.__mm = { sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
+  document.getElementById("loading").remove();
+  placeCamera();
+  setDay(6);
+  tick();
+}).catch((e) => { document.getElementById("loading").textContent = "Couldn't load the anatomy: " + e.message; console.error(e); });
+</script>
+</body>
+</html>
