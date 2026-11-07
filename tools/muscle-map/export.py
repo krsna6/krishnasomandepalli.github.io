@@ -22,6 +22,20 @@ sets = {
     "muscles": [o for o in objects_in("Scene Collection/4: Muscular system") if re.search(r"\.(l|r)$", o.name)],
     "skeleton": [o for o in objects_in("Scene Collection/1: Skeletal system") if re.search(r"\.(l|r|t|j)$", o.name) or "." not in o.name],
 }
+# the head's skin (the atlas's surface regions of the head and ears), so the figure has a calm face rather than a skull;
+# smoothed (two levels of subdivision) because the regions are low-poly patches
+HEAD = {"Frontal region", "Parietal region", "Occipital region", "Temporal region", "Mastoid region", "Orbital region",
+        "Infra-orbital region", "Nasal region", "Oral region", "Buccal region", "Zygomatic region", "Mental region",
+        "Parotideomasseteric region", "Eyebrow", "Philtrum", "Labial commissure", "Angle of mouth", "Tubercle of upper lip",
+        "Mentolabial sulcus", "Nasolabial sulcus", "Auricular region", "Helix", "Antihelix", "Crura of antihelix", "Tragus",
+        "Antitragus", "Lobule of auricle", "Scapha", "Concha of auricle", "Cavity of concha", "Cymba conchae", "Triangular fossa",
+        "Fossa antihelica", "Eminentia conchae", "Eminentia fossae triangularis", "Eminentia scaphae", "Intertragic incisure",
+        "Apex of auricle", "Auricular tubercle", "Anterior notch of auricle", "Posterior auricular groove"}
+sets["head"] = [o for o in objects_in("Scene Collection/9: Regions of human body") if re.sub(r"\.(l|r)$", "", o.name) in HEAD]
+for o in sets["head"]:
+    m = o.modifiers.new("smooth", "SUBSURF"); m.levels = 2; m.render_levels = 2
+    for poly in o.data.polygons:
+        poly.use_smooth = True
 keep = set(o.name for v in sets.values() for o in v)
 # free memory: remove everything else before exporting
 for o in list(bpy.data.objects):
