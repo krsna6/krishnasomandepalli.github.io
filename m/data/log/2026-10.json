@@ -1,6 +1,31 @@
 {
   "month": "2026-10",
   "entries": [
-    { "date": "2026-10-19", "exercise": "Hip thrusts", "sets": 3, "reps": 15, "weight_lb": 135, "unmapped": true, "note": "45 lb bar plus a 45 lb plate per side; sets 2 and 3 staggered stance, one per side (his report)" }
+    {
+      "date": "2026-10-19",
+      "exercise": "Hip thrusts",
+      "sets": 3,
+      "reps": 15,
+      "weight_lb": 135,
+      "unmapped": true,
+      "note": "45 lb bar plus a 45 lb plate per side; sets 2 and 3 staggered stance, one per side (his report)"
+    },
+    {
+      "date": "2026-10-25",
+      "exercise": "Dumbbell deadlifts",
+      "sets": 3,
+      "reps": [
+        10,
+        10,
+        15
+      ],
+      "weight_lb": [
+        35,
+        40,
+        45
+      ],
+      "unmapped": true,
+      "note": "weight per hand (his report)"
+    }
   ]
 }
