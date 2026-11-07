@@ -22,13 +22,16 @@ jobs:
           timeout 300 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxi6 libxkbcommon0 libsm6 libxrender1 libxxf86vm1 libxfixes3 libgl1 libegl1 || true
           git clone -q --depth 1 https://github.com/Z-Anatomy/Models-of-human-anatomy za
           unzip -q za/Z-Anatomy.zip -d za/x
-      - name: Inventory and render
+      - name: Inventory
         run: |
-          ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out 2>&1 | tail -40 | tee tools/muscle-map/out-run.log
-      - name: Commit results
-        if: always()
-        run: |
+          mkdir -p tools/muscle-map/out
+          /usr/bin/time -v ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out --inventory-only > tools/muscle-map/out/inventory-run.log 2>&1 || echo "exit $?" >> tools/muscle-map/out/inventory-run.log
+          tail -30 tools/muscle-map/out/inventory-run.log
           git config user.name "muscle-map-bot"; git config user.email "actions@users.noreply.github.com"
-          git add tools/muscle-map
-          git commit -m "Muscle map: atlas inventory and test render (run ${{ github.run_id }})" || true
-          git push
+          git add tools/muscle-map/out && git commit -qm "Muscle map: atlas inventory (run ${{ github.run_id }})" && git push -q || true
+      - name: Render
+        run: |
+          free -m
+          /usr/bin/time -v ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out > tools/muscle-map/out/render-run.log 2>&1 || echo "exit $?" >> tools/muscle-map/out/render-run.log
+          tail -30 tools/muscle-map/out/render-run.log
+          git add tools/muscle-map/out && git commit -qm "Muscle map: test render (run ${{ github.run_id }})" && git pull -q --rebase && git push -q || true

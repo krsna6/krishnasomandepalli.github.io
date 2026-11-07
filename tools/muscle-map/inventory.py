@@ -34,7 +34,9 @@ for o in bpy.data.objects:
         c = colls.setdefault(k, {"objects": 0, "tris": 0})
         c["objects"] += 1; c["tris"] += tris
 json.dump({"blender": bpy.app.version_string, "collections": colls, "objects": objs}, open(os.path.join(out, "inventory.json"), "w"), indent=1)
-print("objects", len(objs), "collections", len(colls))
+print("objects", len(objs), "collections", len(colls), flush=True)
+if "--inventory-only" in sys.argv:
+    sys.exit(0)
 
 # ---- the render: muscles = meshes whose collection path mentions muscles, base left/right copies only
 def is_muscle(o):
@@ -62,8 +64,8 @@ for o in musc:
 ctr = (lo + hi) / 2; size = hi - lo
 print("bounds", tuple(lo), tuple(hi))
 up = 2 if size[2] >= size[1] else 1   # the tall axis
-scene.render.engine = "CYCLES"; scene.cycles.samples = 48; scene.cycles.device = "CPU"
-scene.render.resolution_x = 900; scene.render.resolution_y = 1200
+scene.render.engine = "CYCLES"; scene.cycles.samples = 24; scene.cycles.device = "CPU"
+scene.render.resolution_x = 600; scene.render.resolution_y = 800
 scene.world = scene.world or bpy.data.worlds.new("w"); scene.world.use_nodes = True
 scene.world.node_tree.nodes["Background"].inputs[0].default_value = (0.93, 0.94, 0.95, 1)
 scene.world.node_tree.nodes["Background"].inputs[1].default_value = 0.9
