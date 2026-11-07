@@ -1,0 +1,277 @@
+{
+  "_about": "Werk's exercise map: which muscles each exercise trains, in the anatomical names of the Z-Anatomy atlas (see m/model/manifest.json). Counting (Pelland et al. 2026, Sports Medicine): a set counts 1 for each primary muscle and 0.5 for each secondary; stabilizers are shown, not counted. 'status': 'draft' entries are provisional; 'reviewed' entries were checked by Krishna against the cited sources. Only Krishna or Claude change this file.",
+  "groups": [
+    [
+      "Chest",
+      [
+        "Clavicular head of pectoralis major muscle",
+        "Sternocostal head of pectoralis major muscle",
+        "(Abdominal part of pectoralis major muscle)"
+      ]
+    ],
+    [
+      "Shoulders",
+      [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle",
+        "Scapular spinal part of deltoid muscle"
+      ]
+    ],
+    [
+      "Triceps",
+      [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ]
+    ],
+    [
+      "Biceps",
+      [
+        "Long head of biceps brachii",
+        "Short head of biceps brachii",
+        "Brachialis muscle"
+      ]
+    ],
+    [
+      "Forearm",
+      [
+        "Brachioradialis muscle"
+      ]
+    ],
+    [
+      "Lats",
+      [
+        "Latissimus dorsi muscle",
+        "Teres major muscle"
+      ]
+    ],
+    [
+      "Traps",
+      [
+        "Descending part of trapezius muscle",
+        "Transverse part of trapezius muscle",
+        "Ascending part of trapezius muscle"
+      ]
+    ],
+    [
+      "Rhomboids",
+      [
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle"
+      ]
+    ],
+    [
+      "Serratus",
+      [
+        "Serratus anterior muscle"
+      ]
+    ],
+    [
+      "Quads",
+      [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Rectus femoris muscle"
+      ]
+    ],
+    [
+      "Hamstrings",
+      [
+        "Long head of biceps femoris",
+        "Semitendinosus muscle",
+        "Semimembranosus muscle"
+      ]
+    ],
+    [
+      "Glutes",
+      [
+        "Gluteus maximus muscle",
+        "Gluteus medius muscle",
+        "Gluteus minimus muscle"
+      ]
+    ],
+    [
+      "Adductors",
+      [
+        "Adductor magnus",
+        "Adductor longus",
+        "Adductor brevis"
+      ]
+    ],
+    [
+      "Calves",
+      [
+        "Medial head of gastrocnemius",
+        "Lateral head of gastrocnemius",
+        "Soleus muscle"
+      ]
+    ]
+  ],
+  "exercises": {
+    "Bench press": {
+      "aliases": [
+        "barbell bench press",
+        "flat bench",
+        "bench"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle",
+        "(Abdominal part of pectoralis major muscle)"
+      ],
+      "secondary": [
+        "Clavicular head of pectoralis major muscle",
+        "Clavicular part of deltoid muscle",
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ],
+      "stabilizers": [
+        "Serratus anterior muscle"
+      ],
+      "status": "draft"
+    },
+    "Overhead press": {
+      "aliases": [
+        "OHP",
+        "military press",
+        "shoulder press"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii",
+        "Clavicular head of pectoralis major muscle",
+        "Descending part of trapezius muscle",
+        "Serratus anterior muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Triceps pushdown": {
+      "aliases": [
+        "cable pushdown",
+        "tricep pushdown"
+      ],
+      "primary": [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ],
+      "secondary": [],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Pull-up": {
+      "aliases": [
+        "pullup",
+        "chin-up"
+      ],
+      "primary": [
+        "Latissimus dorsi muscle"
+      ],
+      "secondary": [
+        "Teres major muscle",
+        "Long head of biceps brachii",
+        "Short head of biceps brachii",
+        "Brachialis muscle",
+        "Ascending part of trapezius muscle",
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Barbell row": {
+      "aliases": [
+        "bent-over row",
+        "BB row"
+      ],
+      "primary": [
+        "Latissimus dorsi muscle",
+        "Transverse part of trapezius muscle",
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle",
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "secondary": [
+        "Long head of biceps brachii",
+        "Short head of biceps brachii",
+        "Brachialis muscle",
+        "Teres major muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Biceps curl": {
+      "aliases": [
+        "curl",
+        "dumbbell curl",
+        "bicep curl"
+      ],
+      "primary": [
+        "Long head of biceps brachii",
+        "Short head of biceps brachii",
+        "Brachialis muscle"
+      ],
+      "secondary": [
+        "Brachioradialis muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Back squat": {
+      "aliases": [
+        "squat",
+        "barbell squat"
+      ],
+      "primary": [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Rectus femoris muscle",
+        "Adductor magnus"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Romanian deadlift": {
+      "aliases": [
+        "RDL"
+      ],
+      "primary": [
+        "Long head of biceps femoris",
+        "Semitendinosus muscle",
+        "Semimembranosus muscle",
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Adductor magnus"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Calf raise": {
+      "aliases": [
+        "standing calf raise"
+      ],
+      "primary": [
+        "Medial head of gastrocnemius",
+        "Lateral head of gastrocnemius"
+      ],
+      "secondary": [
+        "Soleus muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    }
+  }
+}

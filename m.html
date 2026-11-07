@@ -25,7 +25,10 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
   padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));pointer-events:none}
 .title h1{margin:0;font:800 15px/1 var(--f);letter-spacing:.16em;text-transform:uppercase}
 .title p{margin:6px 0 0;font-size:12px;color:var(--dim)}
-.sample{display:inline-block;margin-top:8px;font:600 10.5px/1 var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--hot);border:1px solid currentColor;border-radius:3px;padding:4px 6px}
+.week{display:flex;align-items:center;gap:2px;margin:4px 0 0 -8px;pointer-events:auto}
+.arrow{font:400 20px/1 var(--f);color:var(--dim);background:none;border:0;padding:4px 8px;cursor:pointer;border-radius:6px}
+.arrow:disabled{opacity:.3;cursor:default}
+.arrow:focus-visible{outline:2px solid var(--hot)}
 .card{pointer-events:none;min-width:150px;max-width:220px;background:var(--card);box-shadow:0 6px 24px rgba(20,24,30,.12);text-align:center;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
 .card.on{opacity:1;transform:none}
 .card h2{margin:0;background:var(--hot);color:#fff;font:800 14px/1 var(--f);letter-spacing:.14em;text-transform:uppercase;padding:9px 12px}
@@ -64,7 +67,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 <canvas id="c"></canvas>
 <div class="loading" id="loading">Loading the anatomy…</div>
 <div class="top">
-  <div class="title"><h1>Werk</h1><p id="weekLabel">Week of Nov 2</p><span class="sample">Sample week · mock</span></div>
+  <div class="title"><h1>Werk</h1><p class="week"><button class="arrow" id="bPrev" type="button" aria-label="Previous week">‹</button><span id="weekLabel">This week</span><button class="arrow" id="bNext" type="button" aria-label="Next week">›</button></p></div>
   <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
 </div>
 <div class="bottom">
@@ -89,56 +92,41 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
-// ---------------------------------------------------------------- the sample week (mock data)
+// ---------------------------------------------------------------- the data (m/data; see m/AGENTS.md)
 // Weekly load per muscle is counted as fractional sets, the method that fit best in Pelland et al. (2026,
-// Sports Medicine): a hard set counts 1 for the muscles it targets and 0.5 for the ones it trains indirectly.
-// Stabilisers are listed but not counted. Names are the atlas's own anatomical parts.
-const TRI = ["Long head of triceps brachii", "Lateral head of triceps brachii", "Medial head of triceps brachii"];
-const BI = ["Long head of biceps brachii", "Short head of biceps brachii"];
-const QUADS = ["Vastus lateralis muscle", "Vastus medialis muscle", "Vastus intermedius muscle"];
-const HAMS = ["Long head of biceps femoris", "Semitendinosus muscle", "Semimembranosus muscle"];
-const EXERCISES = {
-  "Bench press": { primary: ["Sternocostal head of pectoralis major muscle", "(Abdominal part of pectoralis major muscle)"], synergist: ["Clavicular head of pectoralis major muscle", "Clavicular part of deltoid muscle", ...TRI], stabiliser: ["Serratus anterior muscle"] },
-  "Overhead press": { primary: ["Clavicular part of deltoid muscle", "Acromial part of deltoid muscle"], synergist: [...TRI, "Clavicular head of pectoralis major muscle", "Descending part of trapezius muscle", "Serratus anterior muscle"], stabiliser: [] },
-  "Triceps pushdown": { primary: TRI, synergist: [], stabiliser: [] },
-  "Pull-up": { primary: ["Latissimus dorsi muscle"], synergist: ["Teres major muscle", ...BI, "Brachialis muscle", "Ascending part of trapezius muscle", "Rhomboid major muscle", "Rhomboid minor muscle"], stabiliser: [] },
-  "Barbell row": { primary: ["Latissimus dorsi muscle", "Transverse part of trapezius muscle", "Rhomboid major muscle", "Rhomboid minor muscle", "Scapular spinal part of deltoid muscle"], synergist: [...BI, "Brachialis muscle", "Teres major muscle"], stabiliser: [] },
-  "Biceps curl": { primary: [...BI, "Brachialis muscle"], synergist: ["Brachioradialis muscle"], stabiliser: [] },
-  "Back squat": { primary: [...QUADS, "Gluteus maximus muscle"], synergist: ["Rectus femoris muscle", "Adductor magnus"], stabiliser: [] },
-  "Romanian deadlift": { primary: [...HAMS, "Gluteus maximus muscle"], synergist: ["Adductor magnus"], stabiliser: [] },
-  "Calf raise": { primary: ["Medial head of gastrocnemius", "Lateral head of gastrocnemius"], synergist: ["Soleus muscle"], stabiliser: [] },
-};
-const WEEK = [
-  { day: "Mon", log: [["Bench press", 4, "8 @ 185"], ["Overhead press", 3, "8 @ 115"], ["Triceps pushdown", 3, "12"]] },
-  { day: "Tue", log: [] },
-  { day: "Wed", log: [["Pull-up", 4, "8"], ["Barbell row", 3, "10 @ 155"], ["Biceps curl", 3, "12 @ 35"]] },
-  { day: "Thu", log: [] },
-  { day: "Fri", log: [["Back squat", 4, "6 @ 245"], ["Romanian deadlift", 3, "8 @ 205"], ["Calf raise", 3, "15"]] },
-  { day: "Sat", log: [] },
-  { day: "Sun", log: [] },
-];
-// what a coach would call each part (the card shows the group and its parts, as in an atlas)
-const GROUPS = [
-  ["Chest", ["Clavicular head of pectoralis major muscle", "Sternocostal head of pectoralis major muscle", "(Abdominal part of pectoralis major muscle)"]],
-  ["Shoulders", ["Clavicular part of deltoid muscle", "Acromial part of deltoid muscle", "Scapular spinal part of deltoid muscle"]],
-  ["Triceps", TRI], ["Biceps", [...BI, "Brachialis muscle"]], ["Forearm", ["Brachioradialis muscle"]],
-  ["Lats", ["Latissimus dorsi muscle", "Teres major muscle"]],
-  ["Traps", ["Descending part of trapezius muscle", "Transverse part of trapezius muscle", "Ascending part of trapezius muscle"]],
-  ["Rhomboids", ["Rhomboid major muscle", "Rhomboid minor muscle"]], ["Serratus", ["Serratus anterior muscle"]],
-  ["Quads", [...QUADS, "Rectus femoris muscle"]], ["Hamstrings", HAMS], ["Glutes", ["Gluteus maximus muscle", "Gluteus medius muscle", "Gluteus minimus muscle"]],
-  ["Adductors", ["Adductor magnus", "Adductor longus", "Adductor brevis"]],
-  ["Calves", ["Medial head of gastrocnemius", "Lateral head of gastrocnemius", "Soleus muscle"]],
-];
-const groupOf = new Map(); for (const [g, parts] of GROUPS) for (const p of parts) groupOf.set(p, g);
-const ROLE = { primary: 1, synergist: 0.5, stabiliser: 0 };
-// sets per part, cumulative through each day of the week
+// Sports Medicine): a hard set counts 1 for each primary muscle and 0.5 for each secondary. Stabilisers
+// are listed, not counted. Muscle names are the atlas's own anatomical parts.
+let EXERCISES = {}, GROUPS = [], groupOf = new Map(), LOG = [];
+const ROLE = { primary: 1, secondary: 0.5, stabilizers: 0 };
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const iso = (d) => d.toISOString().slice(0, 10);
+const addDays = (d, n) => { const x = new Date(d); x.setUTCDate(x.getUTCDate() + n); return x; };
+// today in New York, as a calendar date
+const todayNY = () => { const p = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date()); return new Date(p + "T00:00:00Z"); };
+const mondayOf = (d) => addDays(d, -((d.getUTCDay() + 6) % 7));
+let weekStart = mondayOf(todayNY());
+const weekDates = () => DAYS.map((_, i) => iso(addDays(weekStart, i)));
+const entriesOn = (date) => LOG.filter((e) => e.date === date);
 function setsThrough(d) {
   const s = new Map();
-  for (let i = 0; i <= d; i++) for (const [ex, sets] of WEEK[i].log) for (const [role, parts] of Object.entries(EXERCISES[ex]))
-    for (const p of parts) s.set(p, (s.get(p) || 0) + sets * ROLE[role]);
+  for (const date of weekDates().slice(0, d + 1)) for (const e of entriesOn(date)) {
+    const m = EXERCISES[e.exercise]; if (!m || e.unmapped) continue;
+    for (const role of ["primary", "secondary"]) for (const p of m[role]) s.set(p, (s.get(p) || 0) + e.sets * ROLE[role]);
+  }
   return s;
 }
-const trainedOn = (d) => { const s = new Set(); for (const [ex] of WEEK[d].log) for (const [role, parts] of Object.entries(EXERCISES[ex])) if (role !== "stabiliser") parts.forEach((p) => s.add(p)); return s; };
+const trainedOn = (d) => { const s = new Set(); for (const e of entriesOn(weekDates()[d])) { const m = EXERCISES[e.exercise]; if (m && !e.unmapped) [...m.primary, ...m.secondary].forEach((p) => s.add(p)); } return s; };
+async function loadLog() {
+  // the months this week touches
+  const months = [...new Set(weekDates().map((d) => d.slice(0, 7)))];
+  const docs = await Promise.all(months.map((m) => fetch(`./m/data/log/${m}.json`, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : { entries: [] })).catch(() => ({ entries: [] }))));
+  LOG = docs.flatMap((d) => d.entries || []);
+}
+const fmt = (v) => (Array.isArray(v) ? (v.every((x) => x === v[0]) ? v[0] : v.join("/")) : v);
+function describe(e) {
+  const w = fmt(e.weight_lb);
+  return `${e.exercise} ${e.sets}×${fmt(e.reps)}${w && w !== 0 ? ` @ ${w}` : ""}${e.unmapped || !EXERCISES[e.exercise] ? " (not mapped yet)" : ""}`;
+}
 
 // ---------------------------------------------------------------- the scene
 const canvas = document.getElementById("c");
@@ -235,12 +223,23 @@ function heat(sets) {
 
 let day = 6, playing = false, playT = 0, fresh = new Set();
 const daysEl = document.getElementById("days");
-WEEK.forEach((w, i) => {
-  const b = document.createElement("button"); b.type = "button"; b.textContent = w.day;
-  if (w.log.length) b.classList.add("trained");
+DAYS.forEach((name, i) => {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = name;
   b.addEventListener("click", () => { stopPlay(); setDay(i); });
   daysEl.appendChild(b);
 });
+function showWeek() {
+  const dates = weekDates(), today = iso(todayNY());
+  [...daysEl.children].forEach((b, i) => b.classList.toggle("trained", entriesOn(dates[i]).length > 0));
+  const thisWeek = iso(mondayOf(todayNY())) === dates[0];
+  const label = new Date(dates[0] + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+  document.getElementById("weekLabel").textContent = thisWeek ? "This week" : `Week of ${label}`;
+  document.getElementById("bNext").disabled = thisWeek;
+  setDay(thisWeek ? Math.max(0, dates.indexOf(today)) : 6);
+}
+async function goWeek(n) { stopPlay(); weekStart = addDays(weekStart, 7 * n); await loadLog(); showWeek(); }
+document.getElementById("bPrev").addEventListener("click", () => goWeek(-1));
+document.getElementById("bNext").addEventListener("click", () => goWeek(1));
 function setDay(d) {
   day = d;
   [...daysEl.children].forEach((b, i) => { b.classList.toggle("cur", i === d); b.classList.toggle("done", i < d); });
@@ -250,10 +249,12 @@ function setDay(d) {
     const c = heat(sets.get(b) || 0);
     for (const m of meshes) { m.material.color.copy(c); m.userData.sets = sets.get(b) || 0; }
   }
-  const log = WEEK[d].log;
-  document.getElementById("session").innerHTML = log.length
-    ? `<b>${WEEK[d].day}</b> · ` + log.map(([ex, s, r]) => `${ex} ${s}×${r}`).join(" · ")
-    : `<b>${WEEK[d].day}</b> · rest`;
+  const log = entriesOn(weekDates()[d]);
+  const sessionEl = document.getElementById("session");
+  sessionEl.replaceChildren();
+  const b = document.createElement("b"); b.textContent = DAYS[d]; sessionEl.append(b, " · ");
+  const anyThisWeek = weekDates().some((dt) => entriesOn(dt).length);
+  sessionEl.append(log.length ? log.map(describe).join(" · ") : anyThisWeek ? "rest" : "nothing logged this week yet");
   if (hovered) showCard(hovered);
 }
 
@@ -361,7 +362,10 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), loader.loadAsync("./m/model/head.glb"), fetch("./m/model/manifest.json").then((r) => r.json())]).then(([mu, sk, hd, man]) => {
+Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), loader.loadAsync("./m/model/head.glb"), fetch("./m/model/manifest.json").then((r) => r.json()),
+  fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog()]).then(([mu, sk, hd, man, exDoc]) => {
+  EXERCISES = exDoc.exercises; GROUPS = exDoc.groups;
+  groupOf = new Map(); for (const [g, list] of GROUPS) for (const p of list) groupOf.set(p, g);
   ORIGINAL = new Map([...man.muscles, ...man.skeleton].map((o) => [sanitize(o.name), o.name]));
   MUSCLE_NAMES = new Set(man.muscles.map((o) => o.name));
   ORIGINAL = new Map([...ORIGINAL, ...man.head.map((o) => [sanitize(o.name), o.name])]);
@@ -373,12 +377,12 @@ Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/mo
   addModel(mu, "muscles");
   const box = new THREE.Box3().setFromObject(mu.scene);
   H = box.max.y - box.min.y; CY = (box.max.y + box.min.y) / 2;
-  const missing = [...new Set(Object.values(EXERCISES).flatMap((e) => Object.values(e).flat()))].filter((p) => !parts.has(p));
+  const missing = [...new Set(Object.values(EXERCISES).flatMap((e) => [...e.primary, ...e.secondary, ...e.stabilizers]))].filter((p) => !parts.has(p));
   if (missing.length) console.warn("parts not in the atlas:", missing);
   window.__mm = { sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
   document.getElementById("loading").remove();
   placeCamera();
-  setDay(6);
+  showWeek();
   tick();
 }).catch((e) => { document.getElementById("loading").textContent = "Couldn't load the anatomy: " + e.message; console.error(e); });
 </script>
