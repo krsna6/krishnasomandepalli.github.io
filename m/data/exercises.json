@@ -272,6 +272,184 @@
       ],
       "stabilizers": [],
       "status": "draft"
+    },
+    "Hip thrusts": {
+      "aliases": [
+        "hip thrust",
+        "barbell hip thrust"
+      ],
+      "primary": [
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Long head of biceps femoris",
+        "Semitendinosus muscle",
+        "Semimembranosus muscle",
+        "Adductor magnus"
+      ],
+      "stabilizers": [
+        "Gluteus medius muscle"
+      ],
+      "status": "draft"
+    },
+    "Dumbbell deadlifts": {
+      "aliases": [
+        "dumbbell deadlift",
+        "db deadlift"
+      ],
+      "primary": [
+        "Gluteus maximus muscle",
+        "Long head of biceps femoris",
+        "Semitendinosus muscle",
+        "Semimembranosus muscle"
+      ],
+      "secondary": [
+        "Adductor magnus"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Single arm shoulder press": {
+      "aliases": [
+        "single arm dumbbell shoulder press",
+        "one arm shoulder press"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii",
+        "Clavicular head of pectoralis major muscle",
+        "Descending part of trapezius muscle",
+        "Serratus anterior muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Standing shoulder press single hand": {
+      "aliases": [
+        "standing single arm shoulder press"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii",
+        "Clavicular head of pectoralis major muscle",
+        "Descending part of trapezius muscle",
+        "Serratus anterior muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Sitting Arnold": {
+      "aliases": [
+        "arnold press",
+        "seated arnold press"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Scapular spinal part of deltoid muscle",
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii",
+        "Clavicular head of pectoralis major muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Sitting lateral raises": {
+      "aliases": [
+        "seated lateral raise",
+        "lateral raise",
+        "side raise"
+      ],
+      "primary": [
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Clavicular part of deltoid muscle",
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Shrugs": {
+      "aliases": [
+        "shrug",
+        "dumbbell shrug"
+      ],
+      "primary": [
+        "Descending part of trapezius muscle"
+      ],
+      "secondary": [
+        "Transverse part of trapezius muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Shoulder pull backs": {
+      "aliases": [
+        "shoulder pull back",
+        "scapular retraction"
+      ],
+      "primary": [
+        "Transverse part of trapezius muscle",
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle"
+      ],
+      "secondary": [
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Around the world": {
+      "aliases": [
+        "around the worlds",
+        "plate around the world"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle",
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "secondary": [
+        "Descending part of trapezius muscle",
+        "Clavicular head of pectoralis major muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Flat bench dumbbells": {
+      "aliases": [
+        "dumbbell bench press",
+        "flat dumbbell press",
+        "neutral grip dumbbell press"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle"
+      ],
+      "secondary": [
+        "Clavicular head of pectoralis major muscle",
+        "Clavicular part of deltoid muscle",
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ],
+      "stabilizers": [
+        "Serratus anterior muscle"
+      ],
+      "status": "draft"
     }
   }
 }
