@@ -1,0 +1,31 @@
+# Muscle map: open the Z-Anatomy atlas (CC BY-SA 4.0, from BodyParts3D, DBCLS) in Blender, list what is
+# inside it, and render its muscular system. Run by hand; results are committed to this branch.
+name: muscle-map-model
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Blender 4.2 LTS and the atlas
+        run: |
+          set -e
+          curl -sSL --max-time 600 -o blender.tar.xz https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz
+          tar -xf blender.tar.xz && mv blender-4.2.3-linux-x64 blender
+          timeout 300 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxi6 libxkbcommon0 libsm6 libxrender1 libxxf86vm1 libxfixes3 libgl1 libegl1 || true
+          git clone -q --depth 1 https://github.com/Z-Anatomy/Models-of-human-anatomy za
+          unzip -q za/Z-Anatomy.zip -d za/x
+      - name: Inventory and render
+        run: |
+          ./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/inventory.py -- tools/muscle-map/out 2>&1 | tail -40 | tee tools/muscle-map/out-run.log
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "muscle-map-bot"; git config user.email "actions@users.noreply.github.com"
+          git add tools/muscle-map
+          git commit -m "Muscle map: atlas inventory and test render (run ${{ github.run_id }})" || true
+          git push
