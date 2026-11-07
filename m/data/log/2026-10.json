@@ -17,6 +17,21 @@
       "note": "45 lb bar plus a 45 lb plate per side, then added a 25 lb plate per side; first set one foot slightly forward (his report)"
     },
     {
+      "date": "2026-10-13",
+      "exercise": "Single arm shoulder press",
+      "sets": 2,
+      "reps": [
+        15,
+        5
+      ],
+      "weight_lb": [
+        45,
+        42.5
+      ],
+      "unmapped": true,
+      "note": "per working arm; 35 lb x 12 warm-up not counted; reported as to failure"
+    },
+    {
       "date": "2026-10-19",
       "exercise": "Hip thrusts",
       "sets": 3,
