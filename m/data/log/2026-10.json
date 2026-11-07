@@ -2,6 +2,21 @@
   "month": "2026-10",
   "entries": [
     {
+      "date": "2026-10-06",
+      "exercise": "Hip thrusts",
+      "sets": 2,
+      "reps": [
+        25,
+        10
+      ],
+      "weight_lb": [
+        135,
+        185
+      ],
+      "unmapped": true,
+      "note": "45 lb bar plus a 45 lb plate per side, then added a 25 lb plate per side; first set one foot slightly forward (his report)"
+    },
+    {
       "date": "2026-10-19",
       "exercise": "Hip thrusts",
       "sets": 3,
