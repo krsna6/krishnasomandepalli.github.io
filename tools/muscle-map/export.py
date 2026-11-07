@@ -29,6 +29,10 @@ for o in list(bpy.data.objects):
         bpy.data.objects.remove(o, do_unlink=True)
 bpy.ops.outliner.orphans_purge(do_recursive=True)
 print("kept", {k: len(v) for k, v in sets.items()}, flush=True)
+# the atlas's shader node trees trip the glTF exporter; the web page restyles everything anyway, so keep
+# each material only as a name (muscle vs tendon) with a flat colour
+for m in bpy.data.materials:
+    m.use_nodes = False
 
 manifest = {}
 for key, objs in sets.items():
