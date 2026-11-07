@@ -26333,5 +26333,1517 @@
     1.2868
    ]
   }
+ ],
+ "head": [
+  {
+   "name": "Frontal region.r",
+   "tris": 227,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0683,
+    -0.0943,
+    1.5882
+   ],
+   "max": [
+    -0.0001,
+    -0.0247,
+    1.7018
+   ]
+  },
+  {
+   "name": "Eyebrow.r",
+   "tris": 12,
+   "materials": [
+    "Skin-5",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0472,
+    -0.0938,
+    1.6134
+   ],
+   "max": [
+    -0.0115,
+    -0.0775,
+    1.6204
+   ]
+  },
+  {
+   "name": "Frontal region.l",
+   "tris": 227,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    0.0001,
+    -0.0943,
+    1.5882
+   ],
+   "max": [
+    0.0683,
+    -0.0247,
+    1.7018
+   ]
+  },
+  {
+   "name": "Eyebrow.l",
+   "tris": 12,
+   "materials": [
+    "Skin-5",
+    "Skin-in"
+   ],
+   "min": [
+    0.0115,
+    -0.0938,
+    1.6134
+   ],
+   "max": [
+    0.0472,
+    -0.0775,
+    1.6204
+   ]
+  },
+  {
+   "name": "Mastoid region.r",
+   "tris": 40,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0716,
+    0.0207,
+    1.5591
+   ],
+   "max": [
+    -0.058,
+    0.0547,
+    1.6104
+   ]
+  },
+  {
+   "name": "Occipital region.r",
+   "tris": 138,
+   "materials": [
+    "Skin-3",
+    "Skin-8",
+    "Skin-7",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0679,
+    0.0363,
+    1.5582
+   ],
+   "max": [
+    -0.0004,
+    0.1069,
+    1.6436
+   ]
+  },
+  {
+   "name": "Parietal region.r",
+   "tris": 205,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-8",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0772,
+    -0.0327,
+    1.6061
+   ],
+   "max": [
+    -0.0002,
+    0.1048,
+    1.7088
+   ]
+  },
+  {
+   "name": "Temporal region.r",
+   "tris": 178,
+   "materials": [
+    "Skin-2",
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-8",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0813,
+    -0.0506,
+    1.588
+   ],
+   "max": [
+    -0.0606,
+    0.0493,
+    1.6546
+   ]
+  },
+  {
+   "name": "Mastoid region.l",
+   "tris": 40,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.058,
+    0.0207,
+    1.5591
+   ],
+   "max": [
+    0.0716,
+    0.0547,
+    1.6104
+   ]
+  },
+  {
+   "name": "Occipital region.l",
+   "tris": 138,
+   "materials": [
+    "Skin-3",
+    "Skin-8",
+    "Skin-7",
+    "Skin-in"
+   ],
+   "min": [
+    0.0004,
+    0.0363,
+    1.5582
+   ],
+   "max": [
+    0.0679,
+    0.1069,
+    1.6436
+   ]
+  },
+  {
+   "name": "Parietal region.l",
+   "tris": 205,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-8",
+    "Skin-in"
+   ],
+   "min": [
+    0.0002,
+    -0.0327,
+    1.6061
+   ],
+   "max": [
+    0.0772,
+    0.1048,
+    1.7088
+   ]
+  },
+  {
+   "name": "Temporal region.l",
+   "tris": 178,
+   "materials": [
+    "Skin-2",
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-8",
+    "Skin-in"
+   ],
+   "min": [
+    0.0606,
+    -0.0506,
+    1.588
+   ],
+   "max": [
+    0.0813,
+    0.0493,
+    1.6546
+   ]
+  },
+  {
+   "name": "Cavity of concha.l",
+   "tris": 215,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0646,
+    -0.001,
+    1.5673
+   ],
+   "max": [
+    0.0772,
+    0.0135,
+    1.5791
+   ]
+  },
+  {
+   "name": "Cavity of concha.r",
+   "tris": 215,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0772,
+    -0.001,
+    1.5673
+   ],
+   "max": [
+    -0.0646,
+    0.0135,
+    1.5791
+   ]
+  },
+  {
+   "name": "Concha of auricle.l",
+   "tris": 64,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0675,
+    0.0033,
+    1.5703
+   ],
+   "max": [
+    0.0794,
+    0.0135,
+    1.5857
+   ]
+  },
+  {
+   "name": "Concha of auricle.r",
+   "tris": 64,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0794,
+    0.0033,
+    1.5703
+   ],
+   "max": [
+    -0.0675,
+    0.0135,
+    1.5857
+   ]
+  },
+  {
+   "name": "Cymba conchae.l",
+   "tris": 89,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.07,
+    0.0034,
+    1.577
+   ],
+   "max": [
+    0.0793,
+    0.0135,
+    1.5887
+   ]
+  },
+  {
+   "name": "Cymba conchae.r",
+   "tris": 89,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0793,
+    0.0034,
+    1.577
+   ],
+   "max": [
+    -0.07,
+    0.0135,
+    1.5887
+   ]
+  },
+  {
+   "name": "Anterior notch of auricle.r",
+   "tris": 49,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0738,
+    -0.0071,
+    1.5769
+   ],
+   "max": [
+    -0.0674,
+    0.0063,
+    1.5908
+   ]
+  },
+  {
+   "name": "Antihelix.r",
+   "tris": 88,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.085,
+    0.0051,
+    1.5616
+   ],
+   "max": [
+    -0.0773,
+    0.0134,
+    1.5943
+   ]
+  },
+  {
+   "name": "Antitragus.r",
+   "tris": 39,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0787,
+    -0.0035,
+    1.5599
+   ],
+   "max": [
+    -0.0688,
+    0.0102,
+    1.5707
+   ]
+  },
+  {
+   "name": "Apex of auricle.r",
+   "tris": 36,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0902,
+    0.0046,
+    1.6029
+   ],
+   "max": [
+    -0.0856,
+    0.0101,
+    1.6065
+   ]
+  },
+  {
+   "name": "Auricular region.r",
+   "tris": 90,
+   "materials": [
+    "Skin-2",
+    "Skin-in",
+    "Skin-5'"
+   ],
+   "min": [
+    -0.0777,
+    -0.0154,
+    1.5486
+   ],
+   "max": [
+    -0.0556,
+    0.0266,
+    1.6109
+   ]
+  },
+  {
+   "name": "Auricular tubercle.r",
+   "tris": 26,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0932,
+    0.0161,
+    1.5871
+   ],
+   "max": [
+    -0.091,
+    0.0184,
+    1.5929
+   ]
+  },
+  {
+   "name": "Crura of antihelix.r",
+   "tris": 92,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0856,
+    -0.0001,
+    1.5858
+   ],
+   "max": [
+    -0.0718,
+    0.0119,
+    1.6027
+   ]
+  },
+  {
+   "name": "Eminentia conchae.r",
+   "tris": 61,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0793,
+    0.0048,
+    1.5583
+   ],
+   "max": [
+    -0.061,
+    0.0186,
+    1.5931
+   ]
+  },
+  {
+   "name": "Eminentia fossae triangularis.r",
+   "tris": 51,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0831,
+    -0.0047,
+    1.5926
+   ],
+   "max": [
+    -0.0723,
+    0.0114,
+    1.6061
+   ]
+  },
+  {
+   "name": "Eminentia scaphae.r",
+   "tris": 103,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0871,
+    0.0079,
+    1.5714
+   ],
+   "max": [
+    -0.0739,
+    0.0213,
+    1.6063
+   ]
+  },
+  {
+   "name": "Fossa antihelica.r",
+   "tris": 61,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0825,
+    0.0145,
+    1.5654
+   ],
+   "max": [
+    -0.0738,
+    0.0191,
+    1.5945
+   ]
+  },
+  {
+   "name": "Helix.r",
+   "tris": 473,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0933,
+    -0.0051,
+    1.5585
+   ],
+   "max": [
+    -0.0719,
+    0.0215,
+    1.6065
+   ]
+  },
+  {
+   "name": "Intertragic incisure.r",
+   "tris": 71,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0706,
+    -0.008,
+    1.5601
+   ],
+   "max": [
+    -0.0654,
+    0.0015,
+    1.5725
+   ]
+  },
+  {
+   "name": "Lobule of auricle.r",
+   "tris": 219,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0831,
+    -0.0097,
+    1.551
+   ],
+   "max": [
+    -0.0599,
+    0.0114,
+    1.5649
+   ]
+  },
+  {
+   "name": "Scapha.r",
+   "tris": 69,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0898,
+    0.0092,
+    1.5747
+   ],
+   "max": [
+    -0.0842,
+    0.0181,
+    1.6027
+   ]
+  },
+  {
+   "name": "Tragus.r",
+   "tris": 76,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0722,
+    -0.0097,
+    1.5678
+   ],
+   "max": [
+    -0.0667,
+    0.0012,
+    1.5863
+   ]
+  },
+  {
+   "name": "Triangular fossa.r",
+   "tris": 58,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0806,
+    -0.0003,
+    1.5915
+   ],
+   "max": [
+    -0.0745,
+    0.0079,
+    1.5999
+   ]
+  },
+  {
+   "name": "Posterior auricular groove.r",
+   "tris": 53,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0756,
+    -0.001,
+    1.5623
+   ],
+   "max": [
+    -0.0565,
+    0.0205,
+    1.6037
+   ]
+  },
+  {
+   "name": "Anterior notch of auricle.l",
+   "tris": 49,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0674,
+    -0.0071,
+    1.5769
+   ],
+   "max": [
+    0.0738,
+    0.0063,
+    1.5908
+   ]
+  },
+  {
+   "name": "Antihelix.l",
+   "tris": 88,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0773,
+    0.0051,
+    1.5616
+   ],
+   "max": [
+    0.085,
+    0.0134,
+    1.5943
+   ]
+  },
+  {
+   "name": "Antitragus.l",
+   "tris": 39,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0688,
+    -0.0035,
+    1.5599
+   ],
+   "max": [
+    0.0787,
+    0.0102,
+    1.5707
+   ]
+  },
+  {
+   "name": "Apex of auricle.l",
+   "tris": 36,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0856,
+    0.0046,
+    1.6029
+   ],
+   "max": [
+    0.0902,
+    0.0101,
+    1.6065
+   ]
+  },
+  {
+   "name": "Auricular region.l",
+   "tris": 90,
+   "materials": [
+    "Skin-2",
+    "Skin-in",
+    "Skin-5'"
+   ],
+   "min": [
+    0.0556,
+    -0.0154,
+    1.5486
+   ],
+   "max": [
+    0.0777,
+    0.0266,
+    1.6109
+   ]
+  },
+  {
+   "name": "Auricular tubercle.l",
+   "tris": 26,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.091,
+    0.0161,
+    1.5871
+   ],
+   "max": [
+    0.0932,
+    0.0184,
+    1.5929
+   ]
+  },
+  {
+   "name": "Crura of antihelix.l",
+   "tris": 92,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0718,
+    -0.0001,
+    1.5858
+   ],
+   "max": [
+    0.0856,
+    0.0119,
+    1.6027
+   ]
+  },
+  {
+   "name": "Eminentia conchae.l",
+   "tris": 61,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.061,
+    0.0048,
+    1.5583
+   ],
+   "max": [
+    0.0793,
+    0.0186,
+    1.5931
+   ]
+  },
+  {
+   "name": "Eminentia fossae triangularis.l",
+   "tris": 51,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0723,
+    -0.0047,
+    1.5926
+   ],
+   "max": [
+    0.0831,
+    0.0114,
+    1.6061
+   ]
+  },
+  {
+   "name": "Eminentia scaphae.l",
+   "tris": 103,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0739,
+    0.0079,
+    1.5714
+   ],
+   "max": [
+    0.0871,
+    0.0213,
+    1.6063
+   ]
+  },
+  {
+   "name": "Fossa antihelica.l",
+   "tris": 61,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0738,
+    0.0145,
+    1.5654
+   ],
+   "max": [
+    0.0825,
+    0.0191,
+    1.5945
+   ]
+  },
+  {
+   "name": "Helix.l",
+   "tris": 473,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0719,
+    -0.0051,
+    1.5585
+   ],
+   "max": [
+    0.0933,
+    0.0215,
+    1.6065
+   ]
+  },
+  {
+   "name": "Intertragic incisure.l",
+   "tris": 71,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0654,
+    -0.008,
+    1.5601
+   ],
+   "max": [
+    0.0706,
+    0.0015,
+    1.5725
+   ]
+  },
+  {
+   "name": "Lobule of auricle.l",
+   "tris": 219,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0599,
+    -0.0097,
+    1.551
+   ],
+   "max": [
+    0.0831,
+    0.0114,
+    1.5649
+   ]
+  },
+  {
+   "name": "Scapha.l",
+   "tris": 69,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0842,
+    0.0092,
+    1.5747
+   ],
+   "max": [
+    0.0898,
+    0.0181,
+    1.6027
+   ]
+  },
+  {
+   "name": "Tragus.l",
+   "tris": 76,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0667,
+    -0.0097,
+    1.5678
+   ],
+   "max": [
+    0.0722,
+    0.0012,
+    1.5863
+   ]
+  },
+  {
+   "name": "Triangular fossa.l",
+   "tris": 58,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0745,
+    -0.0003,
+    1.5915
+   ],
+   "max": [
+    0.0806,
+    0.0079,
+    1.5999
+   ]
+  },
+  {
+   "name": "Posterior auricular groove.l",
+   "tris": 53,
+   "materials": [
+    "Skin-2",
+    "Skin-in"
+   ],
+   "min": [
+    0.0565,
+    -0.001,
+    1.5623
+   ],
+   "max": [
+    0.0756,
+    0.0205,
+    1.6037
+   ]
+  },
+  {
+   "name": "Orbital region.r",
+   "tris": 247,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0536,
+    -0.0918,
+    1.572
+   ],
+   "max": [
+    -0.0059,
+    -0.0623,
+    1.6166
+   ]
+  },
+  {
+   "name": "Orbital region.l",
+   "tris": 247,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    0.0059,
+    -0.0918,
+    1.572
+   ],
+   "max": [
+    0.0536,
+    -0.0623,
+    1.6166
+   ]
+  },
+  {
+   "name": "Nasal region.r",
+   "tris": 248,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0173,
+    -0.1165,
+    1.5479
+   ],
+   "max": [
+    0.0003,
+    -0.0829,
+    1.6091
+   ]
+  },
+  {
+   "name": "Nasal region.l",
+   "tris": 248,
+   "materials": [
+    "Skin-5",
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0003,
+    -0.1165,
+    1.5479
+   ],
+   "max": [
+    0.0173,
+    -0.0829,
+    1.6091
+   ]
+  },
+  {
+   "name": "Angle of mouth.r",
+   "tris": 25,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0314,
+    -0.0839,
+    1.5264
+   ],
+   "max": [
+    -0.023,
+    -0.0773,
+    1.5349
+   ]
+  },
+  {
+   "name": "Labial commissure.r",
+   "tris": 44,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0236,
+    -0.0965,
+    1.5269
+   ],
+   "max": [
+    0.0002,
+    -0.0785,
+    1.5339
+   ]
+  },
+  {
+   "name": "Oral region.r",
+   "tris": 261,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0333,
+    -0.1003,
+    1.5107
+   ],
+   "max": [
+    0.0003,
+    -0.0773,
+    1.5501
+   ]
+  },
+  {
+   "name": "Philtrum.r",
+   "tris": 16,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0046,
+    -0.1002,
+    1.537
+   ],
+   "max": [
+    -0.0002,
+    -0.0954,
+    1.5483
+   ]
+  },
+  {
+   "name": "Tubercle of upper lip.r",
+   "tris": 4,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0016,
+    -0.0997,
+    1.5331
+   ],
+   "max": [
+    0.0003,
+    -0.096,
+    1.5369
+   ]
+  },
+  {
+   "name": "Angle of mouth.l",
+   "tris": 25,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.023,
+    -0.0839,
+    1.5264
+   ],
+   "max": [
+    0.0314,
+    -0.0773,
+    1.5349
+   ]
+  },
+  {
+   "name": "Labial commissure.l",
+   "tris": 44,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0002,
+    -0.0965,
+    1.5269
+   ],
+   "max": [
+    0.0236,
+    -0.0785,
+    1.5339
+   ]
+  },
+  {
+   "name": "Oral region.l",
+   "tris": 261,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0003,
+    -0.1003,
+    1.5107
+   ],
+   "max": [
+    0.0333,
+    -0.0773,
+    1.5501
+   ]
+  },
+  {
+   "name": "Philtrum.l",
+   "tris": 16,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    0.0002,
+    -0.1002,
+    1.537
+   ],
+   "max": [
+    0.0046,
+    -0.0954,
+    1.5483
+   ]
+  },
+  {
+   "name": "Tubercle of upper lip.l",
+   "tris": 4,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0003,
+    -0.0997,
+    1.5331
+   ],
+   "max": [
+    0.0016,
+    -0.096,
+    1.5369
+   ]
+  },
+  {
+   "name": "Buccal region.r",
+   "tris": 172,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0627,
+    -0.0867,
+    1.4938
+   ],
+   "max": [
+    -0.0187,
+    -0.0398,
+    1.564
+   ]
+  },
+  {
+   "name": "Infra-orbital region.r",
+   "tris": 48,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0769,
+    -0.0884,
+    1.5571
+   ],
+   "max": [
+    -0.0115,
+    0.0354,
+    1.6509
+   ]
+  },
+  {
+   "name": "Mental region.r",
+   "tris": 76,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0241,
+    -0.0887,
+    1.4888
+   ],
+   "max": [
+    -0.0,
+    -0.0728,
+    1.5157
+   ]
+  },
+  {
+   "name": "Mentolabial sulcus.r",
+   "tris": 36,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.012,
+    -0.0926,
+    1.5127
+   ],
+   "max": [
+    0.0,
+    -0.0846,
+    1.5189
+   ]
+  },
+  {
+   "name": "Parotideomasseteric region.r",
+   "tris": 88,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.069,
+    -0.0461,
+    1.5111
+   ],
+   "max": [
+    -0.0455,
+    -0.0047,
+    1.5767
+   ]
+  },
+  {
+   "name": "Zygomatic region.r",
+   "tris": 78,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0706,
+    -0.0748,
+    1.5581
+   ],
+   "max": [
+    -0.0462,
+    -0.0123,
+    1.5885
+   ]
+  },
+  {
+   "name": "Nasolabial sulcus.r",
+   "tris": 30,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0352,
+    -0.0896,
+    1.5276
+   ],
+   "max": [
+    -0.0162,
+    -0.078,
+    1.555
+   ]
+  },
+  {
+   "name": "Buccal region.l",
+   "tris": 172,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.0187,
+    -0.0867,
+    1.4938
+   ],
+   "max": [
+    0.0627,
+    -0.0398,
+    1.564
+   ]
+  },
+  {
+   "name": "Infra-orbital region.l",
+   "tris": 48,
+   "materials": [
+    "Skin-5'",
+    "Skin-in"
+   ],
+   "min": [
+    0.0115,
+    -0.0884,
+    1.5571
+   ],
+   "max": [
+    0.0769,
+    0.0354,
+    1.6509
+   ]
+  },
+  {
+   "name": "Mental region.l",
+   "tris": 76,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.0,
+    -0.0887,
+    1.4888
+   ],
+   "max": [
+    0.0241,
+    -0.0728,
+    1.5157
+   ]
+  },
+  {
+   "name": "Mentolabial sulcus.l",
+   "tris": 36,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    -0.0,
+    -0.0926,
+    1.5127
+   ],
+   "max": [
+    0.012,
+    -0.0846,
+    1.5189
+   ]
+  },
+  {
+   "name": "Parotideomasseteric region.l",
+   "tris": 88,
+   "materials": [
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.0455,
+    -0.0461,
+    1.5111
+   ],
+   "max": [
+    0.069,
+    -0.0047,
+    1.5767
+   ]
+  },
+  {
+   "name": "Zygomatic region.l",
+   "tris": 78,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.0462,
+    -0.0748,
+    1.5581
+   ],
+   "max": [
+    0.0706,
+    -0.0123,
+    1.5885
+   ]
+  },
+  {
+   "name": "Nasolabial sulcus.l",
+   "tris": 30,
+   "materials": [
+    "Skin-5'",
+    "Skin-5''",
+    "Skin-in"
+   ],
+   "min": [
+    0.0162,
+    -0.0896,
+    1.5276
+   ],
+   "max": [
+    0.0352,
+    -0.078,
+    1.555
+   ]
+  }
  ]
 }
