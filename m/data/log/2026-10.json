@@ -13,7 +13,6 @@
         135,
         185
       ],
-      "unmapped": true,
       "note": "45 lb bar plus a 45 lb plate per side, then added a 25 lb plate per side; first set one foot slightly forward (his report)"
     },
     {
@@ -28,7 +27,6 @@
         45,
         42.5
       ],
-      "unmapped": true,
       "note": "per working arm; 35 lb x 12 warm-up not counted; reported as to failure"
     },
     {
@@ -37,7 +35,6 @@
       "sets": 3,
       "reps": 15,
       "weight_lb": 135,
-      "unmapped": true,
       "note": "45 lb bar plus a 45 lb plate per side; sets 2 and 3 staggered stance, one per side (his report)"
     },
     {
@@ -54,7 +51,6 @@
         40,
         45
       ],
-      "unmapped": true,
       "note": "weight per hand (his report)"
     },
     {
@@ -69,7 +65,6 @@
         40,
         45
       ],
-      "unmapped": true,
       "note": "weight per hand (his report)"
     },
     {
@@ -84,7 +79,6 @@
         30,
         35
       ],
-      "unmapped": true,
       "note": "weight per hand (his report)"
     },
     {
@@ -99,7 +93,6 @@
         10,
         20
       ],
-      "unmapped": true,
       "note": "weight per hand (his report)"
     },
     {
@@ -116,7 +109,6 @@
         65,
         70
       ],
-      "unmapped": true,
       "note": "as reported"
     },
     {
@@ -131,7 +123,6 @@
         35,
         40
       ],
-      "unmapped": true,
       "note": "as reported"
     },
     {
@@ -146,7 +137,6 @@
         35,
         45
       ],
-      "unmapped": true,
       "note": "single plate (his report)"
     }
   ]
