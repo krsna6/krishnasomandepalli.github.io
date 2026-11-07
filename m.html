@@ -5,9 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#eceef1">
-<title>Muscle map</title>
+<title>Werk</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Werk">
 <style>
-/* Muscle map (mock). An anatomical figure in clay grey, the trained muscles heated orange to red by a week of
+/* Werk (mock). An anatomical figure in clay grey, the trained muscles heated orange to red by a week of
    training. The anatomy is the Z-Anatomy atlas (from BodyParts3D), shown as it is: nothing is redrawn. */
 :root{
   --ground:#eceef1; --ink:#1d2126; --dim:#6b7380; --line:#d5d9df; --card:#ffffff;
@@ -37,15 +41,22 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .days button.cur.trained::after{background:#fff}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
 .btn{font:600 12.5px/1 var(--f);color:var(--ink);background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:999px;padding:10px 16px;cursor:pointer}
-.btn:focus-visible,.days button:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.btn:focus-visible,.days button:focus-visible,.round:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.round{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.9);cursor:pointer;padding:0}
+.round svg{width:18px;height:18px;fill:var(--ink)}
+#bPlay{background:var(--ink);border-color:var(--ink)}
+#bPlay svg{fill:#fff}
 .legend{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
-.legend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#cfd1d4,#f0b08c 25%,#ea6a43 60%,#b8141c)}
+.legend .bar{position:relative;display:block}
+.legend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#c4c7cc,#f0b08c 25%,#ea6a43 55%,#b8141c)}
+.legend b{position:absolute;left:50%;top:-3px;width:2px;height:14px;background:var(--ink);border-radius:1px}
 .session{font-size:12px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px}
 .session b{color:var(--ink);font-weight:600}
 .loading{position:fixed;inset:0;display:grid;place-items:center;font-size:13px;color:var(--dim);pointer-events:none}
 .credit{position:fixed;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(4px + env(safe-area-inset-bottom,0px));font-size:9.5px;color:#9aa1ab}
 .credit a{color:inherit}
 @media (max-width:520px){.days button{min-width:34px;padding:9px 6px}.legend i{width:80px}.card{min-width:130px}}
+:fullscreen .credit{display:none}
 </style>
 <script type="importmap">{"imports":{"three":"./m/three.module.min.js","three/addons/":"./m/addons/"}}</script>
 </head>
@@ -53,16 +64,17 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 <canvas id="c"></canvas>
 <div class="loading" id="loading">Loading the anatomy…</div>
 <div class="top">
-  <div class="title"><h1>Muscle map</h1><p id="weekLabel">Week of Nov 2</p><span class="sample">Sample week · mock</span></div>
+  <div class="title"><h1>Werk</h1><p id="weekLabel">Week of Nov 2</p><span class="sample">Sample week · mock</span></div>
   <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
 </div>
 <div class="bottom">
   <div class="session" id="session"></div>
   <div class="days" id="days" role="group" aria-label="Day of the week"></div>
   <div class="row">
-    <button class="btn" id="bPlay" type="button">▶ Play the week</button>
+    <button class="round" id="bPlay" type="button" aria-label="Play the week"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="playIcon" d="M8 5.5v13l11-6.5z"/></svg></button>
     <button class="btn" id="bTurn" type="button">Turn around</button>
-    <div class="legend"><span>0</span><i></i><span>12+ sets</span></div>
+    <button class="round" id="bFull" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
+    <div class="legend"><span>0</span><span class="bar"><i></i><b title="ACSM 2026: about 10+ sets a week per muscle for growth"></b></span><span>20 sets/wk</span></div>
   </div>
 </div>
 <div class="credit">Anatomy: <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> from BodyParts3D (DBCLS), CC BY-SA 4.0</div>
@@ -78,8 +90,9 @@ import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
 // ---------------------------------------------------------------- the sample week (mock data)
-// Weekly load per muscle is counted the way coaches count it: hard sets, a prime mover's set as 1,
-// a synergist's as 0.5, a stabiliser's as 0.25. Names are the atlas's own anatomical parts.
+// Weekly load per muscle is counted as fractional sets, the method that fit best in Pelland et al. (2026,
+// Sports Medicine): a hard set counts 1 for the muscles it targets and 0.5 for the ones it trains indirectly.
+// Stabilisers are listed but not counted. Names are the atlas's own anatomical parts.
 const TRI = ["Long head of triceps brachii", "Lateral head of triceps brachii", "Medial head of triceps brachii"];
 const BI = ["Long head of biceps brachii", "Short head of biceps brachii"];
 const QUADS = ["Vastus lateralis muscle", "Vastus medialis muscle", "Vastus intermedius muscle"];
@@ -117,7 +130,7 @@ const GROUPS = [
   ["Calves", ["Medial head of gastrocnemius", "Lateral head of gastrocnemius", "Soleus muscle"]],
 ];
 const groupOf = new Map(); for (const [g, parts] of GROUPS) for (const p of parts) groupOf.set(p, g);
-const ROLE = { primary: 1, synergist: 0.5, stabiliser: 0.25 };
+const ROLE = { primary: 1, synergist: 0.5, stabiliser: 0 };
 // sets per part, cumulative through each day of the week
 function setsThrough(d) {
   const s = new Map();
@@ -153,9 +166,21 @@ const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
 controls.minDistance = 0.8; controls.maxDistance = 7;
 
+{
+  const g = document.createElement("canvas"); g.width = g.height = 128;
+  const x = g.getContext("2d"), r = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+  r.addColorStop(0, "rgba(40,46,56,.32)"); r.addColorStop(1, "rgba(40,46,56,0)");
+  x.fillStyle = r; x.fillRect(0, 0, 128, 128);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.5), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(g), transparent: true, depthWrite: false }));
+  floor.rotation.x = -Math.PI / 2; floor.position.y = 0.004; floor.renderOrder = -1;
+  scene.add(floor);
+}
 const CLAY = new THREE.MeshStandardMaterial({ color: 0xb4b7bc, roughness: 0.55, metalness: 0 });
 const TENDON = new THREE.MeshStandardMaterial({ color: 0xf3f2ee, roughness: 0.4, metalness: 0 });
 const BONE = new THREE.MeshStandardMaterial({ color: 0xe2ddd2, roughness: 0.7, metalness: 0 });
+const SKIN = new THREE.MeshStandardMaterial({ color: 0xc3c6cb, roughness: 0.5, metalness: 0 });
+// under the head's skin: the skull and the face's muscles are not drawn (names from the manifest, by height)
+let UNDER_HEAD = new Set();
 const HIDE = /Bursa|Fascia|Articular capsule|Ligament|Cartilage/;
 const SHEATH = /^(External abdominal oblique|Internal abdominal oblique|Transversus abdominis) muscle/;
 // deep layers no one can see from outside, which only flicker through the layer above
@@ -179,6 +204,8 @@ function addModel(gltf, kind) {
     const name = ORIGINAL.get(key) || key || o.name;
     const matName = o.material?.name || "";
     if (kind === "muscles" && (HIDE.test(matName) || DEEP.test(name))) { o.visible = false; return; }
+    if (kind === "head") { o.material = SKIN; return; }
+    if (UNDER_HEAD.has(name)) { o.visible = false; return; }
     if (kind === "skeleton") { if (MUSCLE_NAMES.has(name)) { o.visible = false; return; } o.material = BONE; return; }
     // the abdominal wall's aponeuroses (the rectus sheath) lie over rectus abdominis and over each other; atlas plates
     // show rectus itself, so the sheath's tendon layers are left out, and the muscles of the wall stay
@@ -194,10 +221,10 @@ function addModel(gltf, kind) {
   scene.add(gltf.scene);
 }
 
-// heat: 0 sets -> clay, then warm orange to deep red at 12 sets or more
-const STOPS = [[0, 0xb4b7bc], [0.25, 0xf0b08c], [0.6, 0xea6a43], [1, 0xb8141c]].map(([t, c]) => [t, new THREE.Color(c)]);
+// heat: 0 sets -> clay; warm orange through red; 10 a week (ACSM 2026's growth dose) sits mid-scale, 20+ is deepest
+const STOPS = [[0, 0xb4b7bc], [0.25, 0xf0b08c], [0.55, 0xea6a43], [1, 0xb8141c]].map(([t, c]) => [t, new THREE.Color(c)]);
 function heat(sets) {
-  const t = Math.min(1, sets / 12);
+  const t = Math.min(1, sets / 20);
   if (sets <= 0) return STOPS[0][1].clone();
   for (let i = 1; i < STOPS.length; i++) if (t <= STOPS[i][0]) {
     const [t0, c0] = STOPS[i - 1], [t1, c1] = STOPS[i];
@@ -264,10 +291,19 @@ canvas.addEventListener("pointerup", (e) => {
 
 // ---- play the week: a day every 1.2 s; the day's trained muscles pulse
 const bPlay = document.getElementById("bPlay");
-function stopPlay() { playing = false; bPlay.textContent = "▶ Play the week"; }
+const PLAY = "M8 5.5v13l11-6.5z", PAUSE = "M7 5h3.5v14H7zM13.5 5H17v14h-3.5z";
+function stopPlay() { playing = false; document.getElementById("playIcon").setAttribute("d", PLAY); bPlay.setAttribute("aria-label", "Play the week"); }
 bPlay.addEventListener("click", () => {
   if (playing) return stopPlay();
-  playing = true; playT = 0; bPlay.textContent = "❚❚ Pause"; setDay(0);
+  playing = true; playT = 0; document.getElementById("playIcon").setAttribute("d", PAUSE); bPlay.setAttribute("aria-label", "Pause"); setDay(0);
+});
+const bFull = document.getElementById("bFull");
+const fsOK = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+if (!fsOK) bFull.hidden = true;
+bFull.addEventListener("click", () => {
+  const d = document, el = d.documentElement;
+  if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
+  else (el.requestFullscreen || el.webkitRequestFullscreen).call(el).catch?.(() => {});
 });
 let facing = 1, turnTo = null;
 document.getElementById("bTurn").addEventListener("click", () => { facing *= -1; turnTo = facing; });
@@ -325,9 +361,14 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), fetch("./m/model/manifest.json").then((r) => r.json())]).then(([mu, sk, man]) => {
+Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), loader.loadAsync("./m/model/head.glb"), fetch("./m/model/manifest.json").then((r) => r.json())]).then(([mu, sk, hd, man]) => {
   ORIGINAL = new Map([...man.muscles, ...man.skeleton].map((o) => [sanitize(o.name), o.name]));
   MUSCLE_NAMES = new Set(man.muscles.map((o) => o.name));
+  ORIGINAL = new Map([...ORIGINAL, ...man.head.map((o) => [sanitize(o.name), o.name])]);
+  // the head's skin begins at the jaw; what lies wholly above its lowest point is under it
+  const chin = Math.min(...man.head.filter((o) => !/auric|Helix|Tragus|Lobule|Scapha|Concha|conchae|fossa|Eminentia|incisure|Apex|tubercle|groove|Mastoid|Occipital/i.test(o.name)).map((o) => o.min[2]));
+  UNDER_HEAD = new Set([...man.muscles, ...man.skeleton].filter((o) => o.min[2] > chin + 0.005).map((o) => o.name));
+  addModel(hd, "head");
   addModel(sk, "skeleton");
   addModel(mu, "muscles");
   const box = new THREE.Box3().setFromObject(mu.scene);
