@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#eceef1">
+<meta name="theme-color" content="#dddddf">
 <title>Werk</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
 /* Werk (mock). An anatomical figure in clay grey, the trained muscles heated orange to red by a week of
    training. The anatomy is the Z-Anatomy atlas (from BodyParts3D), shown as it is: nothing is redrawn. */
 :root{
-  --ground:#eceef1; --ink:#1d2126; --dim:#6b7380; --line:#d5d9df; --card:#ffffff;
+  --ground:#dddddf; --ink:#1d2126; --dim:#6b7380; --line:#d5d9df; --card:#ffffff;
   --hot:#d7351f; --warm:#ee8a5a;
   --f:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
@@ -24,7 +24,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .top{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
   padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));pointer-events:none}
 .title h1{margin:0;font:800 15px/1 var(--f);letter-spacing:.16em;text-transform:uppercase}
-.title p{margin:6px 0 0;font-size:12px;color:var(--dim)}
+.title p{margin:6px 0 0;font-size:12.5px;color:var(--dim)}
 .week{display:flex;align-items:center;gap:2px;margin:4px 0 0 -8px;pointer-events:auto}
 .arrow{font:400 20px/1 var(--f);color:var(--dim);background:none;border:0;padding:4px 8px;cursor:pointer;border-radius:6px}
 .arrow:disabled{opacity:.3;cursor:default}
@@ -35,31 +35,41 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .card ul{list-style:none;margin:0;padding:9px 12px 4px;font:600 11.5px/1.5 var(--f);letter-spacing:.08em;text-transform:uppercase}
 .card li.lit{color:var(--hot)}
 .card .sets{padding:0 12px 10px;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
-.bottom{position:fixed;left:0;right:0;bottom:0;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:10px;justify-items:center}
-.days{display:flex;gap:4px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:4px}
-.days button{font:600 12px/1 var(--f);color:var(--dim);background:none;border:0;border-radius:999px;padding:9px 10px;min-width:40px;cursor:pointer}
+/* the dock: one frosted bar at the thumb, play on the left, the week, turn on the right */
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));display:grid;gap:7px;justify-items:center;transition:opacity .35s,transform .35s}
+.session{font-size:12.5px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px;text-wrap:balance}
+.session b{color:var(--ink);font-weight:650}
+.dock{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 30px rgba(30,36,46,.10),0 1px 0 rgba(30,36,46,.04);border-radius:999px;padding:5px}
+.days{display:flex;gap:2px}
+.days button{position:relative;font:600 12px/1 var(--f);color:var(--dim);background:none;border:0;border-radius:999px;height:36px;min-width:38px;padding:0 8px;cursor:pointer;transition:background .2s,color .2s}
 .days button.done{color:var(--ink)}
 .days button.cur{background:var(--ink);color:#fff}
-.days button.trained::after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--hot);margin:4px auto 0}
+.days button.trained::after{content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--hot)}
 .days button.cur.trained::after{background:#fff}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
-.btn{font:600 12.5px/1 var(--f);color:var(--ink);background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:999px;padding:10px 16px;cursor:pointer}
-.btn:focus-visible,.days button:focus-visible,.round:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
-.round{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.9);cursor:pointer;padding:0}
+.round{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0;transition:background .2s}
+.round:hover{background:rgba(29,33,38,.06)}
 .round svg{width:18px;height:18px;fill:var(--ink)}
-#bPlay{background:var(--ink);border-color:var(--ink)}
+#bPlay{background:var(--hot)}
 #bPlay svg{fill:#fff}
-.legend{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+#bPlay:hover{background:#c22d18}
+.chip{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(255,255,255,.8);background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 4px 16px rgba(30,36,46,.08);cursor:pointer;padding:0;pointer-events:auto}
+.chip svg{width:18px;height:18px;fill:var(--ink)}
+.days button:focus-visible,.round:focus-visible,.chip:focus-visible,.arrow:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.right{display:grid;justify-items:end;gap:10px}
+.legend{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
 .legend .bar{position:relative;display:block}
-.legend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#c4c7cc,#f0b08c 25%,#ea6a43 55%,#b8141c)}
-.legend b{position:absolute;left:50%;top:-3px;width:2px;height:14px;background:var(--ink);border-radius:1px}
-.session{font-size:12px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px}
-.session b{color:var(--ink);font-weight:600}
-.loading{position:fixed;inset:0;display:grid;place-items:center;font-size:13px;color:var(--dim);pointer-events:none}
-.credit{position:fixed;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(4px + env(safe-area-inset-bottom,0px));font-size:9.5px;color:#9aa1ab}
+.legend i{display:block;width:110px;height:6px;border-radius:3px;background:linear-gradient(90deg,#c4c7cc,#f0b08c 25%,#ea6a43 55%,#b8141c)}
+.legend b{position:absolute;left:50%;top:-3px;width:2px;height:12px;background:var(--ink);border-radius:1px}
+.loading{position:fixed;inset:0;display:grid;place-items:center;font-size:12.5px;letter-spacing:.04em;color:var(--dim);pointer-events:none;font-variant-numeric:tabular-nums}
+.credit{font-size:9.5px;color:#9aa1ab}
 .credit a{color:inherit}
-@media (max-width:520px){.days button{min-width:34px;padding:9px 6px}.legend i{width:80px}.card{min-width:130px}}
-:fullscreen .credit{display:none}
+/* immersive: only the figure, and one quiet way out */
+.top,.bottom{transition:opacity .35s,transform .35s}
+body.immersive .top .title,body.immersive .bottom{opacity:0;pointer-events:none;transform:translateY(8px)}
+body.immersive .card{opacity:0}
+body.immersive #bFull{opacity:.55}
+@media (max-width:520px){.days button{min-width:32px;padding:0 5px}.legend i{width:80px}.card{min-width:130px}}
+@media (prefers-reduced-motion:reduce){.top,.bottom,.card,.days button{transition:none}}
 </style>
 <script type="importmap">{"imports":{"three":"./m/three.module.min.js","three/addons/":"./m/addons/"}}</script>
 </head>
@@ -68,19 +78,21 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 <div class="loading" id="loading">Loading the anatomy…</div>
 <div class="top">
   <div class="title"><h1>Werk</h1><p class="week"><button class="arrow" id="bPrev" type="button" aria-label="Previous week">‹</button><span id="weekLabel">This week</span><button class="arrow" id="bNext" type="button" aria-label="Next week">›</button></p></div>
-  <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
+  <div class="right">
+    <button class="chip" id="bFull" type="button" aria-label="Full screen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="fullIcon" d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
+    <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
+  </div>
 </div>
 <div class="bottom">
   <div class="session" id="session"></div>
-  <div class="days" id="days" role="group" aria-label="Day of the week"></div>
-  <div class="row">
+  <div class="dock">
     <button class="round" id="bPlay" type="button" aria-label="Play the week"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="playIcon" d="M8 5.5v13l11-6.5z"/></svg></button>
-    <button class="btn" id="bTurn" type="button">Turn around</button>
-    <button class="round" id="bFull" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
-    <div class="legend"><span>0</span><span class="bar"><i></i><b title="ACSM 2026: about 10+ sets a week per muscle for growth"></b></span><span>20 sets/wk</span></div>
+    <div class="days" id="days" role="group" aria-label="Day of the week"></div>
+    <button class="round" id="bTurn" type="button" aria-label="Turn around"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 0 1 6.9 5.8l1.6-1.6 1.4 1.4-4 4-4-4 1.4-1.4 1.6 1.6A5 5 0 1 0 12 17v2a7 7 0 0 1 0-14z"/></svg></button>
   </div>
+  <div class="legend"><span>0</span><span class="bar"><i></i><b title="ACSM 2026: about 10+ sets a week per muscle for growth"></b></span><span>20 sets a week</span></div>
+  <div class="credit">Anatomy: <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> from BodyParts3D (DBCLS), CC BY-SA 4.0</div>
 </div>
-<div class="credit">Anatomy: <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> from BodyParts3D (DBCLS), CC BY-SA 4.0</div>
 <script type="module">
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -192,7 +204,10 @@ function addModel(gltf, kind) {
     const name = ORIGINAL.get(key) || key || o.name;
     const matName = o.material?.name || "";
     if (kind === "muscles" && (HIDE.test(matName) || DEEP.test(name))) { o.visible = false; return; }
-    if (kind === "head") { o.material = SKIN; return; }
+    if (kind === "head") {
+      o.material = SKIN;
+      return;
+    }
     if (UNDER_HEAD.has(name)) { o.visible = false; return; }
     if (kind === "skeleton") { if (MUSCLE_NAMES.has(name)) { o.visible = false; return; } o.material = BONE; return; }
     // the abdominal wall's aponeuroses (the rectus sheath) lie over rectus abdominis and over each other; atlas plates
@@ -298,14 +313,36 @@ bPlay.addEventListener("click", () => {
   if (playing) return stopPlay();
   playing = true; playT = 0; document.getElementById("playIcon").setAttribute("d", PAUSE); bPlay.setAttribute("aria-label", "Pause"); setDay(0);
 });
+// ---- full screen: the page itself goes quiet (everything but the figure fades), which works on every
+// device; where the browser also allows true full screen (laptops, Android), it takes the whole screen too.
+// iPhones don't give web pages true full screen; Add to Home Screen opens Werk without the browser's bars.
 const bFull = document.getElementById("bFull");
-const fsOK = document.fullscreenEnabled || document.webkitFullscreenEnabled;
-if (!fsOK) bFull.hidden = true;
+const FULL = "M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z", EXIT = "M8 4h2v6H4V8h4zM14 4h2v4h4v2h-6zM4 14h6v6H8v-4H4zM14 14h6v2h-4v4h-2z";
+let immersive = false;
+const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+function setImmersive(on) {
+  immersive = on;
+  document.body.classList.toggle("immersive", on);
+  bFull.setAttribute("aria-pressed", String(on));
+  bFull.setAttribute("aria-label", on ? "Leave full screen" : "Full screen");
+  document.getElementById("fullIcon").setAttribute("d", on ? EXIT : FULL);
+  refit();
+}
 bFull.addEventListener("click", () => {
-  const d = document, el = d.documentElement;
-  if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
-  else (el.requestFullscreen || el.webkitRequestFullscreen).call(el).catch?.(() => {});
+  if (!immersive) {
+    setImmersive(true);
+    const el = document.documentElement, go = el.requestFullscreen || el.webkitRequestFullscreen;
+    try { const r = go && go.call(el); if (r && r.catch) r.catch(() => {}); } catch (e) {}
+  } else {
+    leavingByButton = true; setImmersive(false); setTimeout(() => { leavingByButton = false; }, 500);
+    if (fsElement()) { const d = document; try { const r = (d.exitFullscreen || d.webkitExitFullscreen).call(d); if (r && r.catch) r.catch(() => {}); } catch (e) {} }
+  }
 });
+const onFs = () => { if (!fsElement() && immersive && !leavingByButton) setImmersive(false); };
+let leavingByButton = false;
+document.addEventListener("fullscreenchange", onFs);
+document.addEventListener("webkitfullscreenchange", onFs);
+addEventListener("keydown", (e) => { if (e.key === "Escape" && immersive) setImmersive(false); });
 let facing = 1, turnTo = null;
 document.getElementById("bTurn").addEventListener("click", () => { facing *= -1; turnTo = facing; });
 
@@ -319,7 +356,7 @@ function frame() {
   // fit the whole figure, with room for the controls below
   // the figure fits the band between the title and the controls (about 90 px above, 190 px below)
   const vfov = THREE.MathUtils.degToRad(camera.fov);
-  const top = 90, bottom = 190, band = Math.max(0.4, (h - top - bottom) / h);
+  const top = immersive ? 70 : 96, bottom = immersive ? 30 : 150, band = Math.max(0.4, (h - top - bottom) / h);
   const needH = H * 1.04 / band, needW = 0.72 * 1.12;
   const dist = Math.max(needH / (2 * Math.tan(vfov / 2)), needW / (2 * Math.tan(vfov / 2) * camera.aspect));
   // shift the view so the band's middle, not the screen's, holds the figure
@@ -334,8 +371,14 @@ function placeCamera() {
   controls.target.set(0, CY - 0.05, 0);
   controls.update();
 }
-addEventListener("resize", () => { const d = camera.position.distanceTo(controls.target); const nd = frame(); camera.position.sub(controls.target).multiplyScalar(nd / d).add(controls.target); });
+// keep the view direction and zoom the user chose, rescaled to the new frame
+function refit() { const d = camera.position.distanceTo(controls.target); const nd = frame(); camera.position.sub(controls.target).multiplyScalar(nd / d).add(controls.target); }
+addEventListener("resize", refit);
 
+// after a quiet spell the figure turns slowly, like a piece on a turntable; any touch stops it
+let lastTouch = performance.now();
+for (const ev of ["pointerdown", "wheel", "keydown"]) addEventListener(ev, () => { lastTouch = performance.now(); controls.autoRotate = false; }, { passive: true });
+controls.autoRotateSpeed = 0.55;
 const clock = new THREE.Clock();
 function tick() {
   if (window.__freeze) { requestAnimationFrame(tick); return; }   // (the test harness renders single frames)
@@ -353,16 +396,22 @@ function tick() {
   }
   // the day's work glows a little, breathing
   const pulse = 0.5 + 0.5 * Math.sin(t * 3.2);
+  const sel = hovered ? new Set(groupOf.has(hovered) ? GROUPS.find(([g]) => g === groupOf.get(hovered))[1] : [hovered]) : null;
   for (const [b, meshes] of parts) {
     const e = fresh.has(b) ? 0.10 + 0.12 * pulse : 0;
-    for (const m of meshes) m.material.emissive.setRGB(e, e * 0.25, e * 0.1);
+    const lift = sel && sel.has(b) ? (b === hovered ? 0.09 : 0.045) : 0;   // the tapped muscle and its group, lifted
+    for (const m of meshes) m.material.emissive.setRGB(e + lift, e * 0.25 + lift, e * 0.1 + lift);
   }
+  if (!controls.autoRotate && turnTo === null && !playing && performance.now() - lastTouch > 12000) controls.autoRotate = true;
   controls.update();
   composer.render();
   requestAnimationFrame(tick);
 }
 
-Promise.all([loader.loadAsync("./m/model/muscles.glb"), loader.loadAsync("./m/model/skeleton.glb"), loader.loadAsync("./m/model/head.glb"), fetch("./m/model/manifest.json").then((r) => r.json()),
+const got = {}, sizes = {};
+const progress = (k) => (ev) => { got[k] = ev.loaded; if (ev.total) sizes[k] = ev.total;
+  const tot = Object.values(sizes).reduce((a, b) => a + b, 0); if (tot) document.getElementById("loading").textContent = `Loading the anatomy · ${Math.min(99, Math.round(100 * Object.values(got).reduce((a, b) => a + b, 0) / tot))}%`; };
+Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.loadAsync("./m/model/skeleton.glb", progress("s")), loader.loadAsync("./m/model/head.glb", progress("h")), fetch("./m/model/manifest.json").then((r) => r.json()),
   fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog()]).then(([mu, sk, hd, man, exDoc]) => {
   EXERCISES = exDoc.exercises; GROUPS = exDoc.groups;
   groupOf = new Map(); for (const [g, list] of GROUPS) for (const p of list) groupOf.set(p, g);
