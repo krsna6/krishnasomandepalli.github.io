@@ -47,7 +47,8 @@ for key, objs in sets.items():
                      "materials": [m.name for m in o.data.materials if m],
                      "min": [round(min(v[i] for v in bb), 4) for i in range(3)], "max": [round(max(v[i] for v in bb), 4) for i in range(3)]})
     manifest[key] = rows
-    bpy.ops.object.select_all(action="DESELECT")
+    for o in bpy.data.objects:        # deselect everything (select_all skips hidden objects, which leaked muscles into the skeleton)
+        o.select_set(False)
     for o in objs:
         o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=os.path.join(out, f"{key}.glb"), export_format="GLB", use_selection=True,
