@@ -1,0 +1,260 @@
+Info: Deleted 3705 data-block(s)
+kept {'muscles': 677, 'skeleton': 899}
+22:54:13 | INFO: Starting glTF 2.0 export
+22:54:13 | INFO: Extracting primitive: Lateral rectus muscle
+Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
+Read blend: "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/za/x/Z-Anatomy/Startup.blend"
+Warning: region type 5 missing in space type "Text" (id: 9) - removing region
+scripts disabled for "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/za/x/Z-Anatomy/Startup.blend", skipping 'z-anatomy.py'
+Dependency cycle detected:
+  OBOesophagus-profile/TRANSFORM_INIT() depends on
+  OBOesophagus/GEOMETRY_EVAL() via 'Curve Follow Parent'
+  OBOesophagus/MODIFIER(Solidify) via 'modifier stack order'
+  OBOesophagus/GEOMETRY_EVAL_INIT() via 'Modifier'
+  CUOesophagus/GEOMETRY_EVAL_DONE() via 'Object Geometry Base Data'
+  CUOesophagus/GEOMETRY_EVAL() via 'ObData Geom Eval Done'
+  OBOesophagus-profile/TRANSFORM_FINAL() via 'Curve Bevel Transform'
+  OBOesophagus-profile/TRANSFORM_SIMULATION_INIT() via 'Simulation -> Final Transform'
+  OBOesophagus-profile/TRANSFORM_EVAL() via 'Transform Eval -> Simulation Init'
+  OBOesophagus-profile/TRANSFORM_PARENT() via 'Eval'
+  OBOesophagus-profile/TRANSFORM_LOCAL() via 'ObLocal -> ObParent'
+  OBOesophagus-profile/TRANSFORM_INIT() via 'Transform Init'
+Detected 1 dependency cycles
+Traceback (most recent call last):
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/__init__.py", line 1289, in execute
+    res = gltf2_blender_export.save(context, export_settings)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 37, in save
+    json, buffer = __export(export_settings)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 55, in __export
+    __gather_gltf(exporter, export_settings)
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 202, in __gather_gltf
+    active_scene_idx, scenes, animations = gltf2_blender_gather.gather_gltf2(export_settings)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather.py", line 31, in gather_gltf2
+    scenes.append(__gather_scene(blender_scene, export_settings))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather.py", line 94, in __gather_scene
+    node = gltf2_blender_gather_nodes.gather_node(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_nodes.py", line 42, in gather_node
+    mesh = __gather_mesh(vnode, blender_object, export_settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_nodes.py", line 343, in __gather_mesh
+    result = gltf2_blender_gather_mesh.gather_mesh(blender_mesh,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_mesh.py", line 59, in gather_mesh
+    blender_mesh, vertex_groups, modifiers, export_settings), primitives=__gather_primitives(
+                                                                         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_mesh.py", line 136, in __gather_primitives
+    return gltf2_blender_gather_primitives.gather_primitives(blender_mesh,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives.py", line 57, in gather_primitives
+    blender_primitives, addional_materials_udim = __gather_cache_primitives(
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives.py", line 140, in __gather_cache_primitives
+    blender_primitives, additional_materials_udim, shared_attributes = gltf2_blender_gather_primitives_extract.extract_primitives(
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives_extract.py", line 41, in extract_primitives
+    primitive_creator.manage_material_info()  # UVMap & Vertex Color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives_extract.py", line 436, in manage_material_info
+    base_material, material_info = get_base_material(material_idx, self.materials, self.export_settings)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 697, in get_base_material
+    material, material_info = gather_material(
+                              ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 89, in gather_material
+    pbr_metallic_roughness, uvmap_info_pbr_metallic_roughness, vc_info, udim_info_prb_mr = __gather_pbr_metallic_roughness(
+                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 465, in __gather_pbr_metallic_roughness
+    return gltf2_blender_gather_materials_pbr_metallic_roughness.gather_material_pbr_metallic_roughness(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 30, in gather_material_pbr_metallic_roughness
+    base_color_texture, uvmap_info, udim_info_bc, _ = __gather_base_color_texture(blender_material, export_settings)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 143, in __gather_base_color_texture
+    inputs = tuple(
+             ^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 145, in <genexpr>
+    if socket.socket is not None and has_image_node_from_socket(socket, export_settings)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 142, in has_image_node_from_socket
+    result = get_texture_node_from_socket(socket, export_settings)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 131, in get_texture_node_from_socket
+    result = from_socket(
+             ^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 126, in from_socket
+    return __search_from_socket(start_socket.socket, shader_node_filter, [], start_socket.group_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 110, in __search_from_socket
+    linked_results = __search_from_socket(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 97, in __search_from_socket
+    socket = [sock for sock in group_path[-1].inputs if sock.name == link.from_socket.name][0]
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/tools/muscle-map/export.py", line 49, in <module>
+    bpy.ops.export_scene.gltf(filepath=os.path.join(out, f"{key}.glb"), export_format="GLB", use_selection=True,
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/modules/bpy/ops.py", line 109, in __call__
+    ret = _op_call(self.idname_py(), kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: Python: Traceback (most recent call last):
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/__init__.py", line 1289, in execute
+    res = gltf2_blender_export.save(context, export_settings)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 37, in save
+    json, buffer = __export(export_settings)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 55, in __export
+    __gather_gltf(exporter, export_settings)
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 202, in __gather_gltf
+    active_scene_idx, scenes, animations = gltf2_blender_gather.gather_gltf2(export_settings)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather.py", line 31, in gather_gltf2
+    scenes.append(__gather_scene(blender_scene, export_settings))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather.py", line 94, in __gather_scene
+    node = gltf2_blender_gather_nodes.gather_node(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_nodes.py", line 42, in gather_node
+    mesh = __gather_mesh(vnode, blender_object, export_settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_nodes.py", line 343, in __gather_mesh
+    result = gltf2_blender_gather_mesh.gather_mesh(blender_mesh,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_mesh.py", line 59, in gather_mesh
+    blender_mesh, vertex_groups, modifiers, export_settings), primitives=__gather_primitives(
+                                                                         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_mesh.py", line 136, in __gather_primitives
+    return gltf2_blender_gather_primitives.gather_primitives(blender_mesh,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives.py", line 57, in gather_primitives
+    blender_primitives, addional_materials_udim = __gather_cache_primitives(
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives.py", line 140, in __gather_cache_primitives
+    blender_primitives, additional_materials_udim, shared_attributes = gltf2_blender_gather_primitives_extract.extract_primitives(
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives_extract.py", line 41, in extract_primitives
+    primitive_creator.manage_material_info()  # UVMap & Vertex Color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_primitives_extract.py", line 436, in manage_material_info
+    base_material, material_info = get_base_material(material_idx, self.materials, self.export_settings)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 697, in get_base_material
+    material, material_info = gather_material(
+                              ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 89, in gather_material
+    pbr_metallic_roughness, uvmap_info_pbr_metallic_roughness, vc_info, udim_info_prb_mr = __gather_pbr_metallic_roughness(
+                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials.py", line 465, in __gather_pbr_metallic_roughness
+    return gltf2_blender_gather_materials_pbr_metallic_roughness.gather_material_pbr_metallic_roughness(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 30, in gather_material_pbr_metallic_roughness
+    base_color_texture, uvmap_info, udim_info_bc, _ = __gather_base_color_texture(blender_material, export_settings)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 143, in __gather_base_color_texture
+    inputs = tuple(
+             ^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_gather_materials_pbr_metallic_roughness.py", line 145, in <genexpr>
+    if socket.socket is not None and has_image_node_from_socket(socket, export_settings)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 142, in has_image_node_from_socket
+    result = get_texture_node_from_socket(socket, export_settings)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_gather_cache.py", line 37, in wrapper_cached
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 131, in get_texture_node_from_socket
+    result = from_socket(
+             ^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 126, in from_socket
+    return __search_from_socket(start_socket.socket, shader_node_filter, [], start_socket.group_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 110, in __search_from_socket
+    linked_results = __search_from_socket(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/material/gltf2_blender_search_node_tree.py", line 97, in __search_from_socket
+    socket = [sock for sock in group_path[-1].inputs if sock.name == link.from_socket.name][0]
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+Location: /home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/modules/bpy/ops.py:109
+
+INFO Draco mesh compression is available, use library at /home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/python/lib/python3.11/site-packages/libextern_draco.so
+Error: Python: Traceback (most recent call last):
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/__init__.py", line 1289, in execute
+    res = gltf2_blender_export.save(context, export_settings)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 37, in save
+    json, buffer = __export(export_settings)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/exp/gltf2_blender_export.py", line 55, in __export
+    __gather_gltf(exporter, export_settings)
+  File "/home/runner/work/krishnasomandepalli.github.io/krishnasomandepalli.github.io/blender/4.2/scripts/addons_core/io_scene_gltf2/blender/e... truncated
+Blender quit
+Error: Not freed memory blocks: 322, total unfreed memory 0.002457 MB
+	Command being timed: "./blender/blender -b za/x/Z-Anatomy/Startup.blend --python tools/muscle-map/export.py -- tools/muscle-map/web"
+	User time (seconds): 178.03
+	System time (seconds): 2.13
+	Percent of CPU this job got: 131%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:16.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 11988880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 15
+	Minor (reclaiming a frame) page faults: 263073
+	Voluntary context switches: 1031
+	Involuntary context switches: 14326
+	Swaps: 0
+	File system inputs: 4032
+	File system outputs: 56
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
