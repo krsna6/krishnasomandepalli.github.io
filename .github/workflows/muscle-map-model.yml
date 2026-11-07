@@ -3,6 +3,9 @@
 name: muscle-map-model
 on:
   workflow_dispatch:
+  push:                       # runs when the scripts change on this branch (a branch's workflow can't be started by hand)
+    branches: [muscle-map-tools]
+    paths: ["tools/muscle-map/*.py", ".github/workflows/muscle-map-model.yml"]
 permissions:
   contents: write
 jobs:
