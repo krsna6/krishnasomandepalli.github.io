@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://krishnasomandepalli.com/sitemap.xml
+
+User-agent: *
+Disallow: /m.html
+Disallow: /m/
