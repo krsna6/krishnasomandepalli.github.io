@@ -56,6 +56,98 @@
       ],
       "unmapped": true,
       "note": "weight per hand (his report)"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Standing shoulder press single hand",
+      "sets": 2,
+      "reps": [
+        10,
+        10
+      ],
+      "weight_lb": [
+        40,
+        45
+      ],
+      "unmapped": true,
+      "note": "weight per hand (his report)"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Sitting Arnold",
+      "sets": 2,
+      "reps": [
+        10,
+        15
+      ],
+      "weight_lb": [
+        30,
+        35
+      ],
+      "unmapped": true,
+      "note": "weight per hand (his report)"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Sitting lateral raises",
+      "sets": 2,
+      "reps": [
+        15,
+        15
+      ],
+      "weight_lb": [
+        10,
+        20
+      ],
+      "unmapped": true,
+      "note": "weight per hand (his report)"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Shrugs",
+      "sets": 3,
+      "reps": [
+        10,
+        10,
+        3
+      ],
+      "weight_lb": [
+        60,
+        65,
+        70
+      ],
+      "unmapped": true,
+      "note": "as reported"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Shoulder pull backs",
+      "sets": 2,
+      "reps": [
+        10,
+        5
+      ],
+      "weight_lb": [
+        35,
+        40
+      ],
+      "unmapped": true,
+      "note": "as reported"
+    },
+    {
+      "date": "2026-10-27",
+      "exercise": "Around the world",
+      "sets": 2,
+      "reps": [
+        10,
+        10
+      ],
+      "weight_lb": [
+        35,
+        45
+      ],
+      "unmapped": true,
+      "note": "single plate (his report)"
     }
   ]
 }
