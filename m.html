@@ -63,6 +63,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .legend{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
 .legend .bar{position:relative;display:block}
 .legend i{display:block;width:110px;height:6px;border-radius:3px;background:linear-gradient(90deg,#c4c7cc 0 3%,#eea27b 3%,#ea6a43 50%,#b8141c)}
+.legend .hitkey{display:flex;align-items:center;gap:5px;margin-left:6px}.legend .hitkey i{width:9px;height:9px;border-radius:50%;background:#d9a441}
 .legend b{position:absolute;left:65%;top:-3px;width:2px;height:12px;background:var(--ink);border-radius:1px}
 .loading{position:fixed;inset:0;display:grid;place-items:center;font-size:12.5px;letter-spacing:.04em;color:var(--dim);pointer-events:none;font-variant-numeric:tabular-nums}
 .credit{font-size:9.5px;color:#9aa1ab}
@@ -88,6 +89,7 @@ body.immersive #bFull{opacity:.55}
 .gr .n{font-size:13.5px;font-weight:600}
 .gr .n i{font-style:normal;font-weight:400;font-size:11px;color:var(--dim)}
 .gr .v{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.gr .v.hit,.det .hit{color:#b07e22}
 .gr .v.zero{color:#a3a9b2;font-weight:500}
 .gr .wk{grid-column:1/-1;display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
 .gr .wk span{height:6px;border-radius:2px;background:#e3e6ea}
@@ -129,7 +131,7 @@ body.immersive .chips #bMuscles{opacity:0;pointer-events:none}
     <div class="days" id="days" role="group" aria-label="Day of the week"></div>
     <button class="round" id="bTurn" type="button" aria-label="Turn around"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 0 1 6.9 5.8l1.6-1.6 1.4 1.4-4 4-4-4 1.4-1.4 1.6 1.6A5 5 0 1 0 12 17v2a7 7 0 0 1 0-14z"/></svg></button>
   </div>
-  <div class="legend"><span>0</span><span class="bar"><i></i><b title="ACSM 2026: about 10+ sets a week per muscle for growth"></b></span><span>20 sets a week</span></div>
+  <div class="legend"><span>0</span><span class="bar"><i></i><b title="ACSM 2026: about 10+ sets a week per muscle for growth"></b></span><span>20 sets a week</span><span class="hitkey"><i></i>hit, sets not given</span></div>
   <div class="credit">Anatomy: <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> from BodyParts3D (DBCLS), CC BY-SA 4.0</div>
 </div>
 <script type="module">
@@ -167,12 +169,24 @@ function setsThrough(d) {
   return s;
 }
 const trainedOn = (d) => { const s = new Set(); for (const e of entriesOn(weekDates()[d])) { const m = EXERCISES[e.exercise]; if (m && !e.unmapped) [...m.primary, ...m.secondary].forEach((p) => s.add(p)); } return s; };
+// ---- hits: diary items he reported without exact sets (sessions[].exercises with in_log false), linked to an
+// exercise, groups or a whole region. They count no sets; they show that the muscles were worked that day.
+function reportedParts(r) {
+  const h = new Set();
+  for (const n of [].concat(r.exercise || [])) { const m = EXERCISES[n]; if (m) [...m.primary, ...m.secondary].forEach((p) => h.add(p)); }
+  for (const g of GROUPS) if ([].concat(r.groups || []).includes(g.name) || [].concat(r.regions || []).includes(g.region)) g.parts.forEach((p) => h.add(p));
+  return h;
+}
+const reportedOn = (date) => sessionsOn(date).flatMap((x) => (x.exercises || []).filter((r) => !r.in_log));
+const hitsOn = (date) => { const h = new Set(); reportedOn(date).forEach((r) => reportedParts(r).forEach((p) => h.add(p))); return h; };
+const hitsThrough = (d) => { const h = new Set(); weekDates().slice(0, d + 1).forEach((dt) => hitsOn(dt).forEach((p) => h.add(p))); return h; };
+const weekHasWork = () => weekDates().some((dt) => entriesOn(dt).length || reportedOn(dt).length);
 // the latest day with exercises, looking back up to three months, so an empty week can point to it
 let latestEntry = null;
 async function findLatest() {
   const t = todayNY(), months = [0, 1, 2, 3].map((k) => { const d = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - k, 1)); return iso(d).slice(0, 7); });
   const docs = await Promise.all(months.map((m) => fetch(`./m/data/log/${m}.json`, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : { entries: [] })).catch(() => ({ entries: [] }))));
-  latestEntry = docs.flatMap((d) => d.entries || []).map((e) => e.date).sort().pop() || null;
+  latestEntry = docs.flatMap((d) => [...(d.entries || []), ...(d.sessions || []).filter((x) => (x.exercises || []).length)]).map((e) => e.date).sort().pop() || null;
 }
 async function loadLog() {
   // the months this week touches
@@ -279,6 +293,8 @@ function addModel(gltf, kind) {
 }
 
 // heat: 0 sets -> clay; warm orange through red; 10 a week (ACSM 2026's growth dose) sits mid-scale, 20+ is deepest
+// a hit without sets: one base colour, apart from the orange-to-red of counted sets
+const HIT = new THREE.Color(0xd9a441);
 const STOPS = [[0, 0xb4b7bc], [0.25, 0xf0b08c], [0.55, 0xea6a43], [1, 0xb8141c]].map(([t, c]) => [t, new THREE.Color(c)]);
 function heat(sets) {
   // any trained muscle shows plainly (from a clear warm tint at the first set), then deepens to red at 20+
@@ -295,7 +311,7 @@ let day = 6, playing = false, playT = 0, fresh = new Set();
 const daysEl = document.getElementById("days");
 DAYS.forEach((name, i) => {
   const b = document.createElement("button"); b.type = "button"; b.textContent = name;
-  b.addEventListener("click", () => { stopPlay(); setDay(i); });
+  b.addEventListener("click", () => { stopPlay(); setDay(i); faceFresh(); });
   daysEl.appendChild(b);
 });
 function showWeek() {
@@ -321,20 +337,22 @@ function setDay(d) {
   [...daysEl.children].forEach((b, i) => { b.classList.toggle("cur", i === d); b.classList.toggle("done", i < d); });
   const sets = setsThrough(d);
   fresh = trainedOn(d);
+  hitsOn(weekDates()[d]).forEach((p) => fresh.add(p));
+  const hits = hitsThrough(d);
   for (const [b, meshes] of parts) {
-    const c = heat(sets.get(b) || 0);
+    const c = !sets.get(b) && hits.has(b) ? HIT.clone() : heat(sets.get(b) || 0);
     for (const m of meshes) { m.material.color.copy(c); m.userData.sets = sets.get(b) || 0; }
   }
   const log = entriesOn(weekDates()[d]);
   const sessionEl = document.getElementById("session");
   sessionEl.replaceChildren();
   const b = document.createElement("b"); b.textContent = DAYS[d]; sessionEl.append(b, " · ");
-  const anyThisWeek = weekDates().some((dt) => entriesOn(dt).length);
+  const anyThisWeek = weekHasWork();
   const sess = sessionText(weekDates()[d]);
   const anySess = weekDates().some((dt) => sessionsOn(dt).length);
   sessionEl.append(log.length ? log.map(describe).join(" · ") : sessionsOn(weekDates()[d]).length ? sessionsOn(weekDates()[d]).map((x) => x.summary).join("; ") : anyThisWeek || anySess ? "rest" : "nothing logged this week yet");
   if (sess) { const w = document.createElement("span"); w.className = "watch"; w.textContent = ` · ${sess}`; sessionEl.append(w); }
-  if (!weekDates().some((dt) => entriesOn(dt).length) && latestEntry && latestEntry < weekDates()[0]) {
+  if (!weekHasWork() && latestEntry && latestEntry < weekDates()[0]) {
     const go = document.createElement("button"); go.type = "button";
     go.textContent = `last exercises ${new Date(latestEntry + "T00:00:00Z").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })}`;
     go.addEventListener("click", () => { const at = new Date(latestEntry + "T00:00:00Z"), target = mondayOf(at); goWeek(Math.round((target - weekStart) / (7 * 864e5))).then(() => setDay((at.getUTCDay() + 6) % 7)); });
@@ -369,13 +387,14 @@ function renderPanel() {
   for (const g of GROUPS) {
     if (g.region !== region) { region = g.region; const h = document.createElement("div"); h.className = "rg"; h.textContent = region; list.appendChild(h); }
     const total = groupSets(g, day);
+    const hit = !total && g.parts.some((p) => hitsThrough(day).has(p));
     const row = document.createElement("button"); row.type = "button"; row.className = "gr" + (selGroup === g ? " sel" : "");
     const deep = g.parts.every((p) => !parts.has(p));
-    row.innerHTML = `<span class="n"></span><span class="v${total ? "" : " zero"}">${total ? total.toFixed(1) : "0"}</span><span class="wk"></span>`;
+    row.innerHTML = `<span class="n"></span><span class="v${total ? "" : hit ? " hit" : " zero"}">${total ? total.toFixed(1) : hit ? "hit" : "0"}</span><span class="wk"></span>`;
     row.querySelector(".n").textContent = g.name;
     if (deep) row.querySelector(".n").insertAdjacentHTML("beforeend", " <i>deep</i>");
     const wk = row.querySelector(".wk");
-    dates.forEach((dt, i) => { const c = document.createElement("span"); const n = groupSetsOn(g, dt); if (n) c.style.background = "#" + heat(Math.min(20, n * 3)).getHexString(); if (i === day) c.classList.add("today"); c.title = `${DAYS[i]}: ${n} sets`; wk.appendChild(c); });
+    dates.forEach((dt, i) => { const c = document.createElement("span"); const n = groupSetsOn(g, dt), h = g.parts.some((p) => hitsOn(dt).has(p)); if (n) c.style.background = "#" + heat(Math.min(20, n * 3)).getHexString(); else if (h) c.style.background = "#" + HIT.getHexString(); if (i === day) c.classList.add("today"); c.title = `${DAYS[i]}: ${n ? n + " sets" : h ? "hit (sets not given)" : "0 sets"}`; wk.appendChild(c); });
     row.addEventListener("click", () => selectGroup(selGroup === g ? null : g, true));
     list.appendChild(row);
     if (selGroup === g) {
@@ -385,7 +404,11 @@ function renderPanel() {
       dates.slice(0, day + 1).forEach((dt, i) => { for (const e of entriesOn(dt)) { const m = EXERCISES[e.exercise]; if (!m || e.unmapped) continue;
         const w = g.parts.some((p) => m.primary.includes(p)) ? 1 : g.parts.some((p) => m.secondary.includes(p)) ? 0.5 : 0; if (!w) continue;
         const li = document.createElement("li"); const l = document.createElement("span"); l.innerHTML = `<b>${DAYS[i]}</b> `; l.append(`${e.exercise}, ${e.sets} sets${w < 1 ? " (helping)" : ""}`);
-        const r = document.createElement("span"); r.textContent = (e.sets * w).toFixed(1); li.append(l, r); ul.appendChild(li); } });
+        const r = document.createElement("span"); r.textContent = (e.sets * w).toFixed(1); li.append(l, r); ul.appendChild(li); }
+        for (const x of reportedOn(dt)) { if (!g.parts.some((p) => reportedParts(x).has(p))) continue;
+          const li = document.createElement("li"); const l = document.createElement("span"); l.innerHTML = `<b>${DAYS[i]}</b> `; l.append(`${x.name}${x.reported ? `, ${x.reported}` : ""}`);
+          const r = document.createElement("span"); r.className = "hit"; r.textContent = "hit"; li.append(l, r); ul.appendChild(li); }
+      });
       if (!ul.children.length) { const li = document.createElement("li"); li.textContent = "Nothing for this group yet this week."; ul.appendChild(li); }
       det.appendChild(ul); row.after(det);
     }
@@ -489,6 +512,13 @@ document.addEventListener("fullscreenchange", onFs);
 document.addEventListener("webkitfullscreenchange", onFs);
 addEventListener("keydown", (e) => { if (e.key === "Escape" && immersive) setImmersive(false); });
 let facing = 1, turnTo = null;
+// a day trained mostly from behind (back, glutes, hamstrings) turns the body round to show it
+function faceFresh() {
+  let f = 0, b = 0;
+  for (const p of fresh) { const g = groupOf.get(p); if (!g || !parts.has(p)) continue; g.view === "back" ? b++ : f++; }
+  const now = Math.sign(camera.position.z - controls.target.z) || 1, want = b > f ? -1 : f > b ? 1 : now;
+  if (want !== now && !selGroup) { facing = want; turnTo = want; }
+}
 document.getElementById("bTurn").addEventListener("click", () => { facing *= -1; turnTo = facing; });
 
 let H = 1.71, CY = 0.86;
@@ -589,9 +619,9 @@ Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.lo
   window.__mm = { selectGroup, setPanel, groups: () => GROUPS, sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
   document.getElementById("loading").remove();
   placeCamera();
-  if (!weekDates().some((dt) => entriesOn(dt).length) && latestEntry && latestEntry < weekDates()[0]) {
+  if (!weekHasWork() && latestEntry && latestEntry < weekDates()[0]) {
     const at = new Date(latestEntry + "T00:00:00Z");
-    weekStart = mondayOf(at); await loadLog(); showWeek(); setDay((at.getUTCDay() + 6) % 7);
+    weekStart = mondayOf(at); await loadLog(); showWeek(); setDay((at.getUTCDay() + 6) % 7); faceFresh();
   } else showWeek();
   tick();
 }).catch((e) => { document.getElementById("loading").textContent = "Couldn't load the anatomy: " + e.message; console.error(e); });

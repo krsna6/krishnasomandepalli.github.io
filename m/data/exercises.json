@@ -308,6 +308,263 @@
         "Serratus anterior muscle"
       ],
       "status": "draft"
+    },
+    "Bulgarian split squat": {
+      "aliases": [
+        "split squat",
+        "split squats"
+      ],
+      "primary": [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Rectus femoris muscle",
+        "Adductor magnus",
+        "Gluteus medius muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Leg press": {
+      "aliases": [
+        "wide stance leg press",
+        "lying leg press"
+      ],
+      "primary": [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Rectus femoris muscle",
+        "Adductor magnus"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Goblet squat": {
+      "aliases": [
+        "kettlebell squat",
+        "kettlebell squats held to chin"
+      ],
+      "primary": [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Gluteus maximus muscle"
+      ],
+      "secondary": [
+        "Rectus femoris muscle",
+        "Adductor magnus"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Leg extension": {
+      "aliases": [
+        "seated leg extension"
+      ],
+      "primary": [
+        "Vastus lateralis muscle",
+        "Vastus medialis muscle",
+        "Vastus intermedius muscle",
+        "Rectus femoris muscle"
+      ],
+      "secondary": [],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Hip abduction machine": {
+      "aliases": [
+        "hip abduction"
+      ],
+      "primary": [
+        "Gluteus medius muscle",
+        "Gluteus minimus muscle",
+        "Tensor fasciae latae"
+      ],
+      "secondary": [
+        "Gluteus maximus muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Hip adduction machine": {
+      "aliases": [
+        "hip adduction"
+      ],
+      "primary": [
+        "Adductor magnus",
+        "Adductor longus",
+        "Adductor brevis",
+        "Gracilis muscle",
+        "Pectineus muscle"
+      ],
+      "secondary": [],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Hanging leg raise": {
+      "aliases": [
+        "hanging leg fold-ins",
+        "hanging knee raise"
+      ],
+      "primary": [
+        "Rectus abdominis muscle",
+        "Iliacus muscle",
+        "Psoas major"
+      ],
+      "secondary": [
+        "External abdominal oblique muscle",
+        "Rectus femoris muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Cable crunch": {
+      "aliases": [
+        "weighted pull-downs (abs)",
+        "ab pull-downs"
+      ],
+      "primary": [
+        "Rectus abdominis muscle"
+      ],
+      "secondary": [
+        "External abdominal oblique muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Face pull": {
+      "aliases": [
+        "face pulls"
+      ],
+      "primary": [
+        "Scapular spinal part of deltoid muscle",
+        "Transverse part of trapezius muscle"
+      ],
+      "secondary": [
+        "Infraspinatus muscle",
+        "Teres minor muscle",
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle",
+        "Ascending part of trapezius muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Rear delt fly": {
+      "aliases": [
+        "reverse fly",
+        "rear lateral raise",
+        "rear delt pulls"
+      ],
+      "primary": [
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "secondary": [
+        "Transverse part of trapezius muscle",
+        "Rhomboid major muscle",
+        "Rhomboid minor muscle",
+        "Infraspinatus muscle",
+        "Teres minor muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Incline dumbbell press": {
+      "aliases": [
+        "incline bench dumbbells",
+        "incline chest press"
+      ],
+      "primary": [
+        "Clavicular head of pectoralis major muscle",
+        "Clavicular part of deltoid muscle"
+      ],
+      "secondary": [
+        "Sternocostal head of pectoralis major muscle",
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Decline bench press": {
+      "aliases": [
+        "decline bench"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle",
+        "(Abdominal part of pectoralis major muscle)"
+      ],
+      "secondary": [
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii",
+        "Clavicular part of deltoid muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Machine fly": {
+      "aliases": [
+        "pec deck",
+        "machine flys"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle",
+        "Clavicular head of pectoralis major muscle"
+      ],
+      "secondary": [
+        "Clavicular part of deltoid muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Dips": {
+      "aliases": [
+        "weighted dips",
+        "chest dips"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle",
+        "Long head of triceps brachii",
+        "Lateral head of triceps brachii",
+        "Medial head of triceps brachii"
+      ],
+      "secondary": [
+        "Clavicular part of deltoid muscle",
+        "(Abdominal part of pectoralis major muscle)",
+        "Pectoralis minor muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Farmer walk": {
+      "aliases": [
+        "farmer walks",
+        "farmer carry"
+      ],
+      "primary": [
+        "Descending part of trapezius muscle",
+        "Humero-ulnar head of flexor digitorum superficialis",
+        "Radial head of flexor digitorum superficialis",
+        "Flexor digitorum profundus"
+      ],
+      "secondary": [
+        "Quadratus lumborum muscle",
+        "External abdominal oblique muscle",
+        "Flexor carpi radialis",
+        "Humeral head of flexor carpi ulnaris",
+        "Ulnar head of flexor carpi ulnaris"
+      ],
+      "stabilizers": [],
+      "status": "draft"
     }
   },
   "regions": [
