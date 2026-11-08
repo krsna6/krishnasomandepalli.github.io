@@ -62,8 +62,8 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .right{display:grid;justify-items:end;gap:10px}
 .legend{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
 .legend .bar{position:relative;display:block}
-.legend i{display:block;width:110px;height:6px;border-radius:3px;background:linear-gradient(90deg,#c4c7cc,#f0b08c 25%,#ea6a43 55%,#b8141c)}
-.legend b{position:absolute;left:50%;top:-3px;width:2px;height:12px;background:var(--ink);border-radius:1px}
+.legend i{display:block;width:110px;height:6px;border-radius:3px;background:linear-gradient(90deg,#c4c7cc 0 3%,#eea27b 3%,#ea6a43 50%,#b8141c)}
+.legend b{position:absolute;left:65%;top:-3px;width:2px;height:12px;background:var(--ink);border-radius:1px}
 .loading{position:fixed;inset:0;display:grid;place-items:center;font-size:12.5px;letter-spacing:.04em;color:var(--dim);pointer-events:none;font-variant-numeric:tabular-nums}
 .credit{font-size:9.5px;color:#9aa1ab}
 .credit a{color:inherit}
@@ -281,8 +281,9 @@ function addModel(gltf, kind) {
 // heat: 0 sets -> clay; warm orange through red; 10 a week (ACSM 2026's growth dose) sits mid-scale, 20+ is deepest
 const STOPS = [[0, 0xb4b7bc], [0.25, 0xf0b08c], [0.55, 0xea6a43], [1, 0xb8141c]].map(([t, c]) => [t, new THREE.Color(c)]);
 function heat(sets) {
-  const t = Math.min(1, sets / 20);
+  // any trained muscle shows plainly (from a clear warm tint at the first set), then deepens to red at 20+
   if (sets <= 0) return STOPS[0][1].clone();
+  const t = 0.3 + 0.7 * Math.min(1, sets / 20);
   for (let i = 1; i < STOPS.length; i++) if (t <= STOPS[i][0]) {
     const [t0, c0] = STOPS[i - 1], [t1, c1] = STOPS[i];
     return c0.clone().lerp(c1, (t - t0) / (t1 - t0));
@@ -568,7 +569,7 @@ const got = {}, sizes = {};
 const progress = (k) => (ev) => { got[k] = ev.loaded; if (ev.total) sizes[k] = ev.total;
   const tot = Object.values(sizes).reduce((a, b) => a + b, 0); if (tot) document.getElementById("loading").textContent = `Loading the anatomy · ${Math.min(99, Math.round(100 * Object.values(got).reduce((a, b) => a + b, 0) / tot))}%`; };
 Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.loadAsync("./m/model/skeleton.glb", progress("s")), loader.loadAsync("./m/model/head.glb", progress("h")), fetch("./m/model/manifest.json").then((r) => r.json()),
-  fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog(), findLatest()]).then(([mu, sk, hd, man, exDoc]) => {
+  fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog(), findLatest()]).then(async ([mu, sk, hd, man, exDoc]) => {
   EXERCISES = exDoc.exercises;
   GROUPS = exDoc.regions.flatMap((r) => r.groups.map((g) => ({ region: r.region, name: g.name, view: g.view, parts: g.parts })));
   groupOf = new Map(); for (const g of GROUPS) for (const p of g.parts) groupOf.set(p, g);
@@ -588,7 +589,10 @@ Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.lo
   window.__mm = { selectGroup, setPanel, groups: () => GROUPS, sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
   document.getElementById("loading").remove();
   placeCamera();
-  showWeek();
+  if (!weekDates().some((dt) => entriesOn(dt).length) && latestEntry && latestEntry < weekDates()[0]) {
+    const at = new Date(latestEntry + "T00:00:00Z");
+    weekStart = mondayOf(at); await loadLog(); showWeek(); setDay((at.getUTCDay() + 6) % 7);
+  } else showWeek();
   tick();
 }).catch((e) => { document.getElementById("loading").textContent = "Couldn't load the anatomy: " + e.message; console.error(e); });
 </script>
