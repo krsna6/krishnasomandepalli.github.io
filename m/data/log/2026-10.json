@@ -113,7 +113,7 @@
     },
     {
       "date": "2026-10-27",
-      "exercise": "Shoulder pull backs",
+      "exercise": "Upright row",
       "sets": 2,
       "reps": [
         10,
@@ -123,12 +123,11 @@
         35,
         40
       ],
-      "note": "as reported; movement not described in his report, mapping pending his clarification",
-      "unmapped": true
+      "note": "as reported ('shoulder pull backs'); he confirmed upright row"
     },
     {
       "date": "2026-10-27",
-      "exercise": "Around the world",
+      "exercise": "Plate halo",
       "sets": 2,
       "reps": [
         10,
@@ -138,8 +137,7 @@
         35,
         45
       ],
-      "note": "single plate (his report); movement not confirmed - plate halo vs arm-arc around-the-world, mapping pending his clarification",
-      "unmapped": true
+      "note": "single plate around the head (his report, 'around the world')"
     }
   ],
   "sessions": [
@@ -274,7 +272,8 @@
           "name": "Seated front delt pulls",
           "reported": "'good weight'x25 (machine notch at his strength)",
           "in_log": false,
-          "missing": "weight in lb (notch), set split"
+          "missing": "weight in lb (notch), set split",
+          "exercise": "Machine front raise"
         },
         {
           "name": "Standing lateral raises (posterior delt)",
@@ -301,7 +300,8 @@
           "name": "Around-the-head plate circles",
           "reported": "35 lb, till exhaustion, about 25 reps",
           "in_log": false,
-          "missing": "exact reps ('about 25'), set count"
+          "missing": "exact reps ('about 25'), set count",
+          "exercise": "Plate halo"
         }
       ],
       "his_notes": "His AxB notation this day: A = lb per side, B = reps usually broken into 4-5 sets. Almost all sets near failure; definite failure on single arm raises and the heavy ones."
@@ -539,12 +539,14 @@
         {
           "name": "Shoulder pull backs",
           "reported": "35x10; 40x5",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Upright row"
         },
         {
           "name": "Around the world (single plate)",
           "reported": "35x10; 45x10",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Plate halo"
         }
       ],
       "his_notes": "Still tight from Sunday but felt like a great workout."
