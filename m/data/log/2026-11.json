@@ -36,7 +36,8 @@
           "name": "Diagonal pull-downs with tension",
           "reported": "notch 10x12; 20x10",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": "High-to-low cable fly"
         },
         {
           "name": "Machine flys",

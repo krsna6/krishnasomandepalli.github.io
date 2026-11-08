@@ -565,6 +565,78 @@
       ],
       "stabilizers": [],
       "status": "draft"
+    },
+    "Upright row": {
+      "aliases": [
+        "shoulder pull backs",
+        "upright rows"
+      ],
+      "primary": [
+        "Acromial part of deltoid muscle"
+      ],
+      "secondary": [
+        "Clavicular part of deltoid muscle",
+        "Descending part of trapezius muscle",
+        "Transverse part of trapezius muscle",
+        "Supraspinatus muscle",
+        "Brachialis muscle",
+        "Brachioradialis muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Machine front raise": {
+      "aliases": [
+        "seated front delt pulls",
+        "front raise",
+        "front delt raise"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle"
+      ],
+      "secondary": [
+        "Acromial part of deltoid muscle",
+        "Clavicular head of pectoralis major muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "High-to-low cable fly": {
+      "aliases": [
+        "diagonal pull-downs with tension",
+        "high to low cable crossover",
+        "decline cable fly"
+      ],
+      "primary": [
+        "Sternocostal head of pectoralis major muscle",
+        "(Abdominal part of pectoralis major muscle)"
+      ],
+      "secondary": [
+        "Clavicular part of deltoid muscle"
+      ],
+      "stabilizers": [],
+      "status": "draft"
+    },
+    "Plate halo": {
+      "aliases": [
+        "around the world (single plate)",
+        "around-the-head plate circles",
+        "halo"
+      ],
+      "primary": [
+        "Clavicular part of deltoid muscle",
+        "Acromial part of deltoid muscle",
+        "Scapular spinal part of deltoid muscle"
+      ],
+      "secondary": [
+        "Descending part of trapezius muscle",
+        "Supraspinatus muscle",
+        "Infraspinatus muscle",
+        "Teres minor muscle",
+        "Long head of triceps brachii"
+      ],
+      "stabilizers": [],
+      "status": "draft"
     }
   },
   "regions": [

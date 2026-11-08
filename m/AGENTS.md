@@ -76,6 +76,16 @@ when it is linked to muscles by one of:
 
 Link only what he said; leave an item unlinked if it's unclear which muscles it worked.
 
+### Matching what he says to an exercise
+
+1. Match his words to a name or an alias in `exercises.json` (case and plurals don't matter). A variation
+   that has its own name there (incline, decline, close grip, machine, cable) is that exercise, not the base one.
+2. If nothing matches, or two could, **ask him** which movement it was, offering 2–4 named movements. Never
+   pick one yourself: until he answers, log it with `"unmapped": true` (entries) or leave the diary item unlinked.
+3. When he names it, add his words to that exercise's `aliases` in the same commit, so next time it matches.
+   New exercises are added by Claude for his review, not by you.
+4. Cardio with no stroke or movement named (a swim lesson, a run) stays unlinked: it is not counted.
+
 ## 5. Muscle groups
 
 `exercises.json` → `regions` groups the muscles for reading the week (body regions, then the groups
