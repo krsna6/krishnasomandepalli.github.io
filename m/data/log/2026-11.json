@@ -9,14 +9,54 @@
       "source": "his Apple Watch photo",
       "duration": "85:12.63",
       "active_cal": 523,
-      "total_cal": 638
+      "total_cal": 638,
+      "exercises": [
+        {
+          "name": "Decline bench press",
+          "reported": "45 lb bar; 35 each side 10 reps; 45 each side 10 reps; 50 each side 5-7 reps till failure",
+          "in_log": false,
+          "missing": "exact reps on the 50s (5-7)"
+        },
+        {
+          "name": "Incline bench dumbbells",
+          "reported": "55 lb each 15-20 reps; 60 lb each 3-5 reps",
+          "in_log": false,
+          "missing": "exact reps (ranges)"
+        },
+        {
+          "name": "Flat bench dumbbells, palms facing inward",
+          "reported": "35 lb each, 20 reps",
+          "in_log": false,
+          "missing": "set count (20 = one set or total across sets)"
+        },
+        {
+          "name": "Diagonal pull-downs with tension",
+          "reported": "notch 10x12; 20x10",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        },
+        {
+          "name": "Machine flys",
+          "reported": "notch 85x10; 100x10",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        }
+      ]
     },
     {
       "date": "2026-11-05",
       "kind": "strength",
       "summary": "back/pull",
       "source": "his text report",
-      "note": "no workout screen shared; daily rings at the time: Move 554/500 cal, Exercise 87/60 min; exercise details never sent"
+      "note": "no workout screen shared; daily rings at the time: Move 554/500 cal, Exercise 87/60 min; exercise details never sent",
+      "exercises": [
+        {
+          "name": "Back/pull day",
+          "reported": "'more later' - details never sent",
+          "in_log": false,
+          "missing": "exercises, sets, reps, weights"
+        }
+      ]
     },
     {
       "date": "2026-11-07",
@@ -26,7 +66,14 @@
       "duration": "31:31.17",
       "active_cal": 61,
       "total_cal": 104,
-      "note": "pool swim screen: 7 laps, 175 yd"
+      "note": "pool swim screen: 7 laps, 175 yd",
+      "exercises": [
+        {
+          "name": "Swim lesson",
+          "reported": "pool swim on watch: 7 laps, 175 yd",
+          "in_log": false
+        }
+      ]
     }
   ]
 }

@@ -148,21 +148,81 @@
       "kind": "strength",
       "summary": "legs: hip thrusts, split squats, leg press, abduction/adduction, leg extension, hanging leg raises, ab pull-downs",
       "source": "his text report",
-      "note": "exercise numbers partially reported; complete exercises are in entries"
+      "note": "exercise numbers partially reported; complete exercises are in entries",
+      "exercises": [
+        {
+          "name": "Hip thrusts (machine hold)",
+          "reported": "45x2 plus 45 lb bar: 25 reps with one foot slightly forward, then barely 10 reps with 70x2 (added a 25 plate per side)",
+          "in_log": true
+        },
+        {
+          "name": "Split squats",
+          "reported": "35 lb each hand, 15 reps",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Wide stance lay down leg press",
+          "reported": "90 lb each side, 20 reps",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Hip abduction and adduction, hip extensions, seated leg extension",
+          "reported": "no numbers given",
+          "in_log": false,
+          "missing": "sets, reps, weight"
+        },
+        {
+          "name": "Hanging leg raises and pull-downs (abs)",
+          "reported": "no numbers given",
+          "in_log": false,
+          "missing": "sets, reps, weight"
+        }
+      ]
     },
     {
       "date": "2026-10-07",
       "kind": "strength",
       "summary": "light: abs, bodyweight pull-ups, face pulls",
       "source": "his text report",
-      "note": "no numbers reported"
+      "note": "no numbers reported",
+      "exercises": [
+        {
+          "name": "Abs",
+          "reported": "no numbers given",
+          "in_log": false,
+          "missing": "sets, reps"
+        },
+        {
+          "name": "Bodyweight pull-ups",
+          "reported": "a few",
+          "in_log": false,
+          "missing": "sets, reps"
+        },
+        {
+          "name": "Face pulls",
+          "reported": "no numbers given",
+          "in_log": false,
+          "missing": "sets, reps, weight"
+        }
+      ],
+      "his_notes": "Too sore from the day before; said it was not a good back workout."
     },
     {
       "date": "2026-10-10",
       "kind": "swim",
       "summary": "swim lesson",
       "source": "his text report",
-      "note": "no watch recording shared"
+      "note": "no watch recording shared",
+      "exercises": [
+        {
+          "name": "Swim lesson",
+          "reported": "lesson (no numbers)",
+          "in_log": false,
+          "missing": "duration, calories"
+        }
+      ]
     },
     {
       "date": "2026-10-13",
@@ -171,7 +231,57 @@
       "source": "his Apple Watch photo",
       "duration": "84:50.94",
       "active_cal": 606,
-      "total_cal": 721
+      "total_cal": 721,
+      "exercises": [
+        {
+          "name": "Single arm shoulder press",
+          "reported": "35 lb x 12 warm-up; 45x15; 42.5x5",
+          "in_log": true
+        },
+        {
+          "name": "Seated dumbbell raises ('I think they're called Arnold press')",
+          "reported": "30x25",
+          "in_log": false,
+          "missing": "set split (his AxB convention: reps usually across 4-5 sets)"
+        },
+        {
+          "name": "Seated lateral raises",
+          "reported": "alternating arms then both arms, 10-15x25",
+          "in_log": false,
+          "missing": "exact weight (he gave a range), set split"
+        },
+        {
+          "name": "Seated front delt pulls",
+          "reported": "'good weight'x25 (machine notch at his strength)",
+          "in_log": false,
+          "missing": "weight in lb (notch), set split"
+        },
+        {
+          "name": "Standing lateral raises (posterior delt)",
+          "reported": "'good weight'x25 (machine notch)",
+          "in_log": false,
+          "missing": "weight in lb (notch), set split"
+        },
+        {
+          "name": "Rear delt target pulls",
+          "reported": "35-40x20",
+          "in_log": false,
+          "missing": "exact weight (he gave a range), set split"
+        },
+        {
+          "name": "Shrugs",
+          "reported": "heavy, 60-65x15",
+          "in_log": false,
+          "missing": "exact weight (he gave a range), set split"
+        },
+        {
+          "name": "Around-the-head plate circles",
+          "reported": "35 lb, till exhaustion, about 25 reps",
+          "in_log": false,
+          "missing": "exact reps ('about 25'), set count"
+        }
+      ],
+      "his_notes": "His AxB notation this day: A = lb per side, B = reps usually broken into 4-5 sets. Almost all sets near failure; definite failure on single arm raises and the heavy ones."
     },
     {
       "date": "2026-10-15",
@@ -181,14 +291,44 @@
       "duration": "69:36.37",
       "active_cal": 465,
       "total_cal": 559,
-      "note": "he said the watch started about 20 minutes late; the swim was not recorded on the watch"
+      "note": "he said the watch started about 20 minutes late; the swim was not recorded on the watch",
+      "exercises": [
+        {
+          "name": "Back workout",
+          "reported": "no exercise numbers given",
+          "in_log": false,
+          "missing": "exercises, sets, reps, weights"
+        },
+        {
+          "name": "Swim",
+          "reported": "30 minutes",
+          "in_log": false,
+          "missing": "calories (not recorded on watch)"
+        }
+      ],
+      "his_notes": "Started the Apple Watch about 20 minutes into the lifting; the 30-min swim was not recorded."
     },
     {
       "date": "2026-10-17",
       "kind": "strength",
       "summary": "chest",
       "source": "his text report",
-      "note": "forgot to wear the watch; he estimated 75-90 minutes"
+      "note": "forgot to wear the watch; he estimated 75-90 minutes",
+      "exercises": [
+        {
+          "name": "Slight incline chest press (one notch)",
+          "reported": "55 lb each arm, easily 10-15 reps; then about 3 reps with 60 each; finished with 50",
+          "in_log": false,
+          "missing": "exact reps per set, set count"
+        },
+        {
+          "name": "3-4 other chest exercises",
+          "reported": "4-5 exercises total, each 25-30 reps till failure",
+          "in_log": false,
+          "missing": "exercise names, weights"
+        }
+      ],
+      "his_notes": "Forgot the watch; estimated 75-90 minutes total."
     },
     {
       "date": "2026-10-19",
@@ -197,7 +337,50 @@
       "source": "his Apple Watch photo",
       "duration": "1:38:37",
       "active_cal": 668,
-      "total_cal": 801
+      "total_cal": 801,
+      "exercises": [
+        {
+          "name": "Bulgarian split squats",
+          "reported": "31 total reps per side split into sets; 35 lb 12-rep warm-up, then 45 lb both hands",
+          "in_log": false,
+          "missing": "set split"
+        },
+        {
+          "name": "Hip thrusts",
+          "reported": "45 bar plus 45 each side; 15 reps as-is, then 15 reps each side with one leg slightly forward, heel tucked up",
+          "in_log": true
+        },
+        {
+          "name": "Kettlebell squats held to chin",
+          "reported": "32.5 lb, 25 reps",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Hip abduction and adduction (machine)",
+          "reported": "25 reps each, as high as he can go (notch)",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        },
+        {
+          "name": "Leg extension",
+          "reported": "'I think it was 80 on the machine notch', 25 reps",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        },
+        {
+          "name": "Hanging leg fold-ins (abs)",
+          "reported": "no numbers given",
+          "in_log": false,
+          "missing": "sets, reps"
+        },
+        {
+          "name": "Weighted pull-downs (abs)",
+          "reported": "75 but machine notch",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        }
+      ]
     },
     {
       "date": "2026-10-21",
@@ -205,7 +388,15 @@
       "summary": "arms",
       "source": "his Apple Watch photo",
       "duration": "1:34:18",
-      "note": "paused-workout screen: no active/total calorie readout; rings showed Move 695/500 cal, Exercise 107/60 min"
+      "note": "paused-workout screen: no active/total calorie readout; rings showed Move 695/500 cal, Exercise 107/60 min",
+      "exercises": [
+        {
+          "name": "Arm day",
+          "reported": "'more details later' - details never sent",
+          "in_log": false,
+          "missing": "exercises, sets, reps, weights"
+        }
+      ]
     },
     {
       "date": "2026-10-23",
@@ -214,7 +405,15 @@
       "source": "his Apple Watch photo",
       "duration": "1:38:54",
       "active_cal": 602,
-      "total_cal": 735
+      "total_cal": 735,
+      "exercises": [
+        {
+          "name": "Back - 7 different exercises (lower, mid, upper)",
+          "reported": "3 sets each, 25-30 reps total",
+          "in_log": false,
+          "missing": "exercise names, weights, rep split (25-30 range)"
+        }
+      ]
     },
     {
       "date": "2026-10-25",
@@ -223,7 +422,27 @@
       "source": "his Apple Watch photo",
       "duration": "81:32.04",
       "active_cal": 534,
-      "total_cal": 644
+      "total_cal": 644,
+      "exercises": [
+        {
+          "name": "Dips",
+          "reported": "25 lb waist weight 20-22 reps, then bodyweight 25 reps",
+          "in_log": false,
+          "missing": "exact reps on the weighted set (20-22)"
+        },
+        {
+          "name": "Dumbbell deadlifts",
+          "reported": "35x10; 40x10; 45x15 (weight per hand, confirmed)",
+          "in_log": true
+        },
+        {
+          "name": "Farmer walks",
+          "reported": "35 lb each hand, maybe a total of 150 step pairs",
+          "in_log": false,
+          "missing": "exact count ('maybe'), and the log schema has no distance/steps field"
+        }
+      ],
+      "his_notes": "Deadlifts felt challenging after heavy dips; kept form careful."
     },
     {
       "date": "2026-10-27",
@@ -232,7 +451,52 @@
       "source": "his Apple Watch photo",
       "duration": "1:43:42",
       "active_cal": 676,
-      "total_cal": 816
+      "total_cal": 816,
+      "exercises": [
+        {
+          "name": "Standing shoulder press single hand",
+          "reported": "40x10; 45x10",
+          "in_log": true
+        },
+        {
+          "name": "Sitting Arnold",
+          "reported": "30x10; 35x15",
+          "in_log": true
+        },
+        {
+          "name": "Sitting lateral raises",
+          "reported": "10x15; 20x15",
+          "in_log": true
+        },
+        {
+          "name": "Standing tension machine rear lateral raises",
+          "reported": "notch 10x15; 15x15",
+          "in_log": false,
+          "missing": "weight in lb (notch)"
+        },
+        {
+          "name": "Very wide hands-facing-in pull-ups",
+          "reported": "bodyweight, 10 reps",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Shrugs",
+          "reported": "heavy, 60x10; 65x10; 70x3",
+          "in_log": true
+        },
+        {
+          "name": "Shoulder pull backs",
+          "reported": "35x10; 40x5",
+          "in_log": true
+        },
+        {
+          "name": "Around the world (single plate)",
+          "reported": "35x10; 45x10",
+          "in_log": true
+        }
+      ],
+      "his_notes": "Still tight from Sunday but felt like a great workout."
     },
     {
       "date": "2026-10-29",
@@ -242,7 +506,22 @@
       "duration": "1:49:49",
       "active_cal": 670,
       "total_cal": 819,
-      "note": "one workout screen as shown; he described the day as swim lesson plus leg day, exercise details never sent"
+      "note": "one workout screen as shown; he described the day as swim lesson plus leg day, exercise details never sent",
+      "exercises": [
+        {
+          "name": "Swim lesson",
+          "reported": "lesson (no numbers)",
+          "in_log": false,
+          "missing": "duration, calories"
+        },
+        {
+          "name": "Leg day",
+          "reported": "'deets later' - details never sent",
+          "in_log": false,
+          "missing": "exercises, sets, reps, weights"
+        }
+      ],
+      "his_notes": "Weighed in 149.2 lb with a towel on that morning."
     }
   ]
 }
