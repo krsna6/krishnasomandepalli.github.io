@@ -247,6 +247,9 @@ const CLAY = new THREE.MeshStandardMaterial({ color: 0xb4b7bc, roughness: 0.55, 
 const TENDON = new THREE.MeshStandardMaterial({ color: 0xf3f2ee, roughness: 0.4, metalness: 0 });
 const BONE = new THREE.MeshStandardMaterial({ color: 0xe2ddd2, roughness: 0.7, metalness: 0 });
 const SKIN = new THREE.MeshStandardMaterial({ color: 0xc3c6cb, roughness: 0.5, metalness: 0 });
+// layers that back the surface: drawn behind whatever covers them, they fill the gaps between surface pieces
+const behind = (m) => { const c = m.clone(); c.polygonOffset = true; c.polygonOffsetFactor = 4; c.polygonOffsetUnits = 8; return c; };
+const BEHIND_TENDON = behind(TENDON), BEHIND_SKIN = behind(SKIN);
 // under the head's skin: the skull and the face's muscles are not drawn (names from the manifest, by height)
 let UNDER_HEAD = new Set();
 const HIDE = /Bursa|Fascia|Articular capsule|Ligament|Cartilage/;
@@ -265,15 +268,26 @@ function base(name) { return name.replace(/\.(l|r)$/, ""); }
 const sanitize = (n) => n.replace(/\s/g, "_").replace(/[\[\]\.:\/]/g, "");
 let ORIGINAL = new Map(), MUSCLE_NAMES = new Set();
 function addModel(gltf, kind) {
+  const backings = [];
   gltf.scene.traverse((o) => {
-    if (!o.isMesh) return;
+    if (!o.isMesh || o.userData.backing) return;
     // a node with two materials comes in as a group of meshes; the object's name is on the group
     const key = ORIGINAL.has(o.name) ? o.name : o.parent?.name;
     const name = ORIGINAL.get(key) || key || o.name;
     const matName = o.material?.name || "";
+    // transversus abdominis's aponeurosis is the back wall of the rectus sheath: it closes the linea alba between the
+    // two recti, which otherwise opens onto the spine. Its muscle belly stays hidden (it only flickers through)
+    // drawn pushed back in depth, so it shows only where nothing lies in front of it (no flicker through the obliques)
+    if (kind === "muscles" && /^Transversus abdominis/.test(name)) { o.material = BEHIND_TENDON; return; }
     if (kind === "muscles" && (HIDE.test(matName) || DEEP.test(name))) { o.visible = false; return; }
     if (kind === "head") {
       o.material = SKIN;
+      // the face's skin comes as patches with hairline gaps between them. Each patch gets a backing copy, grown a
+      // little about its centre and set 1 mm under the skin, so a gap shows skin rather than a dark seam
+      const g = o.geometry.clone(); g.computeBoundingBox(); g.computeVertexNormals();
+      const c = g.boundingBox.getCenter(new THREE.Vector3()), P = g.attributes.position, N = g.attributes.normal, v = new THREE.Vector3(), n = new THREE.Vector3();
+      for (let i = 0; i < P.count; i++) { v.fromBufferAttribute(P, i).sub(c).multiplyScalar(1.06).add(c); n.fromBufferAttribute(N, i); v.addScaledVector(n, -0.001); P.setXYZ(i, v.x, v.y, v.z); }
+      backings.push([o, new THREE.Mesh(g, BEHIND_SKIN)]);
       return;
     }
     if (UNDER_HEAD.has(name)) { o.visible = false; return; }
@@ -289,6 +303,7 @@ function addModel(gltf, kind) {
     o.userData.part = b;
     pick.push(o);
   });
+  for (const [o, b] of backings) { b.userData.backing = true; o.add(b); }
   scene.add(gltf.scene);
 }
 
@@ -610,8 +625,59 @@ Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.lo
   const chin = Math.min(...man.head.filter((o) => !/auric|Helix|Tragus|Lobule|Scapha|Concha|conchae|fossa|Eminentia|incisure|Apex|tubercle|groove|Mastoid|Occipital/i.test(o.name)).map((o) => o.min[2]));
   UNDER_HEAD = new Set([...man.muscles, ...man.skeleton].filter((o) => o.min[2] > chin + 0.005).map((o) => o.name));
   addModel(hd, "head");
+  // the eyes: the atlas has the muscles that move each eye but not the globe. A globe of 12 mm radius (an adult eye
+  // is about 24 mm long) sits where the four recti converge, its front just ahead of where they insert
+  for (const side of ["l", "r"]) {
+    const rs = man.muscles.filter((o) => /^(Superior|Inferior|Medial|Lateral) rectus muscle\.(l|r)$/.test(o.name) && o.name.endsWith("." + side));
+    if (rs.length !== 4) continue;
+    const mn = [0, 1, 2].map((i) => Math.min(...rs.map((o) => o.min[i]))), mx = [0, 1, 2].map((i) => Math.max(...rs.map((o) => o.max[i])));
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.012, 32, 24), SKIN);
+    eye.position.set((mn[0] + mx[0]) / 2, (mn[2] + mx[2]) / 2, -(mn[1] + 0.004));   // atlas z-up, -y forward -> three
+    scene.add(eye);
+  }
   addModel(sk, "skeleton");
   addModel(mu, "muscles");
+  // the linea alba: the atlas leaves the band of tendon between the two recti open (its sheath is not drawn), so
+  // the spine shows through. Each rectus gets a tendon-white copy slid to the midline and set just behind it
+  scene.updateMatrixWorld(true);
+  for (const m of parts.get("Rectus abdominis muscle") || []) {
+    const g = m.geometry.clone().applyMatrix4(m.matrixWorld), P = g.attributes.position;
+    const band = new Map();   // per 1 cm of height, the rectus's nearest approach to the midline
+    for (let i = 0; i < P.count; i++) { const k = Math.round(P.getY(i) * 100), x = Math.abs(P.getX(i)); band.set(k, Math.min(band.get(k) ?? 1, x)); }
+    const gap = Math.max(...band.values()), sign = Math.sign(g.boundingBox?.getCenter(new THREE.Vector3()).x ?? (g.computeBoundingBox(), g.boundingBox.getCenter(new THREE.Vector3()).x));
+    g.translate(-sign * (gap + 0.001), 0, 0);
+    // flat in depth: the band does not follow the dips where the rectus's tendinous intersections cross it
+    const front = new Map();
+    for (let i = 0; i < P.count; i++) { const k = Math.round(P.getY(i) * 100); front.set(k, Math.max(front.get(k) ?? -1, P.getZ(i))); }
+    const ks = [...front.keys()].sort((a, b) => a - b), smooth = new Map(ks.map((k) => [k, Math.max(...[-2, -1, 0, 1, 2].map((d) => front.get(k + d) ?? -1))]));
+    for (let i = 0; i < P.count; i++) P.setZ(i, Math.min(P.getZ(i) + 0.006, smooth.get(Math.round(P.getY(i) * 100)) - 0.003));
+    P.needsUpdate = true; g.computeVertexNormals();
+    const strip = new THREE.Mesh(g, BEHIND_TENDON); strip.userData.backing = true; scene.add(strip);
+  }
+  // the fingers and toes: past the palm and sole a digit is bone, tendon and soft tissue with no muscle, so the
+  // atlas shows bare phalanges. Each phalanx gets a body of soft tissue: a capsule on the bone's long axis (from its
+  // vertices' principal axis), 1.7 times the bone's own girth (a finger is about twice as thick as its phalanx; the palm's
+  // metacarpals likewise, so the hand's back reads as one surface)
+  const FLESH = behind(new THREE.MeshStandardMaterial({ color: 0xbfc2c7, roughness: 0.6, metalness: 0 }));
+  sk.scene.traverse((o) => {
+    if (!o.isMesh || !o.visible) return;
+    const key = ORIGINAL.has(o.name) ? o.name : o.parent?.name, name = ORIGINAL.get(key) || key || o.name;
+    if (!/phalanx of .* finger of (hand|foot)|metacarpal bone/.test(name)) return;
+    const P = o.geometry.attributes.position, n = P.count, pts = [], c = new THREE.Vector3();
+    for (let i = 0; i < n; i++) { const v = new THREE.Vector3().fromBufferAttribute(P, i).applyMatrix4(o.matrixWorld); pts.push(v); c.add(v); }
+    c.divideScalar(n);
+    const C = [0, 0, 0, 0, 0, 0];   // covariance xx xy xz yy yz zz
+    for (const v of pts) { const x = v.x - c.x, y = v.y - c.y, z = v.z - c.z; C[0] += x * x; C[1] += x * y; C[2] += x * z; C[3] += y * y; C[4] += y * z; C[5] += z * z; }
+    const ax = new THREE.Vector3(0.3, 1, 0.2).normalize();
+    for (let k = 0; k < 40; k++) ax.set(C[0] * ax.x + C[1] * ax.y + C[2] * ax.z, C[1] * ax.x + C[3] * ax.y + C[4] * ax.z, C[2] * ax.x + C[4] * ax.y + C[5] * ax.z).normalize();
+    let lo = Infinity, hi = -Infinity, rr = 0;
+    for (const v of pts) { const d = v.clone().sub(c), t = d.dot(ax); lo = Math.min(lo, t); hi = Math.max(hi, t); rr += d.sub(ax.clone().multiplyScalar(t)).lengthSq(); }
+    const r = 1.7 * Math.sqrt(rr / n), len = Math.max(0.001, hi - lo - 0.5 * r);
+    const cap = new THREE.Mesh(new THREE.CapsuleGeometry(r, len, 6, 16), FLESH);
+    cap.position.copy(c).addScaledVector(ax, (hi + lo) / 2);
+    cap.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), ax);
+    scene.add(cap);
+  });
   const box = new THREE.Box3().setFromObject(mu.scene);
   H = box.max.y - box.min.y; CY = (box.max.y + box.min.y) / 2; bodyZ = (box.max.z + box.min.z) / 2;
   const missing = [...new Set(Object.values(EXERCISES).flatMap((e) => [...e.primary, ...e.secondary, ...e.stabilizers]))].filter((p) => !parts.has(p));
