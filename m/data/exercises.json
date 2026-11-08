@@ -1,114 +1,5 @@
 {
   "_about": "Werk's exercise map: which muscles each exercise trains, in the anatomical names of the Z-Anatomy atlas (see m/model/manifest.json). Counting (Pelland et al. 2026, Sports Medicine): a set counts 1 for each primary muscle and 0.5 for each secondary; stabilizers are shown, not counted. 'status': 'draft' entries are provisional; 'reviewed' entries were checked by Krishna against the cited sources. Only Krishna or Claude change this file.",
-  "groups": [
-    [
-      "Chest",
-      [
-        "Clavicular head of pectoralis major muscle",
-        "Sternocostal head of pectoralis major muscle",
-        "(Abdominal part of pectoralis major muscle)"
-      ]
-    ],
-    [
-      "Shoulders",
-      [
-        "Clavicular part of deltoid muscle",
-        "Acromial part of deltoid muscle",
-        "Scapular spinal part of deltoid muscle"
-      ]
-    ],
-    [
-      "Triceps",
-      [
-        "Long head of triceps brachii",
-        "Lateral head of triceps brachii",
-        "Medial head of triceps brachii"
-      ]
-    ],
-    [
-      "Biceps",
-      [
-        "Long head of biceps brachii",
-        "Short head of biceps brachii",
-        "Brachialis muscle"
-      ]
-    ],
-    [
-      "Forearm",
-      [
-        "Brachioradialis muscle"
-      ]
-    ],
-    [
-      "Lats",
-      [
-        "Latissimus dorsi muscle",
-        "Teres major muscle"
-      ]
-    ],
-    [
-      "Traps",
-      [
-        "Descending part of trapezius muscle",
-        "Transverse part of trapezius muscle",
-        "Ascending part of trapezius muscle"
-      ]
-    ],
-    [
-      "Rhomboids",
-      [
-        "Rhomboid major muscle",
-        "Rhomboid minor muscle"
-      ]
-    ],
-    [
-      "Serratus",
-      [
-        "Serratus anterior muscle"
-      ]
-    ],
-    [
-      "Quads",
-      [
-        "Vastus lateralis muscle",
-        "Vastus medialis muscle",
-        "Vastus intermedius muscle",
-        "Rectus femoris muscle"
-      ]
-    ],
-    [
-      "Hamstrings",
-      [
-        "Long head of biceps femoris",
-        "Semitendinosus muscle",
-        "Semimembranosus muscle"
-      ]
-    ],
-    [
-      "Glutes",
-      [
-        "Gluteus maximus muscle",
-        "Gluteus medius muscle",
-        "Gluteus minimus muscle"
-      ]
-    ],
-    [
-      "Adductors",
-      [
-        "Adductor magnus",
-        "Adductor longus",
-        "Adductor brevis"
-      ]
-    ],
-    [
-      "Calves",
-      [
-        "Medial head of gastrocnemius",
-        "Lateral head of gastrocnemius",
-        "Soleus muscle"
-      ]
-    ]
-  ],
   "exercises": {
     "Bench press": {
       "aliases": [
@@ -418,5 +309,440 @@
       ],
       "status": "draft"
     }
-  }
+  },
+  "regions": [
+    {
+      "region": "Neck",
+      "groups": [
+        {
+          "name": "Neck flexors",
+          "view": "front",
+          "parts": [
+            "Sternocleidomastoid muscle"
+          ]
+        },
+        {
+          "name": "Neck extensors",
+          "view": "back",
+          "parts": [
+            "Splenius capitis muscle",
+            "Splenius colli muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Shoulders",
+      "groups": [
+        {
+          "name": "Front delts",
+          "view": "front",
+          "parts": [
+            "Clavicular part of deltoid muscle"
+          ]
+        },
+        {
+          "name": "Side delts",
+          "view": "front",
+          "parts": [
+            "Acromial part of deltoid muscle"
+          ]
+        },
+        {
+          "name": "Rear delts",
+          "view": "back",
+          "parts": [
+            "Scapular spinal part of deltoid muscle"
+          ]
+        },
+        {
+          "name": "Rotator cuff",
+          "view": "back",
+          "parts": [
+            "Supraspinatus muscle",
+            "Infraspinatus muscle",
+            "Teres minor muscle",
+            "Subscapularis muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Chest",
+      "groups": [
+        {
+          "name": "Upper chest",
+          "view": "front",
+          "parts": [
+            "Clavicular head of pectoralis major muscle"
+          ]
+        },
+        {
+          "name": "Mid and lower chest",
+          "view": "front",
+          "parts": [
+            "Sternocostal head of pectoralis major muscle",
+            "(Abdominal part of pectoralis major muscle)"
+          ]
+        },
+        {
+          "name": "Pec minor",
+          "view": "front",
+          "parts": [
+            "Pectoralis minor muscle"
+          ]
+        },
+        {
+          "name": "Serratus",
+          "view": "front",
+          "parts": [
+            "Serratus anterior muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Back",
+      "groups": [
+        {
+          "name": "Lats",
+          "view": "back",
+          "parts": [
+            "Latissimus dorsi muscle",
+            "Teres major muscle"
+          ]
+        },
+        {
+          "name": "Upper traps",
+          "view": "back",
+          "parts": [
+            "Descending part of trapezius muscle"
+          ]
+        },
+        {
+          "name": "Mid traps",
+          "view": "back",
+          "parts": [
+            "Transverse part of trapezius muscle"
+          ]
+        },
+        {
+          "name": "Lower traps",
+          "view": "back",
+          "parts": [
+            "Ascending part of trapezius muscle"
+          ]
+        },
+        {
+          "name": "Rhomboids",
+          "view": "back",
+          "parts": [
+            "Rhomboid major muscle",
+            "Rhomboid minor muscle"
+          ]
+        },
+        {
+          "name": "Levator scapulae",
+          "view": "back",
+          "parts": [
+            "Levator scapulae"
+          ]
+        },
+        {
+          "name": "Spinal erectors",
+          "view": "back",
+          "parts": [
+            "Iliocostalis lumborum muscle",
+            "Iliocostalis thoracis muscle",
+            "Iliocostalis colli muscle",
+            "Longissimus thoracis muscle",
+            "Longissimus colli muscle",
+            "Longissimus capitis muscle",
+            "Spinalis thoracis muscle",
+            "Spinalis colli muscle",
+            "Spinalis capitis muscle"
+          ]
+        },
+        {
+          "name": "Multifidus",
+          "view": "back",
+          "parts": [
+            "Multifidus lumborum muscle",
+            "Multifidus thoracis muscle",
+            "Multifidus colli muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Upper arms",
+      "groups": [
+        {
+          "name": "Biceps",
+          "view": "front",
+          "parts": [
+            "Long head of biceps brachii",
+            "Short head of biceps brachii"
+          ]
+        },
+        {
+          "name": "Brachialis",
+          "view": "front",
+          "parts": [
+            "Brachialis muscle"
+          ]
+        },
+        {
+          "name": "Triceps",
+          "view": "back",
+          "parts": [
+            "Long head of triceps brachii",
+            "Lateral head of triceps brachii",
+            "Medial head of triceps brachii"
+          ]
+        },
+        {
+          "name": "Coracobrachialis",
+          "view": "front",
+          "parts": [
+            "Coracobrachialis muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Forearms",
+      "groups": [
+        {
+          "name": "Brachioradialis",
+          "view": "front",
+          "parts": [
+            "Brachioradialis muscle"
+          ]
+        },
+        {
+          "name": "Wrist flexors",
+          "view": "front",
+          "parts": [
+            "Flexor carpi radialis",
+            "Humeral head of flexor carpi ulnaris",
+            "Ulnar head of flexor carpi ulnaris",
+            "Palmaris longus muscle"
+          ]
+        },
+        {
+          "name": "Finger flexors",
+          "view": "front",
+          "parts": [
+            "Flexor digitorum profundus",
+            "Humero-ulnar head of flexor digitorum superficialis",
+            "Radial head of flexor digitorum superficialis"
+          ]
+        },
+        {
+          "name": "Wrist extensors",
+          "view": "back",
+          "parts": [
+            "Extensor carpi radialis longus",
+            "Extensor carpi radialis brevis",
+            "Humeral head of extensor carpi ulnaris",
+            "Ulnar head of extensor carpi ulnaris"
+          ]
+        },
+        {
+          "name": "Finger extensors",
+          "view": "back",
+          "parts": [
+            "Extensor digitorum"
+          ]
+        },
+        {
+          "name": "Pronators",
+          "view": "front",
+          "parts": [
+            "Superficial head of pronator teres",
+            "Deep head of pronator teres",
+            "Pronator quadratus"
+          ]
+        },
+        {
+          "name": "Supinator",
+          "view": "back",
+          "parts": [
+            "Supinator"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Core",
+      "groups": [
+        {
+          "name": "Abs",
+          "view": "front",
+          "parts": [
+            "Rectus abdominis muscle"
+          ]
+        },
+        {
+          "name": "Obliques",
+          "view": "front",
+          "parts": [
+            "External abdominal oblique muscle",
+            "Internal abdominal oblique muscle"
+          ]
+        },
+        {
+          "name": "Transverse abdominis",
+          "view": "front",
+          "parts": [
+            "Transversus abdominis muscle"
+          ]
+        },
+        {
+          "name": "Quadratus lumborum",
+          "view": "back",
+          "parts": [
+            "Quadratus lumborum muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Hips",
+      "groups": [
+        {
+          "name": "Glutes",
+          "view": "back",
+          "parts": [
+            "Gluteus maximus muscle"
+          ]
+        },
+        {
+          "name": "Hip abductors",
+          "view": "back",
+          "parts": [
+            "Gluteus medius muscle",
+            "Gluteus minimus muscle",
+            "Tensor fasciae latae"
+          ]
+        },
+        {
+          "name": "Hip flexors",
+          "view": "front",
+          "parts": [
+            "Psoas major",
+            "Iliacus muscle"
+          ]
+        },
+        {
+          "name": "Deep hip rotators",
+          "view": "back",
+          "parts": [
+            "Piriformis muscle",
+            "Superior gemellus muscle",
+            "Inferior gemellus muscle",
+            "Obturator internus",
+            "Obturator externus",
+            "Quadratus femoris muscle"
+          ]
+        },
+        {
+          "name": "Adductors",
+          "view": "front",
+          "parts": [
+            "Adductor magnus",
+            "Adductor longus",
+            "Adductor brevis",
+            "(Adductor minimus)",
+            "Gracilis muscle",
+            "Pectineus muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Thighs",
+      "groups": [
+        {
+          "name": "Quads",
+          "view": "front",
+          "parts": [
+            "Vastus lateralis muscle",
+            "Vastus medialis muscle",
+            "Vastus intermedius muscle",
+            "Rectus femoris muscle"
+          ]
+        },
+        {
+          "name": "Hamstrings",
+          "view": "back",
+          "parts": [
+            "Long head of biceps femoris",
+            "Short head of biceps femoris",
+            "Semitendinosus muscle",
+            "Semimembranosus muscle"
+          ]
+        },
+        {
+          "name": "Sartorius",
+          "view": "front",
+          "parts": [
+            "Sartorius muscle"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "Lower legs",
+      "groups": [
+        {
+          "name": "Calves",
+          "view": "back",
+          "parts": [
+            "Medial head of gastrocnemius",
+            "Lateral head of gastrocnemius"
+          ]
+        },
+        {
+          "name": "Soleus",
+          "view": "back",
+          "parts": [
+            "Soleus muscle"
+          ]
+        },
+        {
+          "name": "Tibialis anterior",
+          "view": "front",
+          "parts": [
+            "Tibialis anterior muscle"
+          ]
+        },
+        {
+          "name": "Fibularis",
+          "view": "front",
+          "parts": [
+            "Fibularis longus muscle",
+            "Fibularis brevis muscle",
+            "Fibularis tertius muscle"
+          ]
+        },
+        {
+          "name": "Tibialis posterior",
+          "view": "back",
+          "parts": [
+            "Tibialis posterior muscle"
+          ]
+        },
+        {
+          "name": "Popliteus",
+          "view": "back",
+          "parts": [
+            "Popliteus muscle"
+          ]
+        }
+      ]
+    }
+  ],
+  "_about_regions": "How the muscles are grouped for reading the week: body regions as in the ExRx exercise directory (Neck, Shoulders, Upper arms, Forearms, Back, Chest, Waist/Core, Hips, Thighs, Lower legs), each split into the groups coaches program (front/side/rear delts, upper/mid/lower traps, etc.). 'view' is the side of the body each group is seen from. Every part is a muscle of the atlas."
 }

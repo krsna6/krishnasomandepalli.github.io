@@ -37,8 +37,12 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .card .sets{padding:0 12px 10px;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
 /* the dock: one frosted bar at the thumb, play on the left, the week, turn on the right */
 .bottom{position:fixed;left:0;right:0;bottom:0;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));display:grid;gap:7px;justify-items:center;transition:opacity .35s,transform .35s}
-.session{font-size:12.5px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px;text-wrap:balance}
+.session{font-size:12.5px;color:var(--dim);text-align:center;min-height:1.4em;max-width:560px;text-wrap:balance;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.session button{font:inherit;color:var(--hot);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .session b{color:var(--ink);font-weight:650}
+.session .watch{color:#9aa1ab}
+.days button .rib{position:absolute;left:8px;bottom:2px;height:2px;max-width:calc(100% - 16px);border-radius:1px;background:rgba(29,33,38,.18)}
+.days button.cur .rib{background:rgba(255,255,255,.55)}
 .dock{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 30px rgba(30,36,46,.10),0 1px 0 rgba(30,36,46,.04);border-radius:999px;padding:5px}
 .days{display:flex;gap:2px}
 .days button{position:relative;font:600 12px/1 var(--f);color:var(--dim);background:none;border:0;border-radius:999px;height:36px;min-width:38px;padding:0 8px;cursor:pointer;transition:background .2s,color .2s}
@@ -68,6 +72,34 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 body.immersive .top .title,body.immersive .bottom{opacity:0;pointer-events:none;transform:translateY(8px)}
 body.immersive .card{opacity:0}
 body.immersive #bFull{opacity:.55}
+/* the muscles panel: every group, region by region, with its week; pick one to see it on the body */
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(340px,88vw);z-index:5;display:flex;flex-direction:column;background:rgba(250,251,252,.86);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  border-left:1px solid rgba(255,255,255,.9);box-shadow:-12px 0 40px rgba(30,36,46,.10);transform:translateX(102%);transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.panel.open{transform:none}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 14px 10px 18px}
+.ph h2{margin:0;font:800 13px/1 var(--f);letter-spacing:.16em;text-transform:uppercase}
+.ph p{margin:5px 0 0;font-size:12px;color:var(--dim)}
+.pl{overflow-y:auto;padding:0 10px 18px;-webkit-overflow-scrolling:touch}
+.rg{margin:14px 8px 6px;font:700 10.5px/1 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.gr{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-radius:10px;padding:8px;cursor:pointer}
+.gr:hover{background:rgba(29,33,38,.05)}
+.gr.sel{background:#fff;box-shadow:0 2px 10px rgba(30,36,46,.08)}
+.gr .n{font-size:13.5px;font-weight:600}
+.gr .n i{font-style:normal;font-weight:400;font-size:11px;color:var(--dim)}
+.gr .v{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.gr .v.zero{color:#a3a9b2;font-weight:500}
+.gr .wk{grid-column:1/-1;display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.gr .wk span{height:6px;border-radius:2px;background:#e3e6ea}
+.gr .wk span.today{box-shadow:0 0 0 1px rgba(29,33,38,.35)}
+.det{grid-column:1/-1;margin:4px 0 2px;font-size:12px;color:var(--dim);line-height:1.5}
+.det b{color:var(--ink);font-weight:600}
+.det .parts{font-size:11px;letter-spacing:.02em}
+.det ul{list-style:none;margin:6px 0 0;padding:0}
+.det li{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums}
+.chips{display:grid;gap:10px;justify-items:end}
+#bMuscles svg{width:19px;height:19px}
+body.immersive .chips #bMuscles{opacity:0;pointer-events:none}
 @media (max-width:520px){.days button{min-width:32px;padding:0 5px}.legend i{width:80px}.card{min-width:130px}}
 @media (prefers-reduced-motion:reduce){.top,.bottom,.card,.days button{transition:none}}
 </style>
@@ -79,10 +111,17 @@ body.immersive #bFull{opacity:.55}
 <div class="top">
   <div class="title"><h1>Werk</h1><p class="week"><button class="arrow" id="bPrev" type="button" aria-label="Previous week">‹</button><span id="weekLabel">This week</span><button class="arrow" id="bNext" type="button" aria-label="Next week">›</button></p></div>
   <div class="right">
-    <button class="chip" id="bFull" type="button" aria-label="Full screen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="fullIcon" d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
+    <div class="chips">
+      <button class="chip" id="bFull" type="button" aria-label="Full screen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="fullIcon" d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button>
+      <button class="chip" id="bMuscles" type="button" aria-label="Muscles" aria-expanded="false" aria-controls="panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h10v2H4z"/></svg></button>
+    </div>
     <div class="card" id="card" aria-live="polite"><h2 id="cardTitle"></h2><ul id="cardParts"></ul><div class="sets" id="cardSets"></div></div>
   </div>
 </div>
+<aside class="panel" id="panel" aria-label="Muscles this week">
+  <div class="ph"><div><h2>Muscles</h2><p id="panelSub">This week · fractional sets</p></div><button class="round" id="bClosePanel" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z"/></svg></button></div>
+  <div class="pl" id="panelList"></div>
+</aside>
 <div class="bottom">
   <div class="session" id="session"></div>
   <div class="dock">
@@ -108,7 +147,7 @@ import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 // Weekly load per muscle is counted as fractional sets, the method that fit best in Pelland et al. (2026,
 // Sports Medicine): a hard set counts 1 for each primary muscle and 0.5 for each secondary. Stabilisers
 // are listed, not counted. Muscle names are the atlas's own anatomical parts.
-let EXERCISES = {}, GROUPS = [], groupOf = new Map(), LOG = [];
+let EXERCISES = {}, GROUPS = [], groupOf = new Map(), LOG = [], SESSIONS = [];   // GROUPS: [{ region, name, parts }]
 const ROLE = { primary: 1, secondary: 0.5, stabilizers: 0 };
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const iso = (d) => d.toISOString().slice(0, 10);
@@ -128,11 +167,26 @@ function setsThrough(d) {
   return s;
 }
 const trainedOn = (d) => { const s = new Set(); for (const e of entriesOn(weekDates()[d])) { const m = EXERCISES[e.exercise]; if (m && !e.unmapped) [...m.primary, ...m.secondary].forEach((p) => s.add(p)); } return s; };
+// the latest day with exercises, looking back up to three months, so an empty week can point to it
+let latestEntry = null;
+async function findLatest() {
+  const t = todayNY(), months = [0, 1, 2, 3].map((k) => { const d = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - k, 1)); return iso(d).slice(0, 7); });
+  const docs = await Promise.all(months.map((m) => fetch(`./m/data/log/${m}.json`, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : { entries: [] })).catch(() => ({ entries: [] }))));
+  latestEntry = docs.flatMap((d) => d.entries || []).map((e) => e.date).sort().pop() || null;
+}
 async function loadLog() {
   // the months this week touches
   const months = [...new Set(weekDates().map((d) => d.slice(0, 7)))];
   const docs = await Promise.all(months.map((m) => fetch(`./m/data/log/${m}.json`, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : { entries: [] })).catch(() => ({ entries: [] }))));
   LOG = docs.flatMap((d) => d.entries || []);
+  SESSIONS = docs.flatMap((d) => d.sessions || []);
+}
+// a session's duration as the watch shows it (m:ss or h:mm:ss), in minutes
+const minutes = (d) => { if (!d) return 0; const p = d.split(":").map(Number); return p.length === 3 ? p[0] * 60 + p[1] + p[2] / 60 : p[0] + p[1] / 60; };
+const sessionsOn = (date) => SESSIONS.filter((x) => x.date === date);
+function sessionText(date) {
+  return sessionsOn(date).map((x) => [x.kind === "swim" ? "swim" : null, x.duration ? `${Math.round(minutes(x.duration))} min` : null,
+    x.active_cal != null ? `${x.active_cal} active / ${x.total_cal ?? "?"} total kcal` : null].filter(Boolean).join(" · ")).filter(Boolean).join("; ");
 }
 const fmt = (v) => (Array.isArray(v) ? (v.every((x) => x === v[0]) ? v[0] : v.join("/")) : v);
 function describe(e) {
@@ -245,7 +299,13 @@ DAYS.forEach((name, i) => {
 });
 function showWeek() {
   const dates = weekDates(), today = iso(todayNY());
-  [...daysEl.children].forEach((b, i) => b.classList.toggle("trained", entriesOn(dates[i]).length > 0));
+  [...daysEl.children].forEach((b, i) => {
+    b.classList.toggle("trained", entriesOn(dates[i]).length > 0 || sessionsOn(dates[i]).length > 0);
+    b.querySelector(".rib")?.remove();
+    const mins = sessionsOn(dates[i]).reduce((a, x) => a + minutes(x.duration), 0);
+    if (mins) { const r = document.createElement("span"); r.className = "rib"; r.style.width = `${Math.min(100, (mins / 120) * 100)}%`; b.appendChild(r); b.title = sessionText(dates[i]); }
+    else b.removeAttribute("title");
+  });
   const thisWeek = iso(mondayOf(todayNY())) === dates[0];
   const label = new Date(dates[0] + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
   document.getElementById("weekLabel").textContent = thisWeek ? "This week" : `Week of ${label}`;
@@ -269,18 +329,103 @@ function setDay(d) {
   sessionEl.replaceChildren();
   const b = document.createElement("b"); b.textContent = DAYS[d]; sessionEl.append(b, " · ");
   const anyThisWeek = weekDates().some((dt) => entriesOn(dt).length);
-  sessionEl.append(log.length ? log.map(describe).join(" · ") : anyThisWeek ? "rest" : "nothing logged this week yet");
+  const sess = sessionText(weekDates()[d]);
+  const anySess = weekDates().some((dt) => sessionsOn(dt).length);
+  sessionEl.append(log.length ? log.map(describe).join(" · ") : sessionsOn(weekDates()[d]).length ? sessionsOn(weekDates()[d]).map((x) => x.summary).join("; ") : anyThisWeek || anySess ? "rest" : "nothing logged this week yet");
+  if (sess) { const w = document.createElement("span"); w.className = "watch"; w.textContent = ` · ${sess}`; sessionEl.append(w); }
+  if (!weekDates().some((dt) => entriesOn(dt).length) && latestEntry && latestEntry < weekDates()[0]) {
+    const go = document.createElement("button"); go.type = "button";
+    go.textContent = `last exercises ${new Date(latestEntry + "T00:00:00Z").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })}`;
+    go.addEventListener("click", () => { const at = new Date(latestEntry + "T00:00:00Z"), target = mondayOf(at); goWeek(Math.round((target - weekStart) / (7 * 864e5))).then(() => setDay((at.getUTCDay() + 6) % 7)); });
+    sessionEl.append(" · ", go);
+  }
   if (hovered) showCard(hovered);
+  if (selGroup) fadeOthers();
+  renderPanel();
 }
+
+// ---- a group's week: a set counts once for the group, at the strongest role any of its parts has in
+// that exercise (1 if the group holds a primary mover, 0.5 if only secondary), the same counting as per muscle
+function groupSetsOn(g, date) {
+  let n = 0;
+  for (const e of entriesOn(date)) { const m = EXERCISES[e.exercise]; if (!m || e.unmapped) continue;
+    const w = g.parts.some((p) => m.primary.includes(p)) ? 1 : g.parts.some((p) => m.secondary.includes(p)) ? 0.5 : 0; n += e.sets * w; }
+  return n;
+}
+const groupSets = (g, d) => weekDates().slice(0, d + 1).reduce((a, dt) => a + groupSetsOn(g, dt), 0);
+let selGroup = null, panelOpen = false;
+const panel = document.getElementById("panel"), bMuscles = document.getElementById("bMuscles");
+function setPanel(open) { panelOpen = open; panel.classList.toggle("open", open); bMuscles.setAttribute("aria-expanded", String(open)); if (open) renderPanel(); refit(); }
+bMuscles.addEventListener("click", () => setPanel(!panelOpen));
+document.getElementById("bClosePanel").addEventListener("click", () => setPanel(false));
+const SHORT = (p) => p.replace(/[()]/g, "").replace(/ muscle$/, "");
+function renderPanel() {
+  if (!panelOpen || !GROUPS.length) return;
+  const list = document.getElementById("panelList"), dates = weekDates();
+  document.getElementById("panelSub").textContent = `${document.getElementById("weekLabel").textContent} · through ${DAYS[day]} · fractional sets`;
+  list.replaceChildren();
+  let region = null;
+  for (const g of GROUPS) {
+    if (g.region !== region) { region = g.region; const h = document.createElement("div"); h.className = "rg"; h.textContent = region; list.appendChild(h); }
+    const total = groupSets(g, day);
+    const row = document.createElement("button"); row.type = "button"; row.className = "gr" + (selGroup === g ? " sel" : "");
+    const deep = g.parts.every((p) => !parts.has(p));
+    row.innerHTML = `<span class="n"></span><span class="v${total ? "" : " zero"}">${total ? total.toFixed(1) : "0"}</span><span class="wk"></span>`;
+    row.querySelector(".n").textContent = g.name;
+    if (deep) row.querySelector(".n").insertAdjacentHTML("beforeend", " <i>deep</i>");
+    const wk = row.querySelector(".wk");
+    dates.forEach((dt, i) => { const c = document.createElement("span"); const n = groupSetsOn(g, dt); if (n) c.style.background = "#" + heat(Math.min(20, n * 3)).getHexString(); if (i === day) c.classList.add("today"); c.title = `${DAYS[i]}: ${n} sets`; wk.appendChild(c); });
+    row.addEventListener("click", () => selectGroup(selGroup === g ? null : g, true));
+    list.appendChild(row);
+    if (selGroup === g) {
+      const det = document.createElement("div"); det.className = "det";
+      const ps = document.createElement("div"); ps.className = "parts"; ps.textContent = g.parts.map(SHORT).join(" · "); det.appendChild(ps);
+      const ul = document.createElement("ul");
+      dates.slice(0, day + 1).forEach((dt, i) => { for (const e of entriesOn(dt)) { const m = EXERCISES[e.exercise]; if (!m || e.unmapped) continue;
+        const w = g.parts.some((p) => m.primary.includes(p)) ? 1 : g.parts.some((p) => m.secondary.includes(p)) ? 0.5 : 0; if (!w) continue;
+        const li = document.createElement("li"); const l = document.createElement("span"); l.innerHTML = `<b>${DAYS[i]}</b> `; l.append(`${e.exercise}, ${e.sets} sets${w < 1 ? " (helping)" : ""}`);
+        const r = document.createElement("span"); r.textContent = (e.sets * w).toFixed(1); li.append(l, r); ul.appendChild(li); } });
+      if (!ul.children.length) { const li = document.createElement("li"); li.textContent = "Nothing for this group yet this week."; ul.appendChild(li); }
+      det.appendChild(ul); row.after(det);
+    }
+  }
+}
+// selecting a group: the rest of the body fades, and (from the panel) the view turns and moves to it
+function fadeOthers() {
+  for (const [b, meshes] of parts) if (!selGroup.parts.includes(b)) for (const m of meshes) m.material.color.lerp(FADE, 0.6);
+}
+const FADE = new THREE.Color(0xe4e6ea);
+let camGoal = null;
+function selectGroup(g, frame) {
+  selGroup = g;
+  setDay(day);
+  if (!frame) return;
+  // from the panel: the card names the group; on a phone the panel steps aside so the body shows
+  if (g) { const first = g.parts.find((p) => parts.has(p)) || g.parts[0]; hovered = null; showCard(first); document.querySelectorAll("#cardParts li").forEach((li) => li.classList.remove("lit")); }
+  else card.classList.remove("on");
+  if (g && innerWidth < 700) setTimeout(() => setPanel(false), 350);
+  if (!g) { camGoal = { target: new THREE.Vector3(0, CY - 0.05, 0), dist: frame0(), facing: Math.sign(camera.position.z - controls.target.z) || 1 }; return; }
+  const box = new THREE.Box3();
+  for (const p of g.parts) for (const m of parts.get(p) || []) box.expandByObject(m);
+  if (box.isEmpty()) return;   // deep muscles: listed, not visible from outside
+  const c = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3());
+  const vfov = THREE.MathUtils.degToRad(camera.fov);
+  const need = Math.max(size.y, size.x / camera.aspect, 0.3) * 2.4;
+  // the side it is seen from is part of the group's data (exercises.json, "view")
+  camGoal = { target: c, dist: Math.min(frame0(), need / (2 * Math.tan(vfov / 2))), facing: g.view === "back" ? -1 : 1 };
+}
+let bodyZ = 0;
+const frame0 = () => frame();
+addEventListener("pointerdown", () => { camGoal = null; }, { passive: true });
 
 // ---- the card: the coach's group and its parts, as in an atlas
 const card = document.getElementById("card");
 let hovered = null;
 function showCard(b) {
   const g = groupOf.get(b);
-  const list = g ? GROUPS.find(([n]) => n === g)[1] : [b];
+  const list = g ? g.parts : [b];
   const sets = setsThrough(day);
-  document.getElementById("cardTitle").textContent = g || "Muscle";
+  document.getElementById("cardTitle").textContent = g ? g.name : "Muscle";
   const ul = document.getElementById("cardParts"); ul.replaceChildren();
   for (const p of list) {
     const li = document.createElement("li");
@@ -288,9 +433,7 @@ function showCard(b) {
     if (p === b) li.classList.add("lit");
     ul.appendChild(li);
   }
-  const total = list.reduce((a, p) => a + (sets.get(p) || 0), 0);
-  document.getElementById("cardSets").textContent = `${(sets.get(b) || 0).toFixed(1)} sets this week · ${b.replace(/[()]/g, "")}`;
-  void total;
+  document.getElementById("cardSets").textContent = g ? `${groupSets(g, day).toFixed(1)} sets this week` : `${(sets.get(b) || 0).toFixed(1)} sets this week`;
   card.classList.add("on");
 }
 const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
@@ -303,6 +446,7 @@ canvas.addEventListener("pointerup", (e) => {
   const hit = ray.intersectObjects(pick, false)[0];
   hovered = hit ? hit.object.userData.part : null;
   if (hovered) showCard(hovered); else card.classList.remove("on");
+  selectGroup(hovered && groupOf.get(hovered) ? groupOf.get(hovered) : null, false);
 });
 
 // ---- play the week: a day every 1.2 s; the day's trained muscles pulse
@@ -360,7 +504,9 @@ function frame() {
   const needH = H * 1.04 / band, needW = 0.72 * 1.12;
   const dist = Math.max(needH / (2 * Math.tan(vfov / 2)), needW / (2 * Math.tan(vfov / 2) * camera.aspect));
   // shift the view so the band's middle, not the screen's, holds the figure
-  camera.setViewOffset(w, h, 0, (bottom - top) / 2, w, h);
+  // with the panel open on a wide screen, the figure centres in the space left of it
+  const side = panelOpen && w >= 700 ? Math.min(340, w * 0.88) : 0;
+  camera.setViewOffset(w, h, side / 2, (bottom - top) / 2, w, h);
   camera.updateProjectionMatrix();
   return dist;
 }
@@ -384,6 +530,16 @@ function tick() {
   if (window.__freeze) { requestAnimationFrame(tick); return; }   // (the test harness renders single frames)
   const dt = clock.getDelta(), t = clock.elapsedTime;
   if (playing) { playT += dt; const d = Math.min(6, Math.floor(playT / 1.2)); if (d !== day) setDay(d); if (playT > 7.2) stopPlay(); }
+  if (camGoal) {
+    // ease toward the chosen group: target, distance and side
+    const k = 1 - Math.exp(-dt * 5);
+    controls.target.lerp(camGoal.target, k);
+    const off = camera.position.clone().sub(controls.target);
+    const want = new THREE.Vector3(0, 0.08 * camGoal.dist, camGoal.dist * camGoal.facing);
+    off.lerp(want, k);
+    camera.position.copy(controls.target).add(off);
+    if (off.distanceTo(want) < 0.002 && controls.target.distanceTo(camGoal.target) < 0.002) camGoal = null;
+  }
   if (turnTo !== null) {
     // swing round to face front or back
     const off = camera.position.clone().sub(controls.target);
@@ -396,7 +552,7 @@ function tick() {
   }
   // the day's work glows a little, breathing
   const pulse = 0.5 + 0.5 * Math.sin(t * 3.2);
-  const sel = hovered ? new Set(groupOf.has(hovered) ? GROUPS.find(([g]) => g === groupOf.get(hovered))[1] : [hovered]) : null;
+  const sel = selGroup ? new Set(selGroup.parts) : hovered ? new Set([hovered]) : null;
   for (const [b, meshes] of parts) {
     const e = fresh.has(b) ? 0.10 + 0.12 * pulse : 0;
     const lift = sel && sel.has(b) ? (b === hovered ? 0.09 : 0.045) : 0;   // the tapped muscle and its group, lifted
@@ -412,9 +568,10 @@ const got = {}, sizes = {};
 const progress = (k) => (ev) => { got[k] = ev.loaded; if (ev.total) sizes[k] = ev.total;
   const tot = Object.values(sizes).reduce((a, b) => a + b, 0); if (tot) document.getElementById("loading").textContent = `Loading the anatomy · ${Math.min(99, Math.round(100 * Object.values(got).reduce((a, b) => a + b, 0) / tot))}%`; };
 Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.loadAsync("./m/model/skeleton.glb", progress("s")), loader.loadAsync("./m/model/head.glb", progress("h")), fetch("./m/model/manifest.json").then((r) => r.json()),
-  fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog()]).then(([mu, sk, hd, man, exDoc]) => {
-  EXERCISES = exDoc.exercises; GROUPS = exDoc.groups;
-  groupOf = new Map(); for (const [g, list] of GROUPS) for (const p of list) groupOf.set(p, g);
+  fetch("./m/data/exercises.json", { cache: "no-cache" }).then((r) => r.json()), loadLog(), findLatest()]).then(([mu, sk, hd, man, exDoc]) => {
+  EXERCISES = exDoc.exercises;
+  GROUPS = exDoc.regions.flatMap((r) => r.groups.map((g) => ({ region: r.region, name: g.name, view: g.view, parts: g.parts })));
+  groupOf = new Map(); for (const g of GROUPS) for (const p of g.parts) groupOf.set(p, g);
   ORIGINAL = new Map([...man.muscles, ...man.skeleton].map((o) => [sanitize(o.name), o.name]));
   MUSCLE_NAMES = new Set(man.muscles.map((o) => o.name));
   ORIGINAL = new Map([...ORIGINAL, ...man.head.map((o) => [sanitize(o.name), o.name])]);
@@ -425,10 +582,10 @@ Promise.all([loader.loadAsync("./m/model/muscles.glb", progress("m")), loader.lo
   addModel(sk, "skeleton");
   addModel(mu, "muscles");
   const box = new THREE.Box3().setFromObject(mu.scene);
-  H = box.max.y - box.min.y; CY = (box.max.y + box.min.y) / 2;
+  H = box.max.y - box.min.y; CY = (box.max.y + box.min.y) / 2; bodyZ = (box.max.z + box.min.z) / 2;
   const missing = [...new Set(Object.values(EXERCISES).flatMap((e) => [...e.primary, ...e.secondary, ...e.stabilizers]))].filter((p) => !parts.has(p));
   if (missing.length) console.warn("parts not in the atlas:", missing);
-  window.__mm = { sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
+  window.__mm = { selectGroup, setPanel, groups: () => GROUPS, sk: sk.scene, mu: mu.scene, parts, missing, setDay, camera, controls, render: () => composer.render(), turn: (f) => { facing = f; placeCamera(); } };
   document.getElementById("loading").remove();
   placeCamera();
   showWeek();

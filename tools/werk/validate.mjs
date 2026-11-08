@@ -16,7 +16,15 @@ for (const [name, e] of Object.entries(ex.exercises)) {
   }
   if (!["draft", "reviewed"].includes(e.status)) bad(`exercises.json "${name}"`, `status must be "draft" or "reviewed"`);
 }
-for (const [g, list] of ex.groups) for (const m of list) if (!atlas.has(m)) bad(`exercises.json group "${g}"`, `"${m}" is not a muscle in the atlas`);
+const seen = new Map();
+for (const r of ex.regions || []) for (const g of r.groups) for (const m of g.parts) {
+  if (!atlas.has(m)) bad(`exercises.json group "${r.region} / ${g.name}"`, `"${m}" is not a muscle in the atlas`);
+  if (seen.has(m)) bad(`exercises.json group "${g.name}"`, `"${m}" is already in group "${seen.get(m)}"`); else seen.set(m, g.name);
+}
+for (const r of ex.regions || []) for (const g of r.groups) if (!["front", "back"].includes(g.view)) bad(`exercises.json group "${g.name}"`, `"view" must be "front" or "back"`);
+if (!Array.isArray(ex.regions)) bad("exercises.json", `"regions" must be a list`);
+// every muscle an exercise names should be readable in some group
+for (const [name, e] of Object.entries(ex.exercises)) for (const m of [...(e.primary || []), ...(e.secondary || [])]) if (!seen.has(m)) bad(`exercises.json "${name}"`, `"${m}" is in no group`);
 const names = new Set(Object.keys(ex.exercises));
 
 const prof = read("m/data/profile.json");
@@ -35,6 +43,15 @@ for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
   const month = f.slice(0, 7);
   if (doc.month !== month) bad(where0, `"month" must be "${month}"`);
   if (!Array.isArray(doc.entries)) { bad(where0, `"entries" must be a list`); continue; }
+  if (doc.sessions !== undefined) {
+    if (!Array.isArray(doc.sessions)) bad(where0, `"sessions" must be a list`);
+    else doc.sessions.forEach((x, i) => {
+      const w = `${where0} session ${i + 1}${x && x.date ? ` (${x.date})` : ""}`;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(x.date || "") || !x.date.startsWith(month)) bad(w, `"date" must be YYYY-MM-DD in ${month}`);
+      if (x.duration !== undefined && !/^(\d+:)?\d{1,2}:\d{2}(\.\d+)?$/.test(x.duration)) bad(w, `"duration" must be m:ss or h:mm:ss as the watch shows it`);
+      for (const k of ["active_cal", "total_cal"]) if (x[k] !== undefined && !isNum(x[k], 0, 10000)) bad(w, `"${k}" must be a number of kilocalories`);
+    });
+  }
   let last = "";
   doc.entries.forEach((e, i) => {
     const where = `${where0} entry ${i + 1}${e && e.exercise ? ` (${e.date} ${e.exercise})` : ""}`;
