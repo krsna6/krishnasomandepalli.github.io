@@ -44,11 +44,30 @@ not mapped yet, and Claude will add the mapping for Krishna's review.
 { "date": "2026-11-07", "exercise": "Cable crossover", "sets": 3, "reps": 12, "weight_lb": 30, "unmapped": true }
 ```
 
-## 4. His weight
+## 4. Sessions (the watch, or his report)
+
+Alongside `entries`, a month file may hold `sessions`: one per workout day, for what the Apple Watch
+or Krishna reports about the session as a whole. Werk shows them as a light ribbon under each day.
+
+```json
+{ "date": "2026-11-04", "kind": "strength", "summary": "chest", "source": "his Apple Watch photo",
+  "duration": "85:12.63", "active_cal": 523, "total_cal": 638 }
+```
+
+`duration` exactly as the watch shows it (`m:ss` or `h:mm:ss`, decimals allowed); `active_cal` and
+`total_cal` are the workout's kilocalories. Leave out what wasn't shared (never estimate); daily
+activity rings are not workout calories, so put them in `note`, not in these fields.
+
+## 5. Muscle groups
+
+`exercises.json` → `regions` groups the muscles for reading the week (body regions, then the groups
+coaches program, each with the side it is seen from). Don't change `regions`.
+
+## 6. His weight
 
 When Krishna reports a new body weight, update `weight_lb` and `as_of` in `m/data/profile.json`.
 
-## 5. Commit
+## 7. Commit
 
 One commit per logging session, message: `werk: log YYYY-MM-DD (exercise, exercise, …)`.
 A check (`.github/workflows/werk-validate.yml`) runs on every change to `m/data/`; if it fails, its
