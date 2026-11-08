@@ -1,13 +1,4 @@
 {
   "month": "2026-11",
-  "entries": [
-    {
-      "date": "2026-11-04",
-      "exercise": "Flat bench dumbbells",
-      "sets": 1,
-      "reps": 20,
-      "weight_lb": 35,
-      "note": "palms facing inward, weight per hand; reported as one set of 20 (his report)"
-    }
-  ]
+  "entries": []
 }
