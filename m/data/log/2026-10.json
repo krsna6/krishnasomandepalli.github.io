@@ -141,5 +141,108 @@
       "note": "single plate (his report); movement not confirmed - plate halo vs arm-arc around-the-world, mapping pending his clarification",
       "unmapped": true
     }
+  ],
+  "sessions": [
+    {
+      "date": "2026-10-06",
+      "kind": "strength",
+      "summary": "legs: hip thrusts, split squats, leg press, abduction/adduction, leg extension, hanging leg raises, ab pull-downs",
+      "source": "his text report",
+      "note": "exercise numbers partially reported; complete exercises are in entries"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "strength",
+      "summary": "light: abs, bodyweight pull-ups, face pulls",
+      "source": "his text report",
+      "note": "no numbers reported"
+    },
+    {
+      "date": "2026-10-10",
+      "kind": "swim",
+      "summary": "swim lesson",
+      "source": "his text report",
+      "note": "no watch recording shared"
+    },
+    {
+      "date": "2026-10-13",
+      "kind": "strength",
+      "summary": "shoulders",
+      "source": "his Apple Watch photo",
+      "duration": "84:50.94",
+      "active_cal": 606,
+      "total_cal": 721
+    },
+    {
+      "date": "2026-10-15",
+      "kind": "strength",
+      "summary": "back; also a 30-minute swim",
+      "source": "his Apple Watch photo",
+      "duration": "69:36.37",
+      "active_cal": 465,
+      "total_cal": 559,
+      "note": "he said the watch started about 20 minutes late; the swim was not recorded on the watch"
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "strength",
+      "summary": "chest",
+      "source": "his text report",
+      "note": "forgot to wear the watch; he estimated 75-90 minutes"
+    },
+    {
+      "date": "2026-10-19",
+      "kind": "strength",
+      "summary": "legs",
+      "source": "his Apple Watch photo",
+      "duration": "1:38:37",
+      "active_cal": 668,
+      "total_cal": 801
+    },
+    {
+      "date": "2026-10-21",
+      "kind": "strength",
+      "summary": "arms",
+      "source": "his Apple Watch photo",
+      "duration": "1:34:18",
+      "note": "paused-workout screen: no active/total calorie readout; rings showed Move 695/500 cal, Exercise 107/60 min"
+    },
+    {
+      "date": "2026-10-23",
+      "kind": "strength",
+      "summary": "back: 7 exercises, 3 sets each (his report)",
+      "source": "his Apple Watch photo",
+      "duration": "1:38:54",
+      "active_cal": 602,
+      "total_cal": 735
+    },
+    {
+      "date": "2026-10-25",
+      "kind": "strength",
+      "summary": "weighted dips, dumbbell deadlifts, farmer walks",
+      "source": "his Apple Watch photo",
+      "duration": "81:32.04",
+      "active_cal": 534,
+      "total_cal": 644
+    },
+    {
+      "date": "2026-10-27",
+      "kind": "strength",
+      "summary": "shoulders",
+      "source": "his Apple Watch photo",
+      "duration": "1:43:42",
+      "active_cal": 676,
+      "total_cal": 816
+    },
+    {
+      "date": "2026-10-29",
+      "kind": "strength",
+      "summary": "swim lesson + leg day",
+      "source": "his Apple Watch photo",
+      "duration": "1:49:49",
+      "active_cal": 670,
+      "total_cal": 819,
+      "note": "one workout screen as shown; he described the day as swim lesson plus leg day, exercise details never sent"
+    }
   ]
 }

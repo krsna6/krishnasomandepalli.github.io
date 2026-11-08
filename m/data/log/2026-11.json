@@ -1,4 +1,32 @@
 {
   "month": "2026-11",
-  "entries": []
+  "entries": [],
+  "sessions": [
+    {
+      "date": "2026-11-04",
+      "kind": "strength",
+      "summary": "chest",
+      "source": "his Apple Watch photo",
+      "duration": "85:12.63",
+      "active_cal": 523,
+      "total_cal": 638
+    },
+    {
+      "date": "2026-11-05",
+      "kind": "strength",
+      "summary": "back/pull",
+      "source": "his text report",
+      "note": "no workout screen shared; daily rings at the time: Move 554/500 cal, Exercise 87/60 min; exercise details never sent"
+    },
+    {
+      "date": "2026-11-07",
+      "kind": "swim",
+      "summary": "swim lesson",
+      "source": "his Apple Watch photo",
+      "duration": "31:31.17",
+      "active_cal": 61,
+      "total_cal": 104,
+      "note": "pool swim screen: 7 laps, 175 yd"
+    }
+  ]
 }
