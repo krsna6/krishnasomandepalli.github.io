@@ -15,19 +15,22 @@
           "name": "Decline bench press",
           "reported": "45 lb bar; 35 each side 10 reps; 45 each side 10 reps; 50 each side 5-7 reps till failure",
           "in_log": false,
-          "missing": "exact reps on the 50s (5-7)"
+          "missing": "exact reps on the 50s (5-7)",
+          "exercise": "Decline bench press"
         },
         {
           "name": "Incline bench dumbbells",
           "reported": "55 lb each 15-20 reps; 60 lb each 3-5 reps",
           "in_log": false,
-          "missing": "exact reps (ranges)"
+          "missing": "exact reps (ranges)",
+          "exercise": "Incline dumbbell press"
         },
         {
           "name": "Flat bench dumbbells, palms facing inward",
           "reported": "35 lb each, 20 reps",
           "in_log": false,
-          "missing": "set count (20 = one set or total across sets)"
+          "missing": "set count (20 = one set or total across sets)",
+          "exercise": "Flat bench dumbbells"
         },
         {
           "name": "Diagonal pull-downs with tension",
@@ -39,7 +42,8 @@
           "name": "Machine flys",
           "reported": "notch 85x10; 100x10",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": "Machine fly"
         }
       ]
     },
@@ -54,7 +58,10 @@
           "name": "Back/pull day",
           "reported": "'more later' - details never sent",
           "in_log": false,
-          "missing": "exercises, sets, reps, weights"
+          "missing": "exercises, sets, reps, weights",
+          "regions": [
+            "Back"
+          ]
         }
       ]
     },

@@ -153,31 +153,43 @@
         {
           "name": "Hip thrusts (machine hold)",
           "reported": "45x2 plus 45 lb bar: 25 reps with one foot slightly forward, then barely 10 reps with 70x2 (added a 25 plate per side)",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Hip thrusts"
         },
         {
           "name": "Split squats",
           "reported": "35 lb each hand, 15 reps",
           "in_log": false,
-          "missing": "set count"
+          "missing": "set count",
+          "exercise": "Bulgarian split squat"
         },
         {
           "name": "Wide stance lay down leg press",
           "reported": "90 lb each side, 20 reps",
           "in_log": false,
-          "missing": "set count"
+          "missing": "set count",
+          "exercise": "Leg press"
         },
         {
           "name": "Hip abduction and adduction, hip extensions, seated leg extension",
           "reported": "no numbers given",
           "in_log": false,
-          "missing": "sets, reps, weight"
+          "missing": "sets, reps, weight",
+          "exercise": [
+            "Hip abduction machine",
+            "Hip adduction machine",
+            "Leg extension"
+          ]
         },
         {
           "name": "Hanging leg raises and pull-downs (abs)",
           "reported": "no numbers given",
           "in_log": false,
-          "missing": "sets, reps, weight"
+          "missing": "sets, reps, weight",
+          "exercise": [
+            "Hanging leg raise",
+            "Cable crunch"
+          ]
         }
       ]
     },
@@ -192,19 +204,24 @@
           "name": "Abs",
           "reported": "no numbers given",
           "in_log": false,
-          "missing": "sets, reps"
+          "missing": "sets, reps",
+          "groups": [
+            "Abs"
+          ]
         },
         {
           "name": "Bodyweight pull-ups",
           "reported": "a few",
           "in_log": false,
-          "missing": "sets, reps"
+          "missing": "sets, reps",
+          "exercise": "Pull-up"
         },
         {
           "name": "Face pulls",
           "reported": "no numbers given",
           "in_log": false,
-          "missing": "sets, reps, weight"
+          "missing": "sets, reps, weight",
+          "exercise": "Face pull"
         }
       ],
       "his_notes": "Too sore from the day before; said it was not a good back workout."
@@ -236,19 +253,22 @@
         {
           "name": "Single arm shoulder press",
           "reported": "35 lb x 12 warm-up; 45x15; 42.5x5",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Single arm shoulder press"
         },
         {
           "name": "Seated dumbbell raises ('I think they're called Arnold press')",
           "reported": "30x25",
           "in_log": false,
-          "missing": "set split (his AxB convention: reps usually across 4-5 sets)"
+          "missing": "set split (his AxB convention: reps usually across 4-5 sets)",
+          "exercise": "Sitting Arnold"
         },
         {
           "name": "Seated lateral raises",
           "reported": "alternating arms then both arms, 10-15x25",
           "in_log": false,
-          "missing": "exact weight (he gave a range), set split"
+          "missing": "exact weight (he gave a range), set split",
+          "exercise": "Sitting lateral raises"
         },
         {
           "name": "Seated front delt pulls",
@@ -260,19 +280,22 @@
           "name": "Standing lateral raises (posterior delt)",
           "reported": "'good weight'x25 (machine notch)",
           "in_log": false,
-          "missing": "weight in lb (notch), set split"
+          "missing": "weight in lb (notch), set split",
+          "exercise": "Rear delt fly"
         },
         {
           "name": "Rear delt target pulls",
           "reported": "35-40x20",
           "in_log": false,
-          "missing": "exact weight (he gave a range), set split"
+          "missing": "exact weight (he gave a range), set split",
+          "exercise": "Rear delt fly"
         },
         {
           "name": "Shrugs",
           "reported": "heavy, 60-65x15",
           "in_log": false,
-          "missing": "exact weight (he gave a range), set split"
+          "missing": "exact weight (he gave a range), set split",
+          "exercise": "Shrugs"
         },
         {
           "name": "Around-the-head plate circles",
@@ -297,7 +320,10 @@
           "name": "Back workout",
           "reported": "no exercise numbers given",
           "in_log": false,
-          "missing": "exercises, sets, reps, weights"
+          "missing": "exercises, sets, reps, weights",
+          "regions": [
+            "Back"
+          ]
         },
         {
           "name": "Swim",
@@ -319,13 +345,17 @@
           "name": "Slight incline chest press (one notch)",
           "reported": "55 lb each arm, easily 10-15 reps; then about 3 reps with 60 each; finished with 50",
           "in_log": false,
-          "missing": "exact reps per set, set count"
+          "missing": "exact reps per set, set count",
+          "exercise": "Incline dumbbell press"
         },
         {
           "name": "3-4 other chest exercises",
           "reported": "4-5 exercises total, each 25-30 reps till failure",
           "in_log": false,
-          "missing": "exercise names, weights"
+          "missing": "exercise names, weights",
+          "regions": [
+            "Chest"
+          ]
         }
       ],
       "his_notes": "Forgot the watch; estimated 75-90 minutes total."
@@ -343,42 +373,52 @@
           "name": "Bulgarian split squats",
           "reported": "31 total reps per side split into sets; 35 lb 12-rep warm-up, then 45 lb both hands",
           "in_log": false,
-          "missing": "set split"
+          "missing": "set split",
+          "exercise": "Bulgarian split squat"
         },
         {
           "name": "Hip thrusts",
           "reported": "45 bar plus 45 each side; 15 reps as-is, then 15 reps each side with one leg slightly forward, heel tucked up",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Hip thrusts"
         },
         {
           "name": "Kettlebell squats held to chin",
           "reported": "32.5 lb, 25 reps",
           "in_log": false,
-          "missing": "set count"
+          "missing": "set count",
+          "exercise": "Goblet squat"
         },
         {
           "name": "Hip abduction and adduction (machine)",
           "reported": "25 reps each, as high as he can go (notch)",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": [
+            "Hip abduction machine",
+            "Hip adduction machine"
+          ]
         },
         {
           "name": "Leg extension",
           "reported": "'I think it was 80 on the machine notch', 25 reps",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": "Leg extension"
         },
         {
           "name": "Hanging leg fold-ins (abs)",
           "reported": "no numbers given",
           "in_log": false,
-          "missing": "sets, reps"
+          "missing": "sets, reps",
+          "exercise": "Hanging leg raise"
         },
         {
           "name": "Weighted pull-downs (abs)",
           "reported": "75 but machine notch",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": "Cable crunch"
         }
       ]
     },
@@ -394,7 +434,10 @@
           "name": "Arm day",
           "reported": "'more details later' - details never sent",
           "in_log": false,
-          "missing": "exercises, sets, reps, weights"
+          "missing": "exercises, sets, reps, weights",
+          "regions": [
+            "Upper arms"
+          ]
         }
       ]
     },
@@ -411,7 +454,10 @@
           "name": "Back - 7 different exercises (lower, mid, upper)",
           "reported": "3 sets each, 25-30 reps total",
           "in_log": false,
-          "missing": "exercise names, weights, rep split (25-30 range)"
+          "missing": "exercise names, weights, rep split (25-30 range)",
+          "regions": [
+            "Back"
+          ]
         }
       ]
     },
@@ -428,18 +474,21 @@
           "name": "Dips",
           "reported": "25 lb waist weight 20-22 reps, then bodyweight 25 reps",
           "in_log": false,
-          "missing": "exact reps on the weighted set (20-22)"
+          "missing": "exact reps on the weighted set (20-22)",
+          "exercise": "Dips"
         },
         {
           "name": "Dumbbell deadlifts",
           "reported": "35x10; 40x10; 45x15 (weight per hand, confirmed)",
-          "in_log": true
+          "in_log": true,
+          "exercise": "Dumbbell deadlifts"
         },
         {
           "name": "Farmer walks",
           "reported": "35 lb each hand, maybe a total of 150 step pairs",
           "in_log": false,
-          "missing": "exact count ('maybe'), and the log schema has no distance/steps field"
+          "missing": "exact count ('maybe'), and the log schema has no distance/steps field",
+          "exercise": "Farmer walk"
         }
       ],
       "his_notes": "Deadlifts felt challenging after heavy dips; kept form careful."
@@ -472,13 +521,15 @@
           "name": "Standing tension machine rear lateral raises",
           "reported": "notch 10x15; 15x15",
           "in_log": false,
-          "missing": "weight in lb (notch)"
+          "missing": "weight in lb (notch)",
+          "exercise": "Rear delt fly"
         },
         {
           "name": "Very wide hands-facing-in pull-ups",
           "reported": "bodyweight, 10 reps",
           "in_log": false,
-          "missing": "set count"
+          "missing": "set count",
+          "exercise": "Pull-up"
         },
         {
           "name": "Shrugs",
@@ -518,7 +569,12 @@
           "name": "Leg day",
           "reported": "'deets later' - details never sent",
           "in_log": false,
-          "missing": "exercises, sets, reps, weights"
+          "missing": "exercises, sets, reps, weights",
+          "regions": [
+            "Hips",
+            "Thighs",
+            "Lower legs"
+          ]
         }
       ],
       "his_notes": "Weighed in 149.2 lb with a towel on that morning."

@@ -58,6 +58,24 @@ or Krishna reports about the session as a whole. Werk shows them as a light ribb
 `total_cal` are the workout's kilocalories. Leave out what wasn't shared (never estimate); daily
 activity rings are not workout calories, so put them in `note`, not in these fields.
 
+### Exercises he reports without exact sets
+
+A session may list what he did as `exercises`. An item already logged in `entries` has `"in_log": true`.
+An item without exact sets (`"in_log": false`) still shows on the body as **hit**, in one base colour,
+when it is linked to muscles by one of:
+
+| field | meaning |
+|---|---|
+| `exercise` | a name (or list of names) in `exercises.json` → `exercises` |
+| `groups` | group names from `exercises.json` → `regions[].groups[].name` (e.g. `"Abs"`) |
+| `regions` | region names (e.g. `"Back"`) when he only says which part of the body |
+
+```json
+{ "name": "Back, 7 exercises", "reported": "3 sets each", "in_log": false, "missing": "names, weights", "regions": ["Back"] }
+```
+
+Link only what he said; leave an item unlinked if it's unclear which muscles it worked.
+
 ## 5. Muscle groups
 
 `exercises.json` → `regions` groups the muscles for reading the week (body regions, then the groups

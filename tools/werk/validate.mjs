@@ -26,6 +26,8 @@ if (!Array.isArray(ex.regions)) bad("exercises.json", `"regions" must be a list`
 // every muscle an exercise names should be readable in some group
 for (const [name, e] of Object.entries(ex.exercises)) for (const m of [...(e.primary || []), ...(e.secondary || [])]) if (!seen.has(m)) bad(`exercises.json "${name}"`, `"${m}" is in no group`);
 const names = new Set(Object.keys(ex.exercises));
+const groupNames = new Set((ex.regions || []).flatMap((r) => r.groups.map((g) => g.name)));
+const regionNames = new Set((ex.regions || []).map((r) => r.region));
 
 const prof = read("m/data/profile.json");
 for (const k of ["age", "height_in", "weight_lb"]) if (typeof prof[k] !== "number" || prof[k] <= 0) bad("profile.json", `"${k}" must be a positive number`);
@@ -50,6 +52,12 @@ for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(x.date || "") || !x.date.startsWith(month)) bad(w, `"date" must be YYYY-MM-DD in ${month}`);
       if (x.duration !== undefined && !/^(\d+:)?\d{1,2}:\d{2}(\.\d+)?$/.test(x.duration)) bad(w, `"duration" must be m:ss or h:mm:ss as the watch shows it`);
       for (const k of ["active_cal", "total_cal"]) if (x[k] !== undefined && !isNum(x[k], 0, 10000)) bad(w, `"${k}" must be a number of kilocalories`);
+      for (const [j, r] of (x.exercises || []).entries()) {
+        const wr = `${w} reported exercise ${j + 1} (${r.name})`;
+        for (const n of [].concat(r.exercise || [])) if (!names.has(n)) bad(wr, `"exercise" "${n}" is not in exercises.json`);
+        for (const n of [].concat(r.groups || [])) if (!groupNames.has(n)) bad(wr, `"groups" "${n}" is not a group in exercises.json regions`);
+        for (const n of [].concat(r.regions || [])) if (!regionNames.has(n)) bad(wr, `"regions" "${n}" is not a region in exercises.json`);
+      }
     });
   }
   let last = "";
