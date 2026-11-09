@@ -82,6 +82,23 @@
           "in_log": false
         }
       ]
+    },
+    {
+      "date": "2026-11-09",
+      "kind": "strength",
+      "summary": "legs",
+      "source": "his Apple Watch photo",
+      "duration": "1:33:31",
+      "active_cal": 656,
+      "total_cal": 782,
+      "note": "Photo taken mid-workout: the watch was still running at 1:33:31 (heart rate 144 at that moment), so these are the numbers at that point, not final.",
+      "exercises": [
+        {
+          "name": "Leg day",
+          "reported": "details to come later (he said so while still working out)",
+          "in_log": false
+        }
+      ]
     }
   ]
 }
