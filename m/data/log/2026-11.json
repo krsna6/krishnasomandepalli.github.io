@@ -94,9 +94,68 @@
       "note": "Photo taken mid-workout: the watch was still running at 1:33:31 (heart rate 144 at that moment), so these are the numbers at that point, not final.",
       "exercises": [
         {
-          "name": "Leg day",
-          "reported": "details to come later (he said so while still working out)",
-          "in_log": false
+          "name": "Bulgarian alternating leg split squats",
+          "reported": "40x5; 45x15; 5x50",
+          "exercise": "Bulgarian split squat",
+          "in_log": false,
+          "missing": "what '5x50' means (50 lb x 5 reps? written reversed vs his usual); set split of the reps (his AxB convention: B = total reps across usually 4-5 sets)"
+        },
+        {
+          "name": "Weighted hip thrusts",
+          "reported": "45 lb bar plus a 45 plate per side - 40 reps; 25 reps were with alternating one foot slightly forward",
+          "exercise": "Hip thrusts",
+          "in_log": false,
+          "missing": "set split of the 40 reps"
+        },
+        {
+          "name": "Hip hinge deadlift thing (he forgot the name)",
+          "reported": "45 bar, 40x2",
+          "in_log": false,
+          "missing": "the movement's name (he forgot it); what '40x2' means (plates per side? reps x sets?)"
+        },
+        {
+          "name": "Leg extensions",
+          "reported": "85x10, 90 and 100 10 each by notch",
+          "exercise": "Leg extension",
+          "in_log": false,
+          "missing": "weights are machine notch numbers, not lb"
+        },
+        {
+          "name": "Hip adduction and extension (seated)",
+          "reported": "135x20 each",
+          "exercise": [
+            "Hip abduction machine",
+            "Hip adduction machine"
+          ],
+          "in_log": false,
+          "missing": "lb or notch; what 'each' covers (each movement?); whether 'extension' meant abduction; set count"
+        },
+        {
+          "name": "Squats holding the weight down (not goblet; he does not know the name)",
+          "reported": "50 lb, 25 reps",
+          "in_log": false,
+          "missing": "the movement's name (he does not know it); set count"
+        },
+        {
+          "name": "Hanging leg raises (abs)",
+          "reported": "30 reps",
+          "exercise": "Hanging leg raise",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Hanging leg fold ins (abs)",
+          "reported": "30 reps",
+          "exercise": "Hanging leg raise",
+          "in_log": false,
+          "missing": "set count"
+        },
+        {
+          "name": "Rope pull downs (abs), super heavy",
+          "reported": "80 in notch, 30 reps",
+          "exercise": "Cable crunch",
+          "in_log": false,
+          "missing": "weight is machine notch, not lb; set count"
         }
       ]
     }
