@@ -171,9 +171,45 @@
       "note": "Photo taken mid-workout: the watch was still running at 83:38.95 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
       "exercises": [
         {
-          "name": "Arms day",
-          "reported": "details to come later (he said so while still working out)",
-          "in_log": false
+          "name": "Preacher curls on machine, controlled",
+          "reported": "25x10; 40x40",
+          "exercise": "Biceps curl",
+          "in_log": false,
+          "missing": "set split (his AxB convention: B = total reps across usually 4-5 sets); units lb vs machine notch"
+        },
+        {
+          "name": "Bodyweight pull-ups and bicep hang",
+          "reported": "30 reps (pull-ups plus hang combined)",
+          "exercise": "Pull-up",
+          "in_log": false,
+          "missing": "how the 30 splits between pull-ups and the hang; set count"
+        },
+        {
+          "name": "Incline seated hammer curls",
+          "reported": "15x10; 20x30; 25x3",
+          "exercise": "Biceps curl",
+          "in_log": false,
+          "missing": "set splits (his AxB convention)"
+        },
+        {
+          "name": "Triceps machine pull-downs ('weighted extension thing')",
+          "reported": "notch going up 25, 35, 42.5 - 10-15 reps each",
+          "exercise": "Triceps pushdown",
+          "in_log": false,
+          "missing": "weights are machine notch numbers, not lb; exact reps (he gave 10-15); set count per notch level"
+        },
+        {
+          "name": "Standing overhead extension, single arm alternating",
+          "reported": "controlled notch at 10, 40 reps total",
+          "in_log": false,
+          "missing": "overhead triceps extension is not in the exercise map (new exercises are the other agent's to add); weight is notch, not lb; set count"
+        },
+        {
+          "name": "Bench seated dips for triceps, bodyweight",
+          "reported": "50 reps total",
+          "exercise": "Dips",
+          "in_log": false,
+          "missing": "set count"
         }
       ]
     }
