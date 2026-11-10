@@ -108,10 +108,11 @@
           "missing": "set split of the 40 reps"
         },
         {
-          "name": "Hip hinge deadlift thing (he forgot the name)",
+          "name": "Romanian deadlift (his 'hip hinge deadlift thing', named by him Nov 9)",
           "reported": "45 bar, 40x2",
           "in_log": false,
-          "missing": "the movement's name (he forgot it); what '40x2' means (plates per side? reps x sets?)"
+          "missing": "what '40x2' means (plates per side? reps x sets?)",
+          "exercise": "Romanian deadlift"
         },
         {
           "name": "Leg extensions",
@@ -131,10 +132,10 @@
           "missing": "lb or notch; what 'each' covers (each movement?); whether 'extension' meant abduction; set count"
         },
         {
-          "name": "Squats holding the weight down (not goblet; he does not know the name)",
+          "name": "Front squat, single barbell held in front (his words: 'single barbell front')",
           "reported": "50 lb, 25 reps",
           "in_log": false,
-          "missing": "the movement's name (he does not know it); set count"
+          "missing": "front squat is not in the exercise map yet (new exercises are the other agent's to add); set count"
         },
         {
           "name": "Hanging leg raises (abs)",
