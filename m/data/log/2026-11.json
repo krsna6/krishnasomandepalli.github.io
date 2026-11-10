@@ -159,6 +159,23 @@
           "missing": "weight is machine notch, not lb; set count"
         }
       ]
+    },
+    {
+      "date": "2026-11-10",
+      "kind": "strength",
+      "summary": "arms",
+      "source": "his Apple Watch photo",
+      "duration": "83:38.95",
+      "active_cal": 505,
+      "total_cal": 619,
+      "note": "Photo taken mid-workout: the watch was still running at 83:38.95 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
+      "exercises": [
+        {
+          "name": "Arms day",
+          "reported": "details to come later (he said so while still working out)",
+          "in_log": false
+        }
+      ]
     }
   ]
 }
