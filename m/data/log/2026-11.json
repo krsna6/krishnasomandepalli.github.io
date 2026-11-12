@@ -213,6 +213,21 @@
         }
       ],
       "his_notes": "His usual pre-workout warmup (his words Nov 10): 'athleanx has this abs workout app so usually I do like 6-8 mins pre workout warmup' - the AthleanX '6 Pack Promise' app, level 4 setting, ~5-8 min of their rotations."
+    },
+    {
+      "date": "2026-11-12",
+      "kind": "strength",
+      "summary": "back",
+      "source": "his report (no watch photo)",
+      "note": "Self-reported, no watch photo: about 70 minutes total, about 600 kcal (active vs total not specified).",
+      "exercises": [
+        {
+          "name": "Back day",
+          "reported": "no exercise details shared this time",
+          "in_log": false,
+          "missing": "exercises, sets, reps, weights"
+        }
+      ]
     }
   ]
 }
