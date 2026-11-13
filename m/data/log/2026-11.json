@@ -1,6 +1,15 @@
 {
   "month": "2026-11",
-  "entries": [],
+  "entries": [
+    {
+      "date": "2026-11-13",
+      "exercise": "Bench press",
+      "sets": 1,
+      "reps": 15,
+      "weight_lb": 135,
+      "note": "rest-pause, 15 total reps (his report)"
+    }
+  ],
   "sessions": [
     {
       "date": "2026-11-04",
@@ -240,13 +249,33 @@
       "note": "Photo taken mid-workout: the watch was still running at 73:56.89 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
       "exercises": [
         {
-          "name": "Chest day",
-          "reported": "'fewer types of exercises but went heavy' - weights and reps to come",
+          "name": "Low-incline dumbbell press (bench at 1 notch)",
+          "reported": "60 lb each x 10; 65 lb each x 4-5; 55 lb each x 10",
           "in_log": false,
-          "missing": "exercises, weights, reps"
+          "missing": "exact reps on the 65s (reported 4-5)",
+          "exercise": "Incline dumbbell press"
+        },
+        {
+          "name": "Flat barbell bench press",
+          "reported": "135 lb x 15 total reps, rest-pause, one set",
+          "in_log": true,
+          "exercise": "Bench press"
+        },
+        {
+          "name": "High-to-low cable crossover (alternating)",
+          "reported": "12.5 notch x 10 (warm-up); 17.5 notch x 15; 25 reps/side total",
+          "in_log": false,
+          "missing": "weight in lb (notch), exact set count",
+          "exercise": "High-to-low cable fly"
+        },
+        {
+          "name": "Low-to-high supinated plate raise (alternating)",
+          "reported": "10 lb plate x burnout reps (unspecified); the '~10-15 reps/side' is the summarizing agent's estimate, not his count",
+          "in_log": false,
+          "missing": "which movement (a front raise with a plate?), rep count"
         }
       ],
-      "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.'"
+      "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.' Set details above come from a summary he had another agent write; that summary's derived totals, bodyweight percentages and 'target focus' labels are the agent's and are not recorded here as facts."
     }
   ]
 }

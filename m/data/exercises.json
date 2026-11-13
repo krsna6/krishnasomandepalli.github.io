@@ -5,7 +5,8 @@
       "aliases": [
         "barbell bench press",
         "flat bench",
-        "bench"
+        "bench",
+        "flat barbell bench press"
       ],
       "primary": [
         "Sternocostal head of pectoralis major muscle",
@@ -480,7 +481,8 @@
     "Incline dumbbell press": {
       "aliases": [
         "incline bench dumbbells",
-        "incline chest press"
+        "incline chest press",
+        "low-incline dumbbell press"
       ],
       "primary": [
         "Clavicular head of pectoralis major muscle",
