@@ -228,6 +228,25 @@
           "missing": "exercises, sets, reps, weights"
         }
       ]
+    },
+    {
+      "date": "2026-11-13",
+      "kind": "strength",
+      "summary": "chest",
+      "source": "his Apple Watch photo",
+      "duration": "73:56.89",
+      "active_cal": 510,
+      "total_cal": 610,
+      "note": "Photo taken mid-workout: the watch was still running at 73:56.89 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
+      "exercises": [
+        {
+          "name": "Chest day",
+          "reported": "'fewer types of exercises but went heavy' - weights and reps to come",
+          "in_log": false,
+          "missing": "exercises, weights, reps"
+        }
+      ],
+      "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.'"
     }
   ]
 }
