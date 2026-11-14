@@ -276,6 +276,21 @@
         }
       ],
       "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.' Set details above come from a summary he had another agent write; that summary's derived totals, bodyweight percentages and 'target focus' labels are the agent's and are not recorded here as facts."
+    },
+    {
+      "date": "2026-11-14",
+      "kind": "swim",
+      "summary": "swim lesson",
+      "source": "his report",
+      "duration": "30:00",
+      "note": "His words: '30 min swim lesson'. No watch photo this time; no stroke named, so it stays unlinked.",
+      "exercises": [
+        {
+          "name": "Swim lesson",
+          "reported": "30 min, his report; stroke not named",
+          "in_log": false
+        }
+      ]
     }
   ]
 }
