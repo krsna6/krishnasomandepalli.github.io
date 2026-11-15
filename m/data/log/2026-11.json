@@ -291,6 +291,22 @@
           "in_log": false
         }
       ]
+    },
+    {
+      "date": "2026-11-15",
+      "kind": "strength",
+      "summary": "shoulders",
+      "source": "his report",
+      "note": "He sent a running list during the workout; more exercises may follow. No watch photo yet.",
+      "exercises": [
+        {
+          "name": "Alternating standing shoulder press",
+          "reported": "40x9; 50x5; 47.5x3; 45x8 (his running list, in this order)",
+          "in_log": false,
+          "missing": "which mapped exercise ('Standing shoulder press single hand' vs 'Single arm shoulder press'), whether reps are per arm or total, weight per hand assumed but unconfirmed"
+        }
+      ],
+      "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
     }
   ]
 }
