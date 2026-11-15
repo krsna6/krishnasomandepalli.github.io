@@ -330,6 +330,12 @@
           "reported": "12.5 lb in each arm - 'front raises moving into raising arms above bringing it down to a lateral raise' - 24 reps (his description, verbatim)",
           "in_log": false,
           "missing": "which mapped movement(s) this sequence corresponds to, set count, how the 24 reps split across the sequence"
+        },
+        {
+          "name": "Cable extensions (behind-body lateral raises)",
+          "reported": "'lateral raises but behind the body alternating - warmup - 10 notch 12 reps and then 15 notch 20 reps' (his words, verbatim; he designated this a warmup)",
+          "in_log": false,
+          "missing": "which mapped exercise (no cable lateral raise in the map), weight in lb (notch), whether the warmup label covers both sets"
         }
       ],
       "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
