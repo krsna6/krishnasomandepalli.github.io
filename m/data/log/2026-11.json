@@ -22,6 +22,20 @@
         37.5
       ],
       "note": "weight per hand (his report); second set to failure"
+    },
+    {
+      "date": "2026-11-15",
+      "exercise": "Shrugs",
+      "sets": 2,
+      "reps": [
+        10,
+        15
+      ],
+      "weight_lb": [
+        70,
+        75
+      ],
+      "note": "weight in each hand (his words); he called this one heavy"
     }
   ],
   "sessions": [
@@ -311,7 +325,7 @@
       "kind": "strength",
       "summary": "shoulders",
       "source": "his report",
-      "note": "He sent a running list during the workout; more exercises may follow. No watch photo yet.",
+      "note": "He sent a running list during the workout and called the shrugs the last one, so the list is complete. No watch photo this time.",
       "exercises": [
         {
           "name": "Alternating standing shoulder press",
@@ -356,6 +370,12 @@
           "in_log": false,
           "missing": "plate weight, set count",
           "exercise": "Plate halo"
+        },
+        {
+          "name": "Shrugs",
+          "reported": "'went heavy on shrugs - 70 in each arm by 10 and then 75 by 15' (his words, last exercise of the session)",
+          "in_log": true,
+          "exercise": "Shrugs"
         }
       ],
       "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
