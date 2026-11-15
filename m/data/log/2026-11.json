@@ -8,6 +8,20 @@
       "reps": 15,
       "weight_lb": 135,
       "note": "rest-pause, 15 total reps (his report)"
+    },
+    {
+      "date": "2026-11-15",
+      "exercise": "Sitting Arnold",
+      "sets": 2,
+      "reps": [
+        11,
+        8
+      ],
+      "weight_lb": [
+        35,
+        37.5
+      ],
+      "note": "weight per hand (his report); second set to failure"
     }
   ],
   "sessions": [
@@ -304,6 +318,18 @@
           "reported": "40x9; 50x5; 47.5x3; 45x8 (his running list, in this order). His explanation: '47.5x3 was covering for 50 because I didn't want to lose form' - the drop after 50x5 was deliberate form management, not fatigue ordering.",
           "in_log": false,
           "missing": "which mapped exercise ('Standing shoulder press single hand' vs 'Single arm shoulder press'), whether reps are per arm or total, weight per hand assumed but unconfirmed"
+        },
+        {
+          "name": "Arnold press seated",
+          "reported": "35x11; 37.5x8 to failure",
+          "in_log": true,
+          "exercise": "Sitting Arnold"
+        },
+        {
+          "name": "Standing raise sequence",
+          "reported": "12.5 lb in each arm - 'front raises moving into raising arms above bringing it down to a lateral raise' - 24 reps (his description, verbatim)",
+          "in_log": false,
+          "missing": "which mapped movement(s) this sequence corresponds to, set count, how the 24 reps split across the sequence"
         }
       ],
       "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
