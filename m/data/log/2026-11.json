@@ -336,6 +336,19 @@
           "reported": "'lateral raises but behind the body alternating - warmup - 10 notch 12 reps and then 15 notch 20 reps' (his words, verbatim; he designated this a warmup)",
           "in_log": false,
           "missing": "which mapped exercise (no cable lateral raise in the map), weight in lb (notch), whether the warmup label covers both sets"
+        },
+        {
+          "name": "Standing lateral raises",
+          "reported": "20x25 (single AxB pair; per his convention possibly 20 lb per hand, 25 total reps across sets - one set of 25 also possible)",
+          "in_log": false,
+          "missing": "set/rep split; mapping: map only has 'Sitting lateral raises' and his are standing, so left unlinked for review"
+        },
+        {
+          "name": "Dumbbell upright row",
+          "reported": "15x25 (single AxB pair, same split ambiguity; 15 lb per hand assumed)",
+          "in_log": false,
+          "missing": "set/rep split, weight per hand vs total",
+          "exercise": "Upright row"
         }
       ],
       "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
