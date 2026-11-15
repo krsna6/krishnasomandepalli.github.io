@@ -324,8 +324,8 @@
       "date": "2026-11-15",
       "kind": "strength",
       "summary": "shoulders",
-      "source": "his report",
-      "note": "He sent a running list during the workout and called the shrugs the last one, so the list is complete. No watch photo this time.",
+      "source": "his report + Apple Watch photo",
+      "note": "Watch photo at the end shows 1:38:57 elapsed, 625 active cal, 759 total cal, heart rate 101 at that moment (current reading, not labeled average). Exercise list complete per his words ('last one' = shrugs). Calories are watch-reported, not verified expenditure.",
       "exercises": [
         {
           "name": "Alternating standing shoulder press",
@@ -378,7 +378,10 @@
           "exercise": "Shrugs"
         }
       ],
-      "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
+      "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'",
+      "duration": "1:38:57",
+      "active_cal": 625,
+      "total_cal": 759
     }
   ]
 }
