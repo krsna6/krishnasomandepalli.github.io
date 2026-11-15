@@ -349,6 +349,13 @@
           "in_log": false,
           "missing": "set/rep split, weight per hand vs total",
           "exercise": "Upright row"
+        },
+        {
+          "name": "Plate around the world / plate halo",
+          "reported": "15 reps clockwise, 15 reps anti-clockwise (his words; he named it both 'plate around the world' and 'plate halo')",
+          "in_log": false,
+          "missing": "plate weight, set count",
+          "exercise": "Plate halo"
         }
       ],
       "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'"
