@@ -36,6 +36,20 @@
         75
       ],
       "note": "weight in each hand (his words); he called this one heavy"
+    },
+    {
+      "date": "2026-11-16",
+      "exercise": "Dumbbell deadlifts",
+      "sets": 2,
+      "reps": [
+        25,
+        25
+      ],
+      "weight_lb": [
+        45,
+        50
+      ],
+      "note": "weight per hand (his words: '45 each arm'); two-pair set list read as 2 sets of 25"
     }
   ],
   "sessions": [
@@ -382,6 +396,27 @@
       "duration": "1:38:57",
       "active_cal": 625,
       "total_cal": 759
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "strength",
+      "summary": "variety",
+      "source": "his report",
+      "note": "His words: 'Variety exercise day today.' Running list; more exercises may follow.",
+      "exercises": [
+        {
+          "name": "Bodyweight decline ab workout",
+          "reported": "'warmup with a few body weight decline ab workout' (his words, verbatim; he designated it the warmup)",
+          "in_log": false,
+          "missing": "which movement (no bodyweight decline ab exercise in the map), reps/sets"
+        },
+        {
+          "name": "Dumbbell deadlifts",
+          "reported": "45 each arm x25; 50x25",
+          "in_log": true,
+          "exercise": "Dumbbell deadlifts"
+        }
+      ]
     }
   ]
 }
