@@ -50,6 +50,20 @@
         50
       ],
       "note": "weight per hand (his words: '45 each arm'); two-pair set list read as 2 sets of 25"
+    },
+    {
+      "date": "2026-11-16",
+      "exercise": "Calf raise",
+      "sets": 2,
+      "reps": [
+        25,
+        25
+      ],
+      "weight_lb": [
+        35,
+        45
+      ],
+      "note": "seated machine, load per side ('35each', his words)"
     }
   ],
   "sessions": [
@@ -402,7 +416,7 @@
       "kind": "strength",
       "summary": "variety",
       "source": "his report",
-      "note": "His words: 'Variety exercise day today.' Running list; more exercises may follow.",
+      "note": "His words: 'Variety exercise day today.' He called calf raises and farmer walks 'the wrap', so the list is complete. No watch photo this time.",
       "exercises": [
         {
           "name": "Bodyweight decline ab workout",
@@ -415,6 +429,19 @@
           "reported": "45 each arm x25; 50x25",
           "in_log": true,
           "exercise": "Dumbbell deadlifts"
+        },
+        {
+          "name": "Seated machine calf raises",
+          "reported": "35each x25; 45 eachx25 ('each' = per side, his words)",
+          "in_log": true,
+          "exercise": "Calf raise"
+        },
+        {
+          "name": "Farmer walks",
+          "reported": "44 each arm, total of 300 steps (his words)",
+          "in_log": false,
+          "missing": "how the 300 steps split across sets/carry lengths",
+          "exercise": "Farmer walk"
         }
       ]
     }
