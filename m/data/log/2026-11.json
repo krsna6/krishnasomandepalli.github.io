@@ -415,8 +415,8 @@
       "date": "2026-11-16",
       "kind": "strength",
       "summary": "variety",
-      "source": "his report",
-      "note": "His words: 'Variety exercise day today.' He called calf raises and farmer walks 'the wrap', so the list is complete. No watch photo this time.",
+      "source": "his report + Apple Watch photo",
+      "note": "Watch photo after the wrap shows 75:14.39 elapsed, 385 active cal, 487 total cal, heart rate 103 at that moment (current reading, not labeled average). Calories are watch-reported, not verified expenditure. Exercise list complete per his words ('the wrap').",
       "exercises": [
         {
           "name": "Bodyweight decline ab workout",
@@ -443,7 +443,10 @@
           "missing": "how the 300 steps split across sets/carry lengths",
           "exercise": "Farmer walk"
         }
-      ]
+      ],
+      "duration": "75:14.39",
+      "active_cal": 385,
+      "total_cal": 487
     }
   ]
 }
