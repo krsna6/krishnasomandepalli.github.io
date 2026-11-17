@@ -447,6 +447,22 @@
       "duration": "75:14.39",
       "active_cal": 385,
       "total_cal": 487
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "swim",
+      "summary": "swim practice",
+      "source": "his report",
+      "duration": "52:00",
+      "note": "His words: 'Got 52 mins swim practice with flippers and board - didn't do abs today'. No stroke named, so it stays unlinked; no watch photo; abs explicitly skipped.",
+      "his_notes": "Got 52 mins swim practice with flippers and board - didn't do abs today",
+      "exercises": [
+        {
+          "name": "Swim practice",
+          "reported": "52 min with flippers and kickboard, his report; stroke not named",
+          "in_log": false
+        }
+      ]
     }
   ]
 }
