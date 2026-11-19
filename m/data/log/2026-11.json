@@ -498,8 +498,8 @@
       "date": "2026-11-19",
       "kind": "strength",
       "summary": "chest-and-arms day: dips, preacher curls, pushdowns, hammer curls, overhead extensions, triceps dips",
-      "source": "his report",
-      "note": "Sent as 'my workout today so far' - he then reported wrapping up, so the session is complete. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb. Finishers reported later: seated incline lateral hammer curls alternating arm 25x25 (his AxB convention says 25 = total reps across sets; alternating-arm split unknown); overhead triceps extension on cable '10 notch 25' kept verbatim (mapping of numbers unclear); bodyweight triceps dips 10 reps to failure.",
+      "source": "his report + Apple Watch photo",
+      "note": "Sent as 'my workout today so far' - he then reported wrapping up, so the session is complete. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb. Finishers reported later: seated incline lateral hammer curls alternating arm 25x25 (his AxB convention says 25 = total reps across sets; alternating-arm split unknown); overhead triceps extension on cable '10 notch 25' kept verbatim (mapping of numbers unclear); bodyweight triceps dips 10 reps to failure. Watch photo (Traditional Strength Training screen): 1:48:45, 569 active / 716 total cal, heart rate 125 at the moment of the photo (not an average). Watch face showed 21:44 though the photo arrived 11:44am - recorded as displayed, time discrepancy unexplained.",
       "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10. Then wrapped up with seated incline lateral hammer curls alternating arm - 25x25. Overhead tricep extension - cable - 10 notch 25 and then triceps dips body weight 10 reps but to failure",
       "exercises": [
         {
@@ -549,7 +549,10 @@
           "exercise": "Dips",
           "in_log": true
         }
-      ]
+      ],
+      "duration": "1:48:45",
+      "active_cal": 569,
+      "total_cal": 716
     }
   ]
 }
