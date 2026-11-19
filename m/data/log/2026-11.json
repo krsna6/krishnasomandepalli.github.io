@@ -64,6 +64,28 @@
         45
       ],
       "note": "seated machine, load per side ('35each', his words)"
+    },
+    {
+      "date": "2026-11-19",
+      "exercise": "Dips",
+      "sets": 1,
+      "reps": 12,
+      "weight_lb": 0,
+      "note": "bodyweight (his report), listed before the weighted sets"
+    },
+    {
+      "date": "2026-11-19",
+      "exercise": "Dips",
+      "sets": 2,
+      "reps": [
+        10,
+        10
+      ],
+      "weight_lb": [
+        25,
+        35
+      ],
+      "note": "added weight as plate held around chest (his words); 25 lb then 35 lb"
     }
   ],
   "sessions": [
@@ -461,6 +483,44 @@
           "name": "Swim practice",
           "reported": "52 min with flippers and kickboard, his report; stroke not named",
           "in_log": false
+        }
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "strength",
+      "summary": "chest dips, preacher curls, triceps pushdowns (mid-workout report)",
+      "source": "his report",
+      "note": "Sent as 'my workout today so far' - workout may not be finished; more may follow. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb.",
+      "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10",
+      "exercises": [
+        {
+          "name": "Chest dips",
+          "reported": "bodyweight 12 reps; weighted (plate around chest) 25x10; 35x10",
+          "exercise": "Dips",
+          "in_log": true,
+          "missing": "whether the 12 bodyweight reps were a warmup or work set"
+        },
+        {
+          "name": "Preacher curls, single arm",
+          "reported": "25x10",
+          "exercise": "Biceps curl",
+          "in_log": false,
+          "missing": "'preacher curl' is not in the exercise map (new exercises are the other agent's to add); whether 10 reps is per arm or total; set count"
+        },
+        {
+          "name": "Preacher curls, machine",
+          "reported": "50 plate x 25 reps; 60 x 5 reps",
+          "exercise": "Biceps curl",
+          "in_log": false,
+          "missing": "'preacher curl' not in map; units (lb assumed on plate-loaded machine); set count"
+        },
+        {
+          "name": "Triceps pull-downs on machine",
+          "reported": "notches 25x10; 30x10; 35x10; 42.5x10",
+          "exercise": "Triceps pushdown",
+          "in_log": false,
+          "missing": "weights are machine notch numbers, not lb"
         }
       ]
     }
