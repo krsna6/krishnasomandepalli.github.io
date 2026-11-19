@@ -86,6 +86,14 @@
         35
       ],
       "note": "added weight as plate held around chest (his words); 25 lb then 35 lb"
+    },
+    {
+      "date": "2026-11-19",
+      "exercise": "Dips",
+      "sets": 1,
+      "reps": 10,
+      "weight_lb": 0,
+      "note": "triceps dips, bodyweight, to failure (his words); workout finisher"
     }
   ],
   "sessions": [
@@ -489,10 +497,10 @@
     {
       "date": "2026-11-19",
       "kind": "strength",
-      "summary": "chest dips, preacher curls, triceps pushdowns (mid-workout report)",
+      "summary": "chest-and-arms day: dips, preacher curls, pushdowns, hammer curls, overhead extensions, triceps dips",
       "source": "his report",
-      "note": "Sent as 'my workout today so far' - workout may not be finished; more may follow. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb.",
-      "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10",
+      "note": "Sent as 'my workout today so far' - he then reported wrapping up, so the session is complete. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb. Finishers reported later: seated incline lateral hammer curls alternating arm 25x25 (his AxB convention says 25 = total reps across sets; alternating-arm split unknown); overhead triceps extension on cable '10 notch 25' kept verbatim (mapping of numbers unclear); bodyweight triceps dips 10 reps to failure.",
+      "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10. Then wrapped up with seated incline lateral hammer curls alternating arm - 25x25. Overhead tricep extension - cable - 10 notch 25 and then triceps dips body weight 10 reps but to failure",
       "exercises": [
         {
           "name": "Chest dips",
@@ -521,6 +529,25 @@
           "exercise": "Triceps pushdown",
           "in_log": false,
           "missing": "weights are machine notch numbers, not lb"
+        },
+        {
+          "name": "Seated incline lateral hammer curls, alternating arm",
+          "reported": "25x25",
+          "exercise": "Biceps curl",
+          "in_log": false,
+          "missing": "'hammer curl' is not in the exercise map (new exercises are the other agent's to add); whether 25 reps is total or per arm; set count"
+        },
+        {
+          "name": "Overhead triceps extension, cable",
+          "reported": "'10 notch 25' as written",
+          "in_log": false,
+          "missing": "overhead triceps extension is not in the exercise map; which number is the notch and which the reps (kept verbatim rather than guessed); set count"
+        },
+        {
+          "name": "Triceps dips, bodyweight",
+          "reported": "10 reps, to failure",
+          "exercise": "Dips",
+          "in_log": true
         }
       ]
     }
