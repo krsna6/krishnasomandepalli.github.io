@@ -125,7 +125,7 @@
       "sets": 1,
       "reps": 7,
       "weight_lb": 50,
-      "note": "50 lb in each hand, 7 reps TOTAL across both legs (his correction); rear foot on a roller"
+      "note": "50 lb in each hand; his final correction was '7 reps total' - scope of 'total' unresolved (across both legs vs other), kept verbatim; rear foot on a roller"
     }
   ],
   "sessions": [
@@ -591,7 +591,7 @@
       "kind": "strength",
       "summary": "swim lesson + leg day (mid-workout report)",
       "source": "his report",
-      "note": "Sent mid-workout ('still going' on the Bulgarian split squats) - more may follow. Ambiguities kept as reported: hip thrust '80x10' doesn't say whether 80 is per side or total; Bulgarian 45x10 doesn't say whether 10 reps is per leg or total; 50x4 was still in progress when reported. 'Alternating leg slide forward' is not in the exercise map (new exercises are the other agent's to add). Clarified after: hip thrust 80 is per side (205 lb total with the 45 bar); the Bulgarian 50-each-arm set finished at 6 reps each side, replacing the mid-set 50x4. Final correction: the 50-each-arm Bulgarian set was 7 reps TOTAL across both legs (not 6 each side).",
+      "note": "Sent mid-workout ('still going' on the Bulgarian split squats) - more may follow. Ambiguities kept as reported: hip thrust '80x10' doesn't say whether 80 is per side or total; Bulgarian 45x10 doesn't say whether 10 reps is per leg or total; 50x4 was still in progress when reported. 'Alternating leg slide forward' is not in the exercise map (new exercises are the other agent's to add). Clarified after: hip thrust 80 is per side (205 lb total with the 45 bar); the Bulgarian 50-each-arm set finished at 6 reps each side, replacing the mid-set 50x4. Final correction: the 50-each-arm Bulgarian set was 7 reps TOTAL across both legs (not 6 each side). Scope note: the final correction '7 reps total' is kept verbatim; its scope (across both legs or otherwise) is unresolved - it is NOT read as replacing the '6 each side' unit on its own.",
       "his_notes": "Leg day today - swim lesson 30 mins; ab body weight warmup 5 mins. Bar hip thrusts - 45 bar and then each side 45x10; 80x10 (with breaks); alternating leg slide forward 45x10 each side. Bulgarian split squats on a roller thing. Each arm - 45x10; 50x4 still going. Confirmed: the 80 on hip thrusts is per side. Bulgarian: got to 6 reps each side with 50 each arm. Correction: 7 reps total on the Bulgarians (50 each arm)",
       "exercises": [
         {
@@ -621,10 +621,10 @@
         },
         {
           "name": "Bulgarian split squats, rear foot on roller",
-          "reported": "each arm 45x10; then 50 each arm - 7 reps total (his correction)",
+          "reported": "each arm 45x10; then 50 each arm - first reported mid-set at 4, then '6 reps each side', finally corrected to '7 reps total'",
           "exercise": "Bulgarian split squat",
           "in_log": true,
-          "missing": "whether the 10 reps at 45 is per leg or total; 50-set reps are total across both legs, split unknown"
+          "missing": "whether the 10 reps at 45 is per leg or total; final 50-set rep count is '7 reps total' with scope unresolved (total across legs vs another unit), per his last message"
         }
       ]
     }
