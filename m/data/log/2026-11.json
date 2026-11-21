@@ -94,6 +94,22 @@
       "reps": 10,
       "weight_lb": 0,
       "note": "triceps dips, bodyweight, to failure (his words); workout finisher"
+    },
+    {
+      "date": "2026-11-21",
+      "exercise": "Hip thrusts",
+      "sets": 1,
+      "reps": 10,
+      "weight_lb": 135,
+      "note": "45 lb bar plus a 45 lb plate per side = 135 lb total (his numbers)"
+    },
+    {
+      "date": "2026-11-21",
+      "exercise": "Bulgarian split squat",
+      "sets": 1,
+      "reps": 10,
+      "weight_lb": 45,
+      "note": "45 lb in each hand (his words: 'each arm 45x10'); rear foot on a roller; reps per leg vs total not specified"
     }
   ],
   "sessions": [
@@ -553,6 +569,48 @@
       "duration": "1:48:45",
       "active_cal": 569,
       "total_cal": 716
+    },
+    {
+      "date": "2026-11-21",
+      "kind": "strength",
+      "summary": "swim lesson + leg day (mid-workout report)",
+      "source": "his report",
+      "note": "Sent mid-workout ('still going' on the Bulgarian split squats) - more may follow. Ambiguities kept as reported: hip thrust '80x10' doesn't say whether 80 is per side or total; Bulgarian 45x10 doesn't say whether 10 reps is per leg or total; 50x4 was still in progress when reported. 'Alternating leg slide forward' is not in the exercise map (new exercises are the other agent's to add).",
+      "his_notes": "Leg day today - swim lesson 30 mins; ab body weight warmup 5 mins. Bar hip thrusts - 45 bar and then each side 45x10; 80x10 (with breaks); alternating leg slide forward 45x10 each side. Bulgarian split squats on a roller thing. Each arm - 45x10; 50x4 still going",
+      "exercises": [
+        {
+          "name": "Swim lesson",
+          "reported": "30 min",
+          "in_log": false,
+          "missing": "stroke not named, so it stays unlinked; no watch numbers"
+        },
+        {
+          "name": "Ab bodyweight warmup",
+          "reported": "5 min",
+          "in_log": false,
+          "missing": "exercises not named"
+        },
+        {
+          "name": "Bar hip thrusts",
+          "reported": "45 lb bar, then each side 45 x10; 80x10 (with breaks)",
+          "exercise": "Hip thrusts",
+          "in_log": true,
+          "missing": "whether the 80 is per side or total weight; set count for the 80"
+        },
+        {
+          "name": "Alternating leg slide forward",
+          "reported": "45x10 each side",
+          "in_log": false,
+          "missing": "not in the exercise map; what the 45 is (dumbbell per hand assumed but not stated)"
+        },
+        {
+          "name": "Bulgarian split squats, rear foot on roller",
+          "reported": "each arm 45x10; 50x4 still going",
+          "exercise": "Bulgarian split squat",
+          "in_log": true,
+          "missing": "whether 10 reps is per leg or total; the 50x4 set was still in progress at report time"
+        }
+      ]
     }
   ]
 }
