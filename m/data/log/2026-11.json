@@ -689,21 +689,22 @@
     },
     {
       "date": "2026-11-22",
-      "kind": "unknown",
-      "summary": "workout reported by watch photo only, details not yet sent",
-      "source": "his Apple Watch photo",
+      "kind": "strength",
+      "summary": "back day",
+      "source": "his report + Apple Watch photo",
       "duration": "1:29:07",
       "active_cal": 474,
       "total_cal": 594,
-      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. Workout type and exercises unknown - he hasn't sent details; session recorded as possibly finished, type not assumed.",
+      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. His words: 'Smashed out my back day' - back day, finished-sounding, but no exercise details sent yet.",
       "exercises": [
         {
-          "name": "Unknown workout",
-          "reported": "watch numbers only, no exercise details sent",
+          "name": "Back day",
+          "reported": "'smashed out my back day' - no exercises or numbers sent yet",
           "in_log": false,
-          "missing": "workout type, exercises, sets, reps, weights"
+          "missing": "exercises, sets, reps, weights"
         }
-      ]
+      ],
+      "his_notes": "Smashed out my back day"
     }
   ]
 }
