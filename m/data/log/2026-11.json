@@ -690,21 +690,59 @@
     {
       "date": "2026-11-22",
       "kind": "strength",
-      "summary": "back day",
+      "summary": "back day: pull-ups, lat pulldowns, chest-supported rows, wide/close pulldowns and rows, prone Y-W, shrugs",
       "source": "his report + Apple Watch photo",
       "duration": "1:29:07",
       "active_cal": 474,
       "total_cal": 594,
-      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. His words: 'Smashed out my back day' - back day, finished-sounding, but no exercise details sent yet.",
+      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. His words: 'Smashed out my back day' - back day, finished-sounding, details sent ~15 min later. Ambiguities kept as reported: 'single arm lay pulldowns' read as lat pulldowns, units (lb vs notch) unstated and 10 reps per arm vs total unknown; chest-supported row name is his guess ('I think that's what it's called'), units unstated; 'we each 10' read as 10 reps at each notch; 'close arm rows' kept as written (likely close-grip); shrugs called heavy with no load or reps.",
       "exercises": [
         {
-          "name": "Back day",
-          "reported": "'smashed out my back day' - no exercises or numbers sent yet",
+          "name": "Bodyweight pull-ups and holds",
+          "reported": "30 reps total",
+          "exercise": "Pull-up",
           "in_log": false,
-          "missing": "exercises, sets, reps, weights"
+          "missing": "how the 30 splits between pull-ups and holds; set count"
+        },
+        {
+          "name": "Single-arm lat pulldowns, cable",
+          "reported": "25x10; 35x10; 50x10",
+          "in_log": false,
+          "missing": "not in the exercise map (new exercises are the other agent's to add); units (lb vs notch); whether 10 reps is per arm or total"
+        },
+        {
+          "name": "Chest-supported upper back row (his name guess)",
+          "reported": "70x10; 90x10",
+          "in_log": false,
+          "missing": "not in the exercise map; units unstated; set count"
+        },
+        {
+          "name": "Seated wide lat pulldowns",
+          "reported": "30 reps: 10 each at notch 80, 100, 120",
+          "in_log": false,
+          "missing": "weights are machine notches, not lb"
+        },
+        {
+          "name": "Close arm rows",
+          "reported": "same sets and reps as the wide pulldowns (10 each at notch 80, 100, 120)",
+          "in_log": false,
+          "missing": "not in the exercise map; notch units; kept his wording (likely close-grip)"
+        },
+        {
+          "name": "Prone incline Y-W raises ('little muscles in the back')",
+          "reported": "a few, no numbers",
+          "in_log": false,
+          "missing": "not in the exercise map; sets, reps, weight"
+        },
+        {
+          "name": "Close arm delt shrugs, heavy",
+          "reported": "no numbers",
+          "exercise": "Shrugs",
+          "in_log": false,
+          "missing": "load, reps, sets"
         }
       ],
-      "his_notes": "Smashed out my back day"
+      "his_notes": "Smashed out my back day. Body weight pull up and holds 30 reps total; single arm lay pulldowns - extension cable machine - 25x10; 35x10; 50x10. Chest supported upper back row I think that's what it's called - 70x10; 90x10. Seated wide lat pullbacks - 30 reps, we each 10 of 80, 100 and 120 notch on machine; same sets and reps for close arm rows. Few other strengthening exercises for little muscle in the back by face down on an incline and doing Y W etc. Heavy close arm delt shrugs"
     }
   ]
 }
