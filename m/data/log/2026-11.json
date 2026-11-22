@@ -686,6 +686,24 @@
       "duration": "2:04:47",
       "active_cal": 789,
       "total_cal": 957
+    },
+    {
+      "date": "2026-11-22",
+      "kind": "unknown",
+      "summary": "workout reported by watch photo only, details not yet sent",
+      "source": "his Apple Watch photo",
+      "duration": "1:29:07",
+      "active_cal": 474,
+      "total_cal": 594,
+      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. Workout type and exercises unknown - he hasn't sent details; session recorded as possibly finished, type not assumed.",
+      "exercises": [
+        {
+          "name": "Unknown workout",
+          "reported": "watch numbers only, no exercise details sent",
+          "in_log": false,
+          "missing": "workout type, exercises, sets, reps, weights"
+        }
+      ]
     }
   ]
 }
