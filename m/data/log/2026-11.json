@@ -1,764 +1,785 @@
 {
-  "month": "2026-11",
-  "entries": [
+ "month": "2026-11",
+ "entries": [
+  {
+   "date": "2026-11-13",
+   "exercise": "Bench press",
+   "sets": 1,
+   "reps": 15,
+   "weight_lb": 135,
+   "note": "rest-pause, 15 total reps (his report)"
+  },
+  {
+   "date": "2026-11-15",
+   "exercise": "Sitting Arnold",
+   "sets": 2,
+   "reps": [
+    11,
+    8
+   ],
+   "weight_lb": [
+    35,
+    37.5
+   ],
+   "note": "weight per hand (his report); second set to failure"
+  },
+  {
+   "date": "2026-11-15",
+   "exercise": "Shrugs",
+   "sets": 2,
+   "reps": [
+    10,
+    15
+   ],
+   "weight_lb": [
+    70,
+    75
+   ],
+   "note": "weight in each hand (his words); he called this one heavy"
+  },
+  {
+   "date": "2026-11-16",
+   "exercise": "Dumbbell deadlifts",
+   "sets": 2,
+   "reps": [
+    25,
+    25
+   ],
+   "weight_lb": [
+    45,
+    50
+   ],
+   "note": "weight per hand (his words: '45 each arm'); two-pair set list read as 2 sets of 25"
+  },
+  {
+   "date": "2026-11-16",
+   "exercise": "Calf raise",
+   "sets": 2,
+   "reps": [
+    25,
+    25
+   ],
+   "weight_lb": [
+    35,
+    45
+   ],
+   "note": "seated machine, load per side ('35each', his words)"
+  },
+  {
+   "date": "2026-11-19",
+   "exercise": "Dips",
+   "sets": 1,
+   "reps": 12,
+   "weight_lb": 0,
+   "note": "bodyweight (his report), listed before the weighted sets"
+  },
+  {
+   "date": "2026-11-19",
+   "exercise": "Dips",
+   "sets": 2,
+   "reps": [
+    10,
+    10
+   ],
+   "weight_lb": [
+    25,
+    35
+   ],
+   "note": "added weight as plate held around chest (his words); 25 lb then 35 lb"
+  },
+  {
+   "date": "2026-11-19",
+   "exercise": "Dips",
+   "sets": 1,
+   "reps": 10,
+   "weight_lb": 0,
+   "note": "triceps dips, bodyweight, to failure (his words); workout finisher"
+  },
+  {
+   "date": "2026-11-21",
+   "exercise": "Hip thrusts",
+   "sets": 1,
+   "reps": 10,
+   "weight_lb": 135,
+   "note": "45 lb bar plus a 45 lb plate per side = 135 lb total (his numbers)"
+  },
+  {
+   "date": "2026-11-21",
+   "exercise": "Bulgarian split squat",
+   "sets": 1,
+   "reps": 10,
+   "weight_lb": 45,
+   "note": "45 lb in each hand (his words: 'each arm 45x10'); rear foot on a roller; reps per leg vs total not specified"
+  },
+  {
+   "date": "2026-11-21",
+   "exercise": "Hip thrusts",
+   "sets": 1,
+   "reps": 10,
+   "weight_lb": 205,
+   "note": "45 lb bar plus 80 lb per side (he confirmed per side); heaviest hip thrust load logged"
+  },
+  {
+   "date": "2026-11-21",
+   "exercise": "Bulgarian split squat",
+   "sets": 1,
+   "reps": 7,
+   "weight_lb": 50,
+   "note": "50 lb in each hand; his final correction was '7 reps total' - scope of 'total' unresolved (across both legs vs other), kept verbatim; rear foot on a roller"
+  },
+  {
+   "date": "2026-11-21",
+   "exercise": "Goblet squat",
+   "sets": 1,
+   "reps": 20,
+   "weight_lb": 35,
+   "note": "kettlebell; he corrected 30 lb to 35 lb"
+  },
+  {
+   "date": "2026-11-23",
+   "exercise": "Sitting Arnold",
+   "sets": 1,
+   "reps": 12,
+   "weight_lb": 30,
+   "note": "warm-up (his word); weight per dumbbell; his AxB notation, set count not specified"
+  },
+  {
+   "date": "2026-11-23",
+   "exercise": "Sitting Arnold",
+   "sets": 1,
+   "reps": 20,
+   "weight_lb": 40,
+   "note": "weight per dumbbell; his AxB notation, set count not specified"
+  }
+ ],
+ "sessions": [
+  {
+   "date": "2026-11-04",
+   "kind": "strength",
+   "summary": "chest",
+   "source": "his Apple Watch photo",
+   "duration": "85:12.63",
+   "active_cal": 523,
+   "total_cal": 638,
+   "exercises": [
     {
-      "date": "2026-11-13",
-      "exercise": "Bench press",
-      "sets": 1,
-      "reps": 15,
-      "weight_lb": 135,
-      "note": "rest-pause, 15 total reps (his report)"
+     "name": "Decline bench press",
+     "reported": "45 lb bar; 35 each side 10 reps; 45 each side 10 reps; 50 each side 5-7 reps till failure",
+     "in_log": false,
+     "missing": "exact reps on the 50s (5-7)",
+     "exercise": "Decline bench press"
     },
     {
-      "date": "2026-11-15",
-      "exercise": "Sitting Arnold",
-      "sets": 2,
-      "reps": [
-        11,
-        8
-      ],
-      "weight_lb": [
-        35,
-        37.5
-      ],
-      "note": "weight per hand (his report); second set to failure"
+     "name": "Incline bench dumbbells",
+     "reported": "55 lb each 15-20 reps; 60 lb each 3-5 reps",
+     "in_log": false,
+     "missing": "exact reps (ranges)",
+     "exercise": "Incline dumbbell press"
     },
     {
-      "date": "2026-11-15",
-      "exercise": "Shrugs",
-      "sets": 2,
-      "reps": [
-        10,
-        15
-      ],
-      "weight_lb": [
-        70,
-        75
-      ],
-      "note": "weight in each hand (his words); he called this one heavy"
+     "name": "Flat bench dumbbells, palms facing inward",
+     "reported": "35 lb each, 20 reps",
+     "in_log": false,
+     "missing": "set count (20 = one set or total across sets)",
+     "exercise": "Flat bench dumbbells"
     },
     {
-      "date": "2026-11-16",
-      "exercise": "Dumbbell deadlifts",
-      "sets": 2,
-      "reps": [
-        25,
-        25
-      ],
-      "weight_lb": [
-        45,
-        50
-      ],
-      "note": "weight per hand (his words: '45 each arm'); two-pair set list read as 2 sets of 25"
+     "name": "Diagonal pull-downs with tension",
+     "reported": "notch 10x12; 20x10",
+     "in_log": false,
+     "missing": "weight in lb (notch)",
+     "exercise": "High-to-low cable fly"
     },
     {
-      "date": "2026-11-16",
-      "exercise": "Calf raise",
-      "sets": 2,
-      "reps": [
-        25,
-        25
-      ],
-      "weight_lb": [
-        35,
-        45
-      ],
-      "note": "seated machine, load per side ('35each', his words)"
-    },
-    {
-      "date": "2026-11-19",
-      "exercise": "Dips",
-      "sets": 1,
-      "reps": 12,
-      "weight_lb": 0,
-      "note": "bodyweight (his report), listed before the weighted sets"
-    },
-    {
-      "date": "2026-11-19",
-      "exercise": "Dips",
-      "sets": 2,
-      "reps": [
-        10,
-        10
-      ],
-      "weight_lb": [
-        25,
-        35
-      ],
-      "note": "added weight as plate held around chest (his words); 25 lb then 35 lb"
-    },
-    {
-      "date": "2026-11-19",
-      "exercise": "Dips",
-      "sets": 1,
-      "reps": 10,
-      "weight_lb": 0,
-      "note": "triceps dips, bodyweight, to failure (his words); workout finisher"
-    },
-    {
-      "date": "2026-11-21",
-      "exercise": "Hip thrusts",
-      "sets": 1,
-      "reps": 10,
-      "weight_lb": 135,
-      "note": "45 lb bar plus a 45 lb plate per side = 135 lb total (his numbers)"
-    },
-    {
-      "date": "2026-11-21",
-      "exercise": "Bulgarian split squat",
-      "sets": 1,
-      "reps": 10,
-      "weight_lb": 45,
-      "note": "45 lb in each hand (his words: 'each arm 45x10'); rear foot on a roller; reps per leg vs total not specified"
-    },
-    {
-      "date": "2026-11-21",
-      "exercise": "Hip thrusts",
-      "sets": 1,
-      "reps": 10,
-      "weight_lb": 205,
-      "note": "45 lb bar plus 80 lb per side (he confirmed per side); heaviest hip thrust load logged"
-    },
-    {
-      "date": "2026-11-21",
-      "exercise": "Bulgarian split squat",
-      "sets": 1,
-      "reps": 7,
-      "weight_lb": 50,
-      "note": "50 lb in each hand; his final correction was '7 reps total' - scope of 'total' unresolved (across both legs vs other), kept verbatim; rear foot on a roller"
-    },
-    {
-      "date": "2026-11-21",
-      "exercise": "Goblet squat",
-      "sets": 1,
-      "reps": 20,
-      "weight_lb": 35,
-      "note": "kettlebell; he corrected 30 lb to 35 lb"
+     "name": "Machine flys",
+     "reported": "notch 85x10; 100x10",
+     "in_log": false,
+     "missing": "weight in lb (notch)",
+     "exercise": "Machine fly"
     }
-  ],
-  "sessions": [
+   ]
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "strength",
+   "summary": "back/pull",
+   "source": "his text report",
+   "note": "no workout screen shared; daily rings at the time: Move 554/500 cal, Exercise 87/60 min; exercise details never sent",
+   "exercises": [
     {
-      "date": "2026-11-04",
-      "kind": "strength",
-      "summary": "chest",
-      "source": "his Apple Watch photo",
-      "duration": "85:12.63",
-      "active_cal": 523,
-      "total_cal": 638,
-      "exercises": [
-        {
-          "name": "Decline bench press",
-          "reported": "45 lb bar; 35 each side 10 reps; 45 each side 10 reps; 50 each side 5-7 reps till failure",
-          "in_log": false,
-          "missing": "exact reps on the 50s (5-7)",
-          "exercise": "Decline bench press"
-        },
-        {
-          "name": "Incline bench dumbbells",
-          "reported": "55 lb each 15-20 reps; 60 lb each 3-5 reps",
-          "in_log": false,
-          "missing": "exact reps (ranges)",
-          "exercise": "Incline dumbbell press"
-        },
-        {
-          "name": "Flat bench dumbbells, palms facing inward",
-          "reported": "35 lb each, 20 reps",
-          "in_log": false,
-          "missing": "set count (20 = one set or total across sets)",
-          "exercise": "Flat bench dumbbells"
-        },
-        {
-          "name": "Diagonal pull-downs with tension",
-          "reported": "notch 10x12; 20x10",
-          "in_log": false,
-          "missing": "weight in lb (notch)",
-          "exercise": "High-to-low cable fly"
-        },
-        {
-          "name": "Machine flys",
-          "reported": "notch 85x10; 100x10",
-          "in_log": false,
-          "missing": "weight in lb (notch)",
-          "exercise": "Machine fly"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-05",
-      "kind": "strength",
-      "summary": "back/pull",
-      "source": "his text report",
-      "note": "no workout screen shared; daily rings at the time: Move 554/500 cal, Exercise 87/60 min; exercise details never sent",
-      "exercises": [
-        {
-          "name": "Back/pull day",
-          "reported": "'more later' - details never sent",
-          "in_log": false,
-          "missing": "exercises, sets, reps, weights",
-          "regions": [
-            "Back"
-          ]
-        }
-      ]
-    },
-    {
-      "date": "2026-11-07",
-      "kind": "swim",
-      "summary": "swim lesson",
-      "source": "his Apple Watch photo",
-      "duration": "31:31.17",
-      "active_cal": 61,
-      "total_cal": 104,
-      "note": "pool swim screen: 7 laps, 175 yd",
-      "exercises": [
-        {
-          "name": "Swim lesson",
-          "reported": "pool swim on watch: 7 laps, 175 yd",
-          "in_log": false
-        }
-      ]
-    },
-    {
-      "date": "2026-11-09",
-      "kind": "strength",
-      "summary": "legs",
-      "source": "his Apple Watch photo",
-      "duration": "1:33:31",
-      "active_cal": 656,
-      "total_cal": 782,
-      "note": "Photo taken mid-workout: the watch was still running at 1:33:31 (heart rate 144 at that moment), so these are the numbers at that point, not final.",
-      "exercises": [
-        {
-          "name": "Bulgarian alternating leg split squats",
-          "reported": "40x5; 45x15; 5x50",
-          "exercise": "Bulgarian split squat",
-          "in_log": false,
-          "missing": "what '5x50' means (50 lb x 5 reps? written reversed vs his usual); set split of the reps (his AxB convention: B = total reps across usually 4-5 sets)"
-        },
-        {
-          "name": "Weighted hip thrusts",
-          "reported": "45 lb bar plus a 45 plate per side - 40 reps; 25 reps were with alternating one foot slightly forward",
-          "exercise": "Hip thrusts",
-          "in_log": false,
-          "missing": "set split of the 40 reps"
-        },
-        {
-          "name": "Romanian deadlift (his 'hip hinge deadlift thing', named by him Nov 9)",
-          "reported": "45 bar, 40x2",
-          "in_log": false,
-          "missing": "what '40x2' means (plates per side? reps x sets?)",
-          "exercise": "Romanian deadlift"
-        },
-        {
-          "name": "Leg extensions",
-          "reported": "85x10, 90 and 100 10 each by notch",
-          "exercise": "Leg extension",
-          "in_log": false,
-          "missing": "weights are machine notch numbers, not lb"
-        },
-        {
-          "name": "Hip adduction and extension (seated)",
-          "reported": "135x20 each",
-          "exercise": [
-            "Hip abduction machine",
-            "Hip adduction machine"
-          ],
-          "in_log": false,
-          "missing": "lb or notch; what 'each' covers (each movement?); whether 'extension' meant abduction; set count"
-        },
-        {
-          "name": "Front squat, single barbell held in front (his words: 'single barbell front')",
-          "reported": "50 lb, 25 reps",
-          "in_log": false,
-          "missing": "front squat is not in the exercise map yet (new exercises are the other agent's to add); set count"
-        },
-        {
-          "name": "Hanging leg raises (abs)",
-          "reported": "30 reps",
-          "exercise": "Hanging leg raise",
-          "in_log": false,
-          "missing": "set count"
-        },
-        {
-          "name": "Hanging leg fold ins (abs)",
-          "reported": "30 reps",
-          "exercise": "Hanging leg raise",
-          "in_log": false,
-          "missing": "set count"
-        },
-        {
-          "name": "Rope pull downs (abs), super heavy",
-          "reported": "80 in notch, 30 reps",
-          "exercise": "Cable crunch",
-          "in_log": false,
-          "missing": "weight is machine notch, not lb; set count"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-10",
-      "kind": "strength",
-      "summary": "arms",
-      "source": "his Apple Watch photo",
-      "duration": "83:38.95",
-      "active_cal": 505,
-      "total_cal": 619,
-      "note": "Photo taken mid-workout: the watch was still running at 83:38.95 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
-      "exercises": [
-        {
-          "name": "Preacher curls on machine, controlled",
-          "reported": "25x10; 40x40",
-          "exercise": "Biceps curl",
-          "in_log": false,
-          "missing": "set split (his AxB convention: B = total reps across usually 4-5 sets); units lb vs machine notch"
-        },
-        {
-          "name": "Bodyweight pull-ups and bicep hang",
-          "reported": "30 reps (pull-ups plus hang combined)",
-          "exercise": "Pull-up",
-          "in_log": false,
-          "missing": "how the 30 splits between pull-ups and the hang; set count"
-        },
-        {
-          "name": "Incline seated hammer curls",
-          "reported": "15x10; 20x30; 25x3",
-          "exercise": "Biceps curl",
-          "in_log": false,
-          "missing": "set splits (his AxB convention)"
-        },
-        {
-          "name": "Triceps machine pull-downs ('weighted extension thing')",
-          "reported": "notch going up 25, 35, 42.5 - 10-15 reps each",
-          "exercise": "Triceps pushdown",
-          "in_log": false,
-          "missing": "weights are machine notch numbers, not lb; exact reps (he gave 10-15); set count per notch level"
-        },
-        {
-          "name": "Standing overhead extension, single arm alternating",
-          "reported": "controlled notch at 10, 40 reps total",
-          "in_log": false,
-          "missing": "overhead triceps extension is not in the exercise map (new exercises are the other agent's to add); weight is notch, not lb; set count"
-        },
-        {
-          "name": "Bench seated dips for triceps, bodyweight",
-          "reported": "50 reps total",
-          "exercise": "Dips",
-          "in_log": false,
-          "missing": "set count"
-        }
-      ],
-      "his_notes": "His usual pre-workout warmup (his words Nov 10): 'athleanx has this abs workout app so usually I do like 6-8 mins pre workout warmup' - the AthleanX '6 Pack Promise' app, level 4 setting, ~5-8 min of their rotations."
-    },
-    {
-      "date": "2026-11-12",
-      "kind": "strength",
-      "summary": "back",
-      "source": "his report (no watch photo)",
-      "note": "Self-reported, no watch photo: about 70 minutes total, about 600 kcal (active vs total not specified).",
-      "exercises": [
-        {
-          "name": "Back day",
-          "reported": "no exercise details shared this time",
-          "in_log": false,
-          "missing": "exercises, sets, reps, weights"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-13",
-      "kind": "strength",
-      "summary": "chest",
-      "source": "his Apple Watch photo",
-      "duration": "73:56.89",
-      "active_cal": 510,
-      "total_cal": 610,
-      "note": "Photo taken mid-workout: the watch was still running at 73:56.89 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
-      "exercises": [
-        {
-          "name": "Low-incline dumbbell press (bench at 1 notch)",
-          "reported": "60 lb each x 10; 65 lb each x 4-5; 55 lb each x 10",
-          "in_log": false,
-          "missing": "exact reps on the 65s (reported 4-5)",
-          "exercise": "Incline dumbbell press"
-        },
-        {
-          "name": "Flat barbell bench press",
-          "reported": "135 lb x 15 total reps, rest-pause, one set",
-          "in_log": true,
-          "exercise": "Bench press"
-        },
-        {
-          "name": "High-to-low cable crossover (alternating)",
-          "reported": "12.5 notch x 10 (warm-up); 17.5 notch x 15; 25 reps/side total",
-          "in_log": false,
-          "missing": "weight in lb (notch), exact set count",
-          "exercise": "High-to-low cable fly"
-        },
-        {
-          "name": "Low-to-high supinated plate raise (alternating)",
-          "reported": "10 lb plate x burnout reps (unspecified); the '~10-15 reps/side' is the summarizing agent's estimate, not his count",
-          "in_log": false,
-          "missing": "which movement (a front raise with a plate?), rep count"
-        }
-      ],
-      "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.' Set details above come from a summary he had another agent write; that summary's derived totals, bodyweight percentages and 'target focus' labels are the agent's and are not recorded here as facts."
-    },
-    {
-      "date": "2026-11-14",
-      "kind": "swim",
-      "summary": "swim lesson",
-      "source": "his report",
-      "duration": "30:00",
-      "note": "His words: '30 min swim lesson'. No watch photo this time; no stroke named, so it stays unlinked.",
-      "exercises": [
-        {
-          "name": "Swim lesson",
-          "reported": "30 min, his report; stroke not named",
-          "in_log": false
-        }
-      ]
-    },
-    {
-      "date": "2026-11-15",
-      "kind": "strength",
-      "summary": "shoulders",
-      "source": "his report + Apple Watch photo",
-      "note": "Watch photo at the end shows 1:38:57 elapsed, 625 active cal, 759 total cal, heart rate 101 at that moment (current reading, not labeled average). Exercise list complete per his words ('last one' = shrugs). Calories are watch-reported, not verified expenditure.",
-      "exercises": [
-        {
-          "name": "Alternating standing shoulder press",
-          "reported": "40x9; 50x5; 47.5x3; 45x8 (his running list, in this order). His explanation: '47.5x3 was covering for 50 because I didn't want to lose form' - the drop after 50x5 was deliberate form management, not fatigue ordering.",
-          "in_log": false,
-          "missing": "which mapped exercise ('Standing shoulder press single hand' vs 'Single arm shoulder press'), whether reps are per arm or total, weight per hand assumed but unconfirmed"
-        },
-        {
-          "name": "Arnold press seated",
-          "reported": "35x11; 37.5x8 to failure",
-          "in_log": true,
-          "exercise": "Sitting Arnold"
-        },
-        {
-          "name": "Standing raise sequence",
-          "reported": "12.5 lb in each arm - 'front raises moving into raising arms above bringing it down to a lateral raise' - 24 reps (his description, verbatim)",
-          "in_log": false,
-          "missing": "which mapped movement(s) this sequence corresponds to, set count, how the 24 reps split across the sequence"
-        },
-        {
-          "name": "Cable extensions (behind-body lateral raises)",
-          "reported": "'lateral raises but behind the body alternating - warmup - 10 notch 12 reps and then 15 notch 20 reps' (his words, verbatim; he designated this a warmup)",
-          "in_log": false,
-          "missing": "which mapped exercise (no cable lateral raise in the map), weight in lb (notch), whether the warmup label covers both sets"
-        },
-        {
-          "name": "Standing lateral raises",
-          "reported": "20x25 (single AxB pair; per his convention possibly 20 lb per hand, 25 total reps across sets - one set of 25 also possible)",
-          "in_log": false,
-          "missing": "set/rep split; mapping: map only has 'Sitting lateral raises' and his are standing, so left unlinked for review"
-        },
-        {
-          "name": "Dumbbell upright row",
-          "reported": "15x25 (single AxB pair, same split ambiguity; 15 lb per hand assumed)",
-          "in_log": false,
-          "missing": "set/rep split, weight per hand vs total",
-          "exercise": "Upright row"
-        },
-        {
-          "name": "Plate around the world / plate halo",
-          "reported": "15 reps clockwise, 15 reps anti-clockwise (his words; he named it both 'plate around the world' and 'plate halo')",
-          "in_log": false,
-          "missing": "plate weight, set count",
-          "exercise": "Plate halo"
-        },
-        {
-          "name": "Shrugs",
-          "reported": "'went heavy on shrugs - 70 in each arm by 10 and then 75 by 15' (his words, last exercise of the session)",
-          "in_log": true,
-          "exercise": "Shrugs"
-        }
-      ],
-      "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'",
-      "duration": "1:38:57",
-      "active_cal": 625,
-      "total_cal": 759
-    },
-    {
-      "date": "2026-11-16",
-      "kind": "strength",
-      "summary": "variety",
-      "source": "his report + Apple Watch photo",
-      "note": "Watch photo after the wrap shows 75:14.39 elapsed, 385 active cal, 487 total cal, heart rate 103 at that moment (current reading, not labeled average). Calories are watch-reported, not verified expenditure. Exercise list complete per his words ('the wrap').",
-      "exercises": [
-        {
-          "name": "Bodyweight decline ab workout",
-          "reported": "'warmup with a few body weight decline ab workout' (his words, verbatim; he designated it the warmup)",
-          "in_log": false,
-          "missing": "which movement (no bodyweight decline ab exercise in the map), reps/sets"
-        },
-        {
-          "name": "Dumbbell deadlifts",
-          "reported": "45 each arm x25; 50x25",
-          "in_log": true,
-          "exercise": "Dumbbell deadlifts"
-        },
-        {
-          "name": "Seated machine calf raises",
-          "reported": "35each x25; 45 eachx25 ('each' = per side, his words)",
-          "in_log": true,
-          "exercise": "Calf raise"
-        },
-        {
-          "name": "Farmer walks",
-          "reported": "44 each arm, total of 300 steps (his words)",
-          "in_log": false,
-          "missing": "how the 300 steps split across sets/carry lengths",
-          "exercise": "Farmer walk"
-        }
-      ],
-      "duration": "75:14.39",
-      "active_cal": 385,
-      "total_cal": 487
-    },
-    {
-      "date": "2026-11-17",
-      "kind": "swim",
-      "summary": "swim practice",
-      "source": "his report",
-      "duration": "52:00",
-      "note": "His words: 'Got 52 mins swim practice with flippers and board - didn't do abs today'. No stroke named, so it stays unlinked; no watch photo; abs explicitly skipped. Same morning he reported an unclothed weigh-in of 148.8 lb; prior reference was 149.2 lb on 2026-10-29 with a towel on, so conditions differ and the small difference doesn't establish weight loss.",
-      "his_notes": "Got 52 mins swim practice with flippers and board - didn't do abs today. Later: 'Weighed myself with no clothes - 148.8'",
-      "exercises": [
-        {
-          "name": "Swim practice",
-          "reported": "52 min with flippers and kickboard, his report; stroke not named",
-          "in_log": false
-        }
-      ]
-    },
-    {
-      "date": "2026-11-19",
-      "kind": "strength",
-      "summary": "chest-and-arms day: dips, preacher curls, pushdowns, hammer curls, overhead extensions, triceps dips",
-      "source": "his report + Apple Watch photo",
-      "note": "Sent as 'my workout today so far' - he then reported wrapping up, so the session is complete. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb. Finishers reported later: seated incline lateral hammer curls alternating arm 25x25 (his AxB convention says 25 = total reps across sets; alternating-arm split unknown); overhead triceps extension on cable '10 notch 25' kept verbatim (mapping of numbers unclear); bodyweight triceps dips 10 reps to failure. Watch photo (Traditional Strength Training screen): 1:48:45, 569 active / 716 total cal, heart rate 125 at the moment of the photo (not an average). Watch face showed 21:44 though the photo arrived 11:44am - recorded as displayed, time discrepancy unexplained.",
-      "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10. Then wrapped up with seated incline lateral hammer curls alternating arm - 25x25. Overhead tricep extension - cable - 10 notch 25 and then triceps dips body weight 10 reps but to failure",
-      "exercises": [
-        {
-          "name": "Chest dips",
-          "reported": "bodyweight 12 reps; weighted (plate around chest) 25x10; 35x10",
-          "exercise": "Dips",
-          "in_log": true,
-          "missing": "whether the 12 bodyweight reps were a warmup or work set"
-        },
-        {
-          "name": "Preacher curls, single arm",
-          "reported": "25x10",
-          "exercise": "Biceps curl",
-          "in_log": false,
-          "missing": "'preacher curl' is not in the exercise map (new exercises are the other agent's to add); whether 10 reps is per arm or total; set count"
-        },
-        {
-          "name": "Preacher curls, machine",
-          "reported": "50 plate x 25 reps; 60 x 5 reps",
-          "exercise": "Biceps curl",
-          "in_log": false,
-          "missing": "'preacher curl' not in map; units (lb assumed on plate-loaded machine); set count"
-        },
-        {
-          "name": "Triceps pull-downs on machine",
-          "reported": "notches 25x10; 30x10; 35x10; 42.5x10",
-          "exercise": "Triceps pushdown",
-          "in_log": false,
-          "missing": "weights are machine notch numbers, not lb"
-        },
-        {
-          "name": "Seated incline lateral hammer curls, alternating arm",
-          "reported": "25x25",
-          "exercise": "Biceps curl",
-          "in_log": false,
-          "missing": "'hammer curl' is not in the exercise map (new exercises are the other agent's to add); whether 25 reps is total or per arm; set count"
-        },
-        {
-          "name": "Overhead triceps extension, cable",
-          "reported": "'10 notch 25' as written",
-          "in_log": false,
-          "missing": "overhead triceps extension is not in the exercise map; which number is the notch and which the reps (kept verbatim rather than guessed); set count"
-        },
-        {
-          "name": "Triceps dips, bodyweight",
-          "reported": "10 reps, to failure",
-          "exercise": "Dips",
-          "in_log": true
-        }
-      ],
-      "duration": "1:48:45",
-      "active_cal": 569,
-      "total_cal": 716
-    },
-    {
-      "date": "2026-11-21",
-      "kind": "strength",
-      "summary": "swim lesson + leg day",
-      "source": "his report + Apple Watch photo",
-      "note": "Sent mid-workout ('still going' on the Bulgarian split squats) - more may follow. Ambiguities kept as reported: hip thrust '80x10' doesn't say whether 80 is per side or total; Bulgarian 45x10 doesn't say whether 10 reps is per leg or total; 50x4 was still in progress when reported. 'Alternating leg slide forward' is not in the exercise map (new exercises are the other agent's to add). Clarified after: hip thrust 80 is per side (205 lb total with the 45 bar); the Bulgarian 50-each-arm set finished at 6 reps each side, replacing the mid-set 50x4. Final correction: the 50-each-arm Bulgarian set was 7 reps TOTAL across both legs (not 6 each side). Scope note: the final correction '7 reps total' is kept verbatim; its scope (across both legs or otherwise) is unresolved - it is NOT read as replacing the '6 each side' unit on its own. Watch photo (Traditional Strength Training screen): 2:04:47, 789 active / 957 total cal, heart rate 119 at the moment of the photo (not an average); watch showed 2:13, matching 11:13am Pacific. Photo looks like the end-of-session shot but he hasn't explicitly said he's finished; whether the watch time includes the 30-min swim is unknown - the numbers are recorded as displayed, not summed with anything. He declared the session finished ('That's a wrap'). Final ab work: pull-downs notch 80 x30 (same notch as Nov 9), leg raises 30, and seated leg raises x20 - the two leg-raise mentions may overlap, kept separate as reported.",
-      "his_notes": "Leg day today - swim lesson 30 mins; ab body weight warmup 5 mins. Bar hip thrusts - 45 bar and then each side 45x10; 80x10 (with breaks); alternating leg slide forward 45x10 each side. Bulgarian split squats on a roller thing. Each arm - 45x10; 50x4 still going. Confirmed: the 80 on hip thrusts is per side. Bulgarian: got to 6 reps each side with 50 each arm. Correction: 7 reps total on the Bulgarians (50 each arm). Then lunge walks with twist 20 steps each side holding a 12 lb ball. Kneeling plated leg curl - 25 each side - 20 reps total. Hip abduction and adduction - 25 reps each - 130 notch on machine. Kettle bell goblet squat 30lb - 20 reps. Correction: 35 lb actually. That's a wrap - seated leg raises heavy just at the end for 20 reps. Abs did - pull downs heavy 80 on the notch - 30 reps and did leg raises for 30 reps. Wrap",
-      "exercises": [
-        {
-          "name": "Swim lesson",
-          "reported": "30 min",
-          "in_log": false,
-          "missing": "stroke not named, so it stays unlinked; no watch numbers"
-        },
-        {
-          "name": "Ab bodyweight warmup",
-          "reported": "5 min",
-          "in_log": false,
-          "missing": "exercises not named"
-        },
-        {
-          "name": "Bar hip thrusts",
-          "reported": "45 lb bar, then each side 45 x10; then 80 per side x10 (with breaks)",
-          "exercise": "Hip thrusts",
-          "in_log": true,
-          "missing": "set count for the 80-per-side work"
-        },
-        {
-          "name": "Alternating leg slide forward",
-          "reported": "45x10 each side",
-          "in_log": false,
-          "missing": "not in the exercise map; what the 45 is (dumbbell per hand assumed but not stated)"
-        },
-        {
-          "name": "Bulgarian split squats, rear foot on roller",
-          "reported": "each arm 45x10; then 50 each arm - first reported mid-set at 4, then '6 reps each side', finally corrected to '7 reps total'",
-          "exercise": "Bulgarian split squat",
-          "in_log": true,
-          "missing": "whether the 10 reps at 45 is per leg or total; final 50-set rep count is '7 reps total' with scope unresolved (total across legs vs another unit), per his last message"
-        },
-        {
-          "name": "Walking lunges with twist",
-          "reported": "20 steps each side, holding a 12 lb ball",
-          "in_log": false,
-          "missing": "walking lunge is not in the exercise map (new exercises are the other agent's to add); set count (steps given, sets not)"
-        },
-        {
-          "name": "Kneeling leg curl, plate-loaded",
-          "reported": "25 each side, 20 reps total (his explicit total)",
-          "in_log": false,
-          "missing": "leg curl is not in the exercise map (new exercises are the other agent's to add); set count; whether 25 is lb per side on the machine"
-        },
-        {
-          "name": "Hip abduction and adduction, machine",
-          "reported": "25 reps each, notch 130",
-          "exercise": [
-            "Hip abduction machine",
-            "Hip adduction machine"
-          ],
-          "in_log": false,
-          "missing": "weight is a machine notch, not lb; set count"
-        },
-        {
-          "name": "Kettlebell goblet squat",
-          "reported": "35 lb (corrected from 30), 20 reps",
-          "exercise": "Goblet squat",
-          "in_log": true,
-          "missing": "set count (one set of 20 reported)"
-        },
-        {
-          "name": "Seated leg raises, heavy",
-          "reported": "20 reps",
-          "in_log": false,
-          "missing": "load ('heavy' only); possibly overlaps the 'leg raises 30 reps' mentioned right after - kept as two separate reported items, not merged"
-        },
-        {
-          "name": "Ab pull-downs, heavy",
-          "reported": "notch 80, 30 reps",
-          "exercise": "Cable crunch",
-          "in_log": false,
-          "missing": "weight is machine notch, not lb; set count"
-        },
-        {
-          "name": "Leg raises",
-          "reported": "30 reps",
-          "in_log": false,
-          "missing": "variation (hanging vs seated vs lying); possibly the same work as the seated leg raises above - kept as reported"
-        }
-      ],
-      "duration": "2:04:47",
-      "active_cal": 789,
-      "total_cal": 957
-    },
-    {
-      "date": "2026-11-22",
-      "kind": "strength",
-      "summary": "back day: pull-ups, lat pulldowns, chest-supported rows, wide/close pulldowns and rows, prone Y-W, shrugs",
-      "source": "his report + Apple Watch photo",
-      "duration": "1:29:07",
-      "active_cal": 474,
-      "total_cal": 594,
-      "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. His words: 'Smashed out my back day' - back day, finished-sounding, details sent ~15 min later. Ambiguities kept as reported: 'single arm lay pulldowns' read as lat pulldowns, units (lb vs notch) unstated and 10 reps per arm vs total unknown; chest-supported row name is his guess ('I think that's what it's called'), units unstated; 'we each 10' read as 10 reps at each notch; 'close arm rows' kept as written (likely close-grip); shrugs called heavy with no load or reps.",
-      "exercises": [
-        {
-          "name": "Bodyweight pull-ups and holds",
-          "reported": "30 reps total",
-          "exercise": "Pull-up",
-          "in_log": false,
-          "missing": "how the 30 splits between pull-ups and holds; set count"
-        },
-        {
-          "name": "Single-arm lat pulldowns, cable",
-          "reported": "25x10; 35x10; 50x10",
-          "in_log": false,
-          "missing": "not in the exercise map (new exercises are the other agent's to add); units (lb vs notch); whether 10 reps is per arm or total"
-        },
-        {
-          "name": "Chest-supported upper back row (his name guess)",
-          "reported": "70x10; 90x10",
-          "in_log": false,
-          "missing": "not in the exercise map; units unstated; set count"
-        },
-        {
-          "name": "Seated wide lat pulldowns",
-          "reported": "30 reps: 10 each at notch 80, 100, 120",
-          "in_log": false,
-          "missing": "weights are machine notches, not lb"
-        },
-        {
-          "name": "Close arm rows",
-          "reported": "same sets and reps as the wide pulldowns (10 each at notch 80, 100, 120)",
-          "in_log": false,
-          "missing": "not in the exercise map; notch units; kept his wording (likely close-grip)"
-        },
-        {
-          "name": "Prone incline Y-W raises ('little muscles in the back')",
-          "reported": "a few, no numbers",
-          "in_log": false,
-          "missing": "not in the exercise map; sets, reps, weight"
-        },
-        {
-          "name": "Close arm delt shrugs, heavy",
-          "reported": "no numbers",
-          "exercise": "Shrugs",
-          "in_log": false,
-          "missing": "load, reps, sets"
-        }
-      ],
-      "his_notes": "Smashed out my back day. Body weight pull up and holds 30 reps total; single arm lay pulldowns - extension cable machine - 25x10; 35x10; 50x10. Chest supported upper back row I think that's what it's called - 70x10; 90x10. Seated wide lat pullbacks - 30 reps, we each 10 of 80, 100 and 120 notch on machine; same sets and reps for close arm rows. Few other strengthening exercises for little muscle in the back by face down on an incline and doing Y W etc. Heavy close arm delt shrugs"
-    },
-    {
-      "date": "2026-11-23",
-      "kind": "strength",
-      "summary": "shoulders day (mid-workout report)",
-      "source": "his report",
-      "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - he clarified it's a press. Seated vs standing still unknown, so it stays unlinked between the two map entries.",
-      "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50. Clarified: it's a press. Update: reached 50 lb x5, matching last week's 50x5; going heavy with fewer reps - third training day in a row. Then: 'So - 50x8 to failure felt like' (message appears cut off; unclear if an additional set or a correction to 50x5 - kept verbatim, 50x5 not overwritten). Final clarification: the 50 lb press was 8 reps total, spread out (not one continuous set); the last rep felt like failure",
-      "exercises": [
-        {
-          "name": "Single-arm dumbbell shoulder press",
-          "reported": "45 lb each arm x12; then 50 lb - 8 reps total spread out, not one continuous set, last rep felt like failure (his clarification; supersedes the mid-workout 50x4/50x5 reports)",
-          "in_log": false,
-          "missing": "seated or standing (map has both 'Single arm shoulder press' and 'Standing shoulder press single hand' - kept unlinked rather than picking)"
-        }
-      ]
+     "name": "Back/pull day",
+     "reported": "'more later' - details never sent",
+     "in_log": false,
+     "missing": "exercises, sets, reps, weights",
+     "regions": [
+      "Back"
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "date": "2026-11-07",
+   "kind": "swim",
+   "summary": "swim lesson",
+   "source": "his Apple Watch photo",
+   "duration": "31:31.17",
+   "active_cal": 61,
+   "total_cal": 104,
+   "note": "pool swim screen: 7 laps, 175 yd",
+   "exercises": [
+    {
+     "name": "Swim lesson",
+     "reported": "pool swim on watch: 7 laps, 175 yd",
+     "in_log": false
+    }
+   ]
+  },
+  {
+   "date": "2026-11-09",
+   "kind": "strength",
+   "summary": "legs",
+   "source": "his Apple Watch photo",
+   "duration": "1:33:31",
+   "active_cal": 656,
+   "total_cal": 782,
+   "note": "Photo taken mid-workout: the watch was still running at 1:33:31 (heart rate 144 at that moment), so these are the numbers at that point, not final.",
+   "exercises": [
+    {
+     "name": "Bulgarian alternating leg split squats",
+     "reported": "40x5; 45x15; 5x50",
+     "exercise": "Bulgarian split squat",
+     "in_log": false,
+     "missing": "what '5x50' means (50 lb x 5 reps? written reversed vs his usual); set split of the reps (his AxB convention: B = total reps across usually 4-5 sets)"
+    },
+    {
+     "name": "Weighted hip thrusts",
+     "reported": "45 lb bar plus a 45 plate per side - 40 reps; 25 reps were with alternating one foot slightly forward",
+     "exercise": "Hip thrusts",
+     "in_log": false,
+     "missing": "set split of the 40 reps"
+    },
+    {
+     "name": "Romanian deadlift (his 'hip hinge deadlift thing', named by him Nov 9)",
+     "reported": "45 bar, 40x2",
+     "in_log": false,
+     "missing": "what '40x2' means (plates per side? reps x sets?)",
+     "exercise": "Romanian deadlift"
+    },
+    {
+     "name": "Leg extensions",
+     "reported": "85x10, 90 and 100 10 each by notch",
+     "exercise": "Leg extension",
+     "in_log": false,
+     "missing": "weights are machine notch numbers, not lb"
+    },
+    {
+     "name": "Hip adduction and extension (seated)",
+     "reported": "135x20 each",
+     "exercise": [
+      "Hip abduction machine",
+      "Hip adduction machine"
+     ],
+     "in_log": false,
+     "missing": "lb or notch; what 'each' covers (each movement?); whether 'extension' meant abduction; set count"
+    },
+    {
+     "name": "Front squat, single barbell held in front (his words: 'single barbell front')",
+     "reported": "50 lb, 25 reps",
+     "in_log": false,
+     "missing": "front squat is not in the exercise map yet (new exercises are the other agent's to add); set count"
+    },
+    {
+     "name": "Hanging leg raises (abs)",
+     "reported": "30 reps",
+     "exercise": "Hanging leg raise",
+     "in_log": false,
+     "missing": "set count"
+    },
+    {
+     "name": "Hanging leg fold ins (abs)",
+     "reported": "30 reps",
+     "exercise": "Hanging leg raise",
+     "in_log": false,
+     "missing": "set count"
+    },
+    {
+     "name": "Rope pull downs (abs), super heavy",
+     "reported": "80 in notch, 30 reps",
+     "exercise": "Cable crunch",
+     "in_log": false,
+     "missing": "weight is machine notch, not lb; set count"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-10",
+   "kind": "strength",
+   "summary": "arms",
+   "source": "his Apple Watch photo",
+   "duration": "83:38.95",
+   "active_cal": 505,
+   "total_cal": 619,
+   "note": "Photo taken mid-workout: the watch was still running at 83:38.95 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
+   "exercises": [
+    {
+     "name": "Preacher curls on machine, controlled",
+     "reported": "25x10; 40x40",
+     "exercise": "Biceps curl",
+     "in_log": false,
+     "missing": "set split (his AxB convention: B = total reps across usually 4-5 sets); units lb vs machine notch"
+    },
+    {
+     "name": "Bodyweight pull-ups and bicep hang",
+     "reported": "30 reps (pull-ups plus hang combined)",
+     "exercise": "Pull-up",
+     "in_log": false,
+     "missing": "how the 30 splits between pull-ups and the hang; set count"
+    },
+    {
+     "name": "Incline seated hammer curls",
+     "reported": "15x10; 20x30; 25x3",
+     "exercise": "Biceps curl",
+     "in_log": false,
+     "missing": "set splits (his AxB convention)"
+    },
+    {
+     "name": "Triceps machine pull-downs ('weighted extension thing')",
+     "reported": "notch going up 25, 35, 42.5 - 10-15 reps each",
+     "exercise": "Triceps pushdown",
+     "in_log": false,
+     "missing": "weights are machine notch numbers, not lb; exact reps (he gave 10-15); set count per notch level"
+    },
+    {
+     "name": "Standing overhead extension, single arm alternating",
+     "reported": "controlled notch at 10, 40 reps total",
+     "in_log": false,
+     "missing": "overhead triceps extension is not in the exercise map (new exercises are the other agent's to add); weight is notch, not lb; set count"
+    },
+    {
+     "name": "Bench seated dips for triceps, bodyweight",
+     "reported": "50 reps total",
+     "exercise": "Dips",
+     "in_log": false,
+     "missing": "set count"
+    }
+   ],
+   "his_notes": "His usual pre-workout warmup (his words Nov 10): 'athleanx has this abs workout app so usually I do like 6-8 mins pre workout warmup' - the AthleanX '6 Pack Promise' app, level 4 setting, ~5-8 min of their rotations."
+  },
+  {
+   "date": "2026-11-12",
+   "kind": "strength",
+   "summary": "back",
+   "source": "his report (no watch photo)",
+   "note": "Self-reported, no watch photo: about 70 minutes total, about 600 kcal (active vs total not specified).",
+   "exercises": [
+    {
+     "name": "Back day",
+     "reported": "no exercise details shared this time",
+     "in_log": false,
+     "missing": "exercises, sets, reps, weights"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-13",
+   "kind": "strength",
+   "summary": "chest",
+   "source": "his Apple Watch photo",
+   "duration": "73:56.89",
+   "active_cal": 510,
+   "total_cal": 610,
+   "note": "Photo taken mid-workout: the watch was still running at 73:56.89 (heart rate 122 at that moment), so these are the numbers at that point, not final.",
+   "exercises": [
+    {
+     "name": "Low-incline dumbbell press (bench at 1 notch)",
+     "reported": "60 lb each x 10; 65 lb each x 4-5; 55 lb each x 10",
+     "in_log": false,
+     "missing": "exact reps on the 65s (reported 4-5)",
+     "exercise": "Incline dumbbell press"
+    },
+    {
+     "name": "Flat barbell bench press",
+     "reported": "135 lb x 15 total reps, rest-pause, one set",
+     "in_log": true,
+     "exercise": "Bench press"
+    },
+    {
+     "name": "High-to-low cable crossover (alternating)",
+     "reported": "12.5 notch x 10 (warm-up); 17.5 notch x 15; 25 reps/side total",
+     "in_log": false,
+     "missing": "weight in lb (notch), exact set count",
+     "exercise": "High-to-low cable fly"
+    },
+    {
+     "name": "Low-to-high supinated plate raise (alternating)",
+     "reported": "10 lb plate x burnout reps (unspecified); the '~10-15 reps/side' is the summarizing agent's estimate, not his count",
+     "in_log": false,
+     "missing": "which movement (a front raise with a plate?), rep count"
+    }
+   ],
+   "his_notes": "His words: 'Chest day - fewer types of exercises but went heavy.' Set details above come from a summary he had another agent write; that summary's derived totals, bodyweight percentages and 'target focus' labels are the agent's and are not recorded here as facts."
+  },
+  {
+   "date": "2026-11-14",
+   "kind": "swim",
+   "summary": "swim lesson",
+   "source": "his report",
+   "duration": "30:00",
+   "note": "His words: '30 min swim lesson'. No watch photo this time; no stroke named, so it stays unlinked.",
+   "exercises": [
+    {
+     "name": "Swim lesson",
+     "reported": "30 min, his report; stroke not named",
+     "in_log": false
+    }
+   ]
+  },
+  {
+   "date": "2026-11-15",
+   "kind": "strength",
+   "summary": "shoulders",
+   "source": "his report + Apple Watch photo",
+   "note": "Watch photo at the end shows 1:38:57 elapsed, 625 active cal, 759 total cal, heart rate 101 at that moment (current reading, not labeled average). Exercise list complete per his words ('last one' = shrugs). Calories are watch-reported, not verified expenditure.",
+   "exercises": [
+    {
+     "name": "Alternating standing shoulder press",
+     "reported": "40x9; 50x5; 47.5x3; 45x8 (his running list, in this order). His explanation: '47.5x3 was covering for 50 because I didn't want to lose form' - the drop after 50x5 was deliberate form management, not fatigue ordering.",
+     "in_log": false,
+     "missing": "which mapped exercise ('Standing shoulder press single hand' vs 'Single arm shoulder press'), whether reps are per arm or total, weight per hand assumed but unconfirmed"
+    },
+    {
+     "name": "Arnold press seated",
+     "reported": "35x11; 37.5x8 to failure",
+     "in_log": true,
+     "exercise": "Sitting Arnold"
+    },
+    {
+     "name": "Standing raise sequence",
+     "reported": "12.5 lb in each arm - 'front raises moving into raising arms above bringing it down to a lateral raise' - 24 reps (his description, verbatim)",
+     "in_log": false,
+     "missing": "which mapped movement(s) this sequence corresponds to, set count, how the 24 reps split across the sequence"
+    },
+    {
+     "name": "Cable extensions (behind-body lateral raises)",
+     "reported": "'lateral raises but behind the body alternating - warmup - 10 notch 12 reps and then 15 notch 20 reps' (his words, verbatim; he designated this a warmup)",
+     "in_log": false,
+     "missing": "which mapped exercise (no cable lateral raise in the map), weight in lb (notch), whether the warmup label covers both sets"
+    },
+    {
+     "name": "Standing lateral raises",
+     "reported": "20x25 (single AxB pair; per his convention possibly 20 lb per hand, 25 total reps across sets - one set of 25 also possible)",
+     "in_log": false,
+     "missing": "set/rep split; mapping: map only has 'Sitting lateral raises' and his are standing, so left unlinked for review"
+    },
+    {
+     "name": "Dumbbell upright row",
+     "reported": "15x25 (single AxB pair, same split ambiguity; 15 lb per hand assumed)",
+     "in_log": false,
+     "missing": "set/rep split, weight per hand vs total",
+     "exercise": "Upright row"
+    },
+    {
+     "name": "Plate around the world / plate halo",
+     "reported": "15 reps clockwise, 15 reps anti-clockwise (his words; he named it both 'plate around the world' and 'plate halo')",
+     "in_log": false,
+     "missing": "plate weight, set count",
+     "exercise": "Plate halo"
+    },
+    {
+     "name": "Shrugs",
+     "reported": "'went heavy on shrugs - 70 in each arm by 10 and then 75 by 15' (his words, last exercise of the session)",
+     "in_log": true,
+     "exercise": "Shrugs"
+    }
+   ],
+   "his_notes": "His words: 'Shoulders day today - lemme give you a running list of what I'm doing.'",
+   "duration": "1:38:57",
+   "active_cal": 625,
+   "total_cal": 759
+  },
+  {
+   "date": "2026-11-16",
+   "kind": "strength",
+   "summary": "variety",
+   "source": "his report + Apple Watch photo",
+   "note": "Watch photo after the wrap shows 75:14.39 elapsed, 385 active cal, 487 total cal, heart rate 103 at that moment (current reading, not labeled average). Calories are watch-reported, not verified expenditure. Exercise list complete per his words ('the wrap').",
+   "exercises": [
+    {
+     "name": "Bodyweight decline ab workout",
+     "reported": "'warmup with a few body weight decline ab workout' (his words, verbatim; he designated it the warmup)",
+     "in_log": false,
+     "missing": "which movement (no bodyweight decline ab exercise in the map), reps/sets"
+    },
+    {
+     "name": "Dumbbell deadlifts",
+     "reported": "45 each arm x25; 50x25",
+     "in_log": true,
+     "exercise": "Dumbbell deadlifts"
+    },
+    {
+     "name": "Seated machine calf raises",
+     "reported": "35each x25; 45 eachx25 ('each' = per side, his words)",
+     "in_log": true,
+     "exercise": "Calf raise"
+    },
+    {
+     "name": "Farmer walks",
+     "reported": "44 each arm, total of 300 steps (his words)",
+     "in_log": false,
+     "missing": "how the 300 steps split across sets/carry lengths",
+     "exercise": "Farmer walk"
+    }
+   ],
+   "duration": "75:14.39",
+   "active_cal": 385,
+   "total_cal": 487
+  },
+  {
+   "date": "2026-11-17",
+   "kind": "swim",
+   "summary": "swim practice",
+   "source": "his report",
+   "duration": "52:00",
+   "note": "His words: 'Got 52 mins swim practice with flippers and board - didn't do abs today'. No stroke named, so it stays unlinked; no watch photo; abs explicitly skipped. Same morning he reported an unclothed weigh-in of 148.8 lb; prior reference was 149.2 lb on 2026-10-29 with a towel on, so conditions differ and the small difference doesn't establish weight loss.",
+   "his_notes": "Got 52 mins swim practice with flippers and board - didn't do abs today. Later: 'Weighed myself with no clothes - 148.8'",
+   "exercises": [
+    {
+     "name": "Swim practice",
+     "reported": "52 min with flippers and kickboard, his report; stroke not named",
+     "in_log": false
+    }
+   ]
+  },
+  {
+   "date": "2026-11-19",
+   "kind": "strength",
+   "summary": "chest-and-arms day: dips, preacher curls, pushdowns, hammer curls, overhead extensions, triceps dips",
+   "source": "his report + Apple Watch photo",
+   "note": "Sent as 'my workout today so far' - he then reported wrapping up, so the session is complete. Ambiguities kept as reported: dip plate held 'around chest' (not the usual waist belt); preacher curl single-arm 25x10 unclear whether 10 reps is per arm or total (his AxB convention says B = total reps); preacher machine '50 plate, 25 reps' and '60 5 reps' recorded as given (lb assumed, plate-loaded machine); triceps pull-down numbers are machine notches, not lb. Finishers reported later: seated incline lateral hammer curls alternating arm 25x25 (his AxB convention says 25 = total reps across sets; alternating-arm split unknown); overhead triceps extension on cable '10 notch 25' kept verbatim (mapping of numbers unclear); bodyweight triceps dips 10 reps to failure. Watch photo (Traditional Strength Training screen): 1:48:45, 569 active / 716 total cal, heart rate 125 at the moment of the photo (not an average). Watch face showed 21:44 though the photo arrived 11:44am - recorded as displayed, time discrepancy unexplained.",
+   "his_notes": "Chest dips: body weight 12 reps, weighted plate around chest 25x10; 35x10. Preacher curls - single arm 25x10; machine - 50 plate, 25 reps; 60 5 reps. Triceps pull downs on machine - notches - 25x10; 30x10; 35x10; 42.5x10. Then wrapped up with seated incline lateral hammer curls alternating arm - 25x25. Overhead tricep extension - cable - 10 notch 25 and then triceps dips body weight 10 reps but to failure",
+   "exercises": [
+    {
+     "name": "Chest dips",
+     "reported": "bodyweight 12 reps; weighted (plate around chest) 25x10; 35x10",
+     "exercise": "Dips",
+     "in_log": true,
+     "missing": "whether the 12 bodyweight reps were a warmup or work set"
+    },
+    {
+     "name": "Preacher curls, single arm",
+     "reported": "25x10",
+     "exercise": "Biceps curl",
+     "in_log": false,
+     "missing": "'preacher curl' is not in the exercise map (new exercises are the other agent's to add); whether 10 reps is per arm or total; set count"
+    },
+    {
+     "name": "Preacher curls, machine",
+     "reported": "50 plate x 25 reps; 60 x 5 reps",
+     "exercise": "Biceps curl",
+     "in_log": false,
+     "missing": "'preacher curl' not in map; units (lb assumed on plate-loaded machine); set count"
+    },
+    {
+     "name": "Triceps pull-downs on machine",
+     "reported": "notches 25x10; 30x10; 35x10; 42.5x10",
+     "exercise": "Triceps pushdown",
+     "in_log": false,
+     "missing": "weights are machine notch numbers, not lb"
+    },
+    {
+     "name": "Seated incline lateral hammer curls, alternating arm",
+     "reported": "25x25",
+     "exercise": "Biceps curl",
+     "in_log": false,
+     "missing": "'hammer curl' is not in the exercise map (new exercises are the other agent's to add); whether 25 reps is total or per arm; set count"
+    },
+    {
+     "name": "Overhead triceps extension, cable",
+     "reported": "'10 notch 25' as written",
+     "in_log": false,
+     "missing": "overhead triceps extension is not in the exercise map; which number is the notch and which the reps (kept verbatim rather than guessed); set count"
+    },
+    {
+     "name": "Triceps dips, bodyweight",
+     "reported": "10 reps, to failure",
+     "exercise": "Dips",
+     "in_log": true
+    }
+   ],
+   "duration": "1:48:45",
+   "active_cal": 569,
+   "total_cal": 716
+  },
+  {
+   "date": "2026-11-21",
+   "kind": "strength",
+   "summary": "swim lesson + leg day",
+   "source": "his report + Apple Watch photo",
+   "note": "Sent mid-workout ('still going' on the Bulgarian split squats) - more may follow. Ambiguities kept as reported: hip thrust '80x10' doesn't say whether 80 is per side or total; Bulgarian 45x10 doesn't say whether 10 reps is per leg or total; 50x4 was still in progress when reported. 'Alternating leg slide forward' is not in the exercise map (new exercises are the other agent's to add). Clarified after: hip thrust 80 is per side (205 lb total with the 45 bar); the Bulgarian 50-each-arm set finished at 6 reps each side, replacing the mid-set 50x4. Final correction: the 50-each-arm Bulgarian set was 7 reps TOTAL across both legs (not 6 each side). Scope note: the final correction '7 reps total' is kept verbatim; its scope (across both legs or otherwise) is unresolved - it is NOT read as replacing the '6 each side' unit on its own. Watch photo (Traditional Strength Training screen): 2:04:47, 789 active / 957 total cal, heart rate 119 at the moment of the photo (not an average); watch showed 2:13, matching 11:13am Pacific. Photo looks like the end-of-session shot but he hasn't explicitly said he's finished; whether the watch time includes the 30-min swim is unknown - the numbers are recorded as displayed, not summed with anything. He declared the session finished ('That's a wrap'). Final ab work: pull-downs notch 80 x30 (same notch as Nov 9), leg raises 30, and seated leg raises x20 - the two leg-raise mentions may overlap, kept separate as reported.",
+   "his_notes": "Leg day today - swim lesson 30 mins; ab body weight warmup 5 mins. Bar hip thrusts - 45 bar and then each side 45x10; 80x10 (with breaks); alternating leg slide forward 45x10 each side. Bulgarian split squats on a roller thing. Each arm - 45x10; 50x4 still going. Confirmed: the 80 on hip thrusts is per side. Bulgarian: got to 6 reps each side with 50 each arm. Correction: 7 reps total on the Bulgarians (50 each arm). Then lunge walks with twist 20 steps each side holding a 12 lb ball. Kneeling plated leg curl - 25 each side - 20 reps total. Hip abduction and adduction - 25 reps each - 130 notch on machine. Kettle bell goblet squat 30lb - 20 reps. Correction: 35 lb actually. That's a wrap - seated leg raises heavy just at the end for 20 reps. Abs did - pull downs heavy 80 on the notch - 30 reps and did leg raises for 30 reps. Wrap",
+   "exercises": [
+    {
+     "name": "Swim lesson",
+     "reported": "30 min",
+     "in_log": false,
+     "missing": "stroke not named, so it stays unlinked; no watch numbers"
+    },
+    {
+     "name": "Ab bodyweight warmup",
+     "reported": "5 min",
+     "in_log": false,
+     "missing": "exercises not named"
+    },
+    {
+     "name": "Bar hip thrusts",
+     "reported": "45 lb bar, then each side 45 x10; then 80 per side x10 (with breaks)",
+     "exercise": "Hip thrusts",
+     "in_log": true,
+     "missing": "set count for the 80-per-side work"
+    },
+    {
+     "name": "Alternating leg slide forward",
+     "reported": "45x10 each side",
+     "in_log": false,
+     "missing": "not in the exercise map; what the 45 is (dumbbell per hand assumed but not stated)"
+    },
+    {
+     "name": "Bulgarian split squats, rear foot on roller",
+     "reported": "each arm 45x10; then 50 each arm - first reported mid-set at 4, then '6 reps each side', finally corrected to '7 reps total'",
+     "exercise": "Bulgarian split squat",
+     "in_log": true,
+     "missing": "whether the 10 reps at 45 is per leg or total; final 50-set rep count is '7 reps total' with scope unresolved (total across legs vs another unit), per his last message"
+    },
+    {
+     "name": "Walking lunges with twist",
+     "reported": "20 steps each side, holding a 12 lb ball",
+     "in_log": false,
+     "missing": "walking lunge is not in the exercise map (new exercises are the other agent's to add); set count (steps given, sets not)"
+    },
+    {
+     "name": "Kneeling leg curl, plate-loaded",
+     "reported": "25 each side, 20 reps total (his explicit total)",
+     "in_log": false,
+     "missing": "leg curl is not in the exercise map (new exercises are the other agent's to add); set count; whether 25 is lb per side on the machine"
+    },
+    {
+     "name": "Hip abduction and adduction, machine",
+     "reported": "25 reps each, notch 130",
+     "exercise": [
+      "Hip abduction machine",
+      "Hip adduction machine"
+     ],
+     "in_log": false,
+     "missing": "weight is a machine notch, not lb; set count"
+    },
+    {
+     "name": "Kettlebell goblet squat",
+     "reported": "35 lb (corrected from 30), 20 reps",
+     "exercise": "Goblet squat",
+     "in_log": true,
+     "missing": "set count (one set of 20 reported)"
+    },
+    {
+     "name": "Seated leg raises, heavy",
+     "reported": "20 reps",
+     "in_log": false,
+     "missing": "load ('heavy' only); possibly overlaps the 'leg raises 30 reps' mentioned right after - kept as two separate reported items, not merged"
+    },
+    {
+     "name": "Ab pull-downs, heavy",
+     "reported": "notch 80, 30 reps",
+     "exercise": "Cable crunch",
+     "in_log": false,
+     "missing": "weight is machine notch, not lb; set count"
+    },
+    {
+     "name": "Leg raises",
+     "reported": "30 reps",
+     "in_log": false,
+     "missing": "variation (hanging vs seated vs lying); possibly the same work as the seated leg raises above - kept as reported"
+    }
+   ],
+   "duration": "2:04:47",
+   "active_cal": 789,
+   "total_cal": 957
+  },
+  {
+   "date": "2026-11-22",
+   "kind": "strength",
+   "summary": "back day: pull-ups, lat pulldowns, chest-supported rows, wide/close pulldowns and rows, prone Y-W, shrugs",
+   "source": "his report + Apple Watch photo",
+   "duration": "1:29:07",
+   "active_cal": 474,
+   "total_cal": 594,
+   "note": "Watch photo with no accompanying text: displayed 89:07.15 (= 1:29:07), 474 active / 594 total cal, heart rate 109 at the moment of the photo (not an average); watch clock 12:41, matching 9:41am Pacific. Photo taken on a staircase. His words: 'Smashed out my back day' - back day, finished-sounding, details sent ~15 min later. Ambiguities kept as reported: 'single arm lay pulldowns' read as lat pulldowns, units (lb vs notch) unstated and 10 reps per arm vs total unknown; chest-supported row name is his guess ('I think that's what it's called'), units unstated; 'we each 10' read as 10 reps at each notch; 'close arm rows' kept as written (likely close-grip); shrugs called heavy with no load or reps.",
+   "exercises": [
+    {
+     "name": "Bodyweight pull-ups and holds",
+     "reported": "30 reps total",
+     "exercise": "Pull-up",
+     "in_log": false,
+     "missing": "how the 30 splits between pull-ups and holds; set count"
+    },
+    {
+     "name": "Single-arm lat pulldowns, cable",
+     "reported": "25x10; 35x10; 50x10",
+     "in_log": false,
+     "missing": "not in the exercise map (new exercises are the other agent's to add); units (lb vs notch); whether 10 reps is per arm or total"
+    },
+    {
+     "name": "Chest-supported upper back row (his name guess)",
+     "reported": "70x10; 90x10",
+     "in_log": false,
+     "missing": "not in the exercise map; units unstated; set count"
+    },
+    {
+     "name": "Seated wide lat pulldowns",
+     "reported": "30 reps: 10 each at notch 80, 100, 120",
+     "in_log": false,
+     "missing": "weights are machine notches, not lb"
+    },
+    {
+     "name": "Close arm rows",
+     "reported": "same sets and reps as the wide pulldowns (10 each at notch 80, 100, 120)",
+     "in_log": false,
+     "missing": "not in the exercise map; notch units; kept his wording (likely close-grip)"
+    },
+    {
+     "name": "Prone incline Y-W raises ('little muscles in the back')",
+     "reported": "a few, no numbers",
+     "in_log": false,
+     "missing": "not in the exercise map; sets, reps, weight"
+    },
+    {
+     "name": "Close arm delt shrugs, heavy",
+     "reported": "no numbers",
+     "exercise": "Shrugs",
+     "in_log": false,
+     "missing": "load, reps, sets"
+    }
+   ],
+   "his_notes": "Smashed out my back day. Body weight pull up and holds 30 reps total; single arm lay pulldowns - extension cable machine - 25x10; 35x10; 50x10. Chest supported upper back row I think that's what it's called - 70x10; 90x10. Seated wide lat pullbacks - 30 reps, we each 10 of 80, 100 and 120 notch on machine; same sets and reps for close arm rows. Few other strengthening exercises for little muscle in the back by face down on an incline and doing Y W etc. Heavy close arm delt shrugs"
+  },
+  {
+   "date": "2026-11-23",
+   "kind": "strength",
+   "summary": "shoulders day (mid-workout report)",
+   "source": "his report",
+   "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - he clarified it's a press. Seated vs standing still unknown, so it stays unlinked between the two map entries. Seated Arnold linked to 'Sitting Arnold' (alias 'seated arnold press' - the only Arnold in the map); 30x12 marked warm-up, 40x20 logged as reported.",
+   "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50. Clarified: it's a press. Update: reached 50 lb x5, matching last week's 50x5; going heavy with fewer reps - third training day in a row. Then: 'So - 50x8 to failure felt like' (message appears cut off; unclear if an additional set or a correction to 50x5 - kept verbatim, 50x5 not overwritten). Final clarification: the 50 lb press was 8 reps total, spread out (not one continuous set); the last rep felt like failure. Then: 'Seated Arnold - 30x12 warmup ; 40x20'",
+   "exercises": [
+    {
+     "name": "Single-arm dumbbell shoulder press",
+     "reported": "45 lb each arm x12; then 50 lb - 8 reps total spread out, not one continuous set, last rep felt like failure (his clarification; supersedes the mid-workout 50x4/50x5 reports)",
+     "in_log": false,
+     "missing": "seated or standing (map has both 'Single arm shoulder press' and 'Standing shoulder press single hand' - kept unlinked rather than picking)"
+    },
+    {
+     "name": "Sitting Arnold",
+     "reported": "Seated Arnold - 30x12 warmup ; 40x20 (his words; lb per dumbbell per his usual convention, set count not specified)",
+     "in_log": true
+    }
+   ]
+  }
+ ]
 }
