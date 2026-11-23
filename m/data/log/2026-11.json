@@ -743,6 +743,22 @@
         }
       ],
       "his_notes": "Smashed out my back day. Body weight pull up and holds 30 reps total; single arm lay pulldowns - extension cable machine - 25x10; 35x10; 50x10. Chest supported upper back row I think that's what it's called - 70x10; 90x10. Seated wide lat pullbacks - 30 reps, we each 10 of 80, 100 and 120 notch on machine; same sets and reps for close arm rows. Few other strengthening exercises for little muscle in the back by face down on an incline and doing Y W etc. Heavy close arm delt shrugs"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "strength",
+      "summary": "shoulders day (mid-workout report)",
+      "source": "his report",
+      "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - whether this is a press or a raise is ambiguous, so it stays unlinked rather than mapped to 'Single arm shoulder press' or a raise.",
+      "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50",
+      "exercises": [
+        {
+          "name": "Single-arm dumbbell raise (movement unclear - press vs raise)",
+          "reported": "45 lb each arm x12; then 50 lb x4 each arm",
+          "in_log": false,
+          "missing": "which movement (press or raise/lateral); set count"
+        }
+      ]
     }
   ]
 }
