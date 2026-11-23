@@ -749,14 +749,14 @@
       "kind": "strength",
       "summary": "shoulders day (mid-workout report)",
       "source": "his report",
-      "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - whether this is a press or a raise is ambiguous, so it stays unlinked rather than mapped to 'Single arm shoulder press' or a raise.",
-      "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50",
+      "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - he clarified it's a press. Seated vs standing still unknown, so it stays unlinked between the two map entries.",
+      "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50. Clarified: it's a press",
       "exercises": [
         {
-          "name": "Single-arm dumbbell raise (movement unclear - press vs raise)",
+          "name": "Single-arm dumbbell shoulder press",
           "reported": "45 lb each arm x12; then 50 lb x4 each arm",
           "in_log": false,
-          "missing": "which movement (press or raise/lateral); set count"
+          "missing": "seated or standing (map has both 'Single arm shoulder press' and 'Standing shoulder press single hand' - kept unlinked rather than picking); set count"
         }
       ]
     }
