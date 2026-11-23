@@ -150,6 +150,14 @@
    "reps": 20,
    "weight_lb": 40,
    "note": "weight per dumbbell; his AxB notation, set count not specified"
+  },
+  {
+   "date": "2026-11-23",
+   "exercise": "Sitting lateral raises",
+   "sets": 1,
+   "reps": 20,
+   "weight_lb": 20,
+   "note": "weight per dumbbell; his AxB notation, set count not specified"
   }
  ],
  "sessions": [
@@ -765,8 +773,8 @@
    "kind": "strength",
    "summary": "shoulders day (mid-workout report)",
    "source": "his report",
-   "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - he clarified it's a press. Seated vs standing still unknown, so it stays unlinked between the two map entries. Seated Arnold linked to 'Sitting Arnold' (alias 'seated arnold press' - the only Arnold in the map); 30x12 marked warm-up, 40x20 logged as reported.",
-   "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50. Clarified: it's a press. Update: reached 50 lb x5, matching last week's 50x5; going heavy with fewer reps - third training day in a row. Then: 'So - 50x8 to failure felt like' (message appears cut off; unclear if an additional set or a correction to 50x5 - kept verbatim, 50x5 not overwritten). Final clarification: the 50 lb press was 8 reps total, spread out (not one continuous set); the last rep felt like failure. Then: 'Seated Arnold - 30x12 warmup ; 40x20'",
+   "note": "Sent mid-workout; more details may follow. The opener is kept in his words: '12 rep each arm dumbbell raise 45lb' - he clarified it's a press. Seated vs standing still unknown, so it stays unlinked between the two map entries. Seated Arnold linked to 'Sitting Arnold' (alias 'seated arnold press' - the only Arnold in the map); 30x12 marked warm-up, 40x20 logged as reported. Laterals: standing 20x12 is diary-only (no standing lateral raise in the map); seated 20x20 linked to 'Sitting lateral raises'; the 25 lb attempt ('maybe a few reps') kept verbatim with no invented rep count - it follows the seated pair in his message.",
+   "his_notes": "Shoulders day today - started with 12 rep each arm dumbbell raise 45lb. And hit 4 reps each arm on 50. Clarified: it's a press. Update: reached 50 lb x5, matching last week's 50x5; going heavy with fewer reps - third training day in a row. Then: 'So - 50x8 to failure felt like' (message appears cut off; unclear if an additional set or a correction to 50x5 - kept verbatim, 50x5 not overwritten). Final clarification: the 50 lb press was 8 reps total, spread out (not one continuous set); the last rep felt like failure. Then: 'Seated Arnold - 30x12 warmup ; 40x20'. Then: 'Standing lateral raises 20x12; seated 20x20 and then tried to do 25s maybe a few reps but that's it'",
    "exercises": [
     {
      "name": "Single-arm dumbbell shoulder press",
@@ -777,6 +785,17 @@
     {
      "name": "Sitting Arnold",
      "reported": "Seated Arnold - 30x12 warmup ; 40x20 (his words; lb per dumbbell per his usual convention, set count not specified)",
+     "in_log": true
+    },
+    {
+     "name": "Standing lateral raises",
+     "reported": "Standing lateral raises 20x12 (his words; lb per dumbbell)",
+     "in_log": false,
+     "missing": "not in the exercise map (only 'Sitting lateral raises' exists) - kept unlinked, Claude adds new exercises"
+    },
+    {
+     "name": "Sitting lateral raises",
+     "reported": "seated 20x20 and then tried to do 25s maybe a few reps but that's it (his words; 25 lb rep count deliberately uncounted)",
      "in_log": true
     }
    ]
