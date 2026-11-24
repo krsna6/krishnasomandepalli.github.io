@@ -198,6 +198,22 @@
    "reps": 10,
    "weight_lb": 75,
    "note": "each arm (his words); 'with breaks' - not one straight set, kept verbatim"
+  },
+  {
+   "date": "2026-11-24",
+   "exercise": "Incline dumbbell press",
+   "sets": 1,
+   "reps": 12,
+   "weight_lb": 55,
+   "note": "bench at one notch incline (his words); weight per hand per his usual convention"
+  },
+  {
+   "date": "2026-11-24",
+   "exercise": "Incline dumbbell press",
+   "sets": 1,
+   "reps": 10,
+   "weight_lb": 60,
+   "note": "bench at one notch incline (his words); weight per hand per his usual convention"
   }
  ],
  "sessions": [
@@ -859,6 +875,21 @@
      "reported": "10 reps each at machine notch 65, 72.5 and 80 (his words)",
      "in_log": false,
      "missing": "weights are machine notches, not lb; movement matches 'Cable crunch' via its 'ab pull-downs' alias, kept diary-only over units"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "kind": "strength",
+   "summary": "chest and arms day (mid-workout report)",
+   "source": "his report",
+   "note": "Sent mid-workout ('started with'); more exercises may follow. 'One notch incline' is his bench angle setting, kept in the notes; linked to 'Incline dumbbell press' (its 'low-incline dumbbell press' alias fits one notch up from flat).",
+   "his_notes": "Chest and arms target today - started with: 'One notch incline bench press dumbbell 55x12; 60x10'",
+   "exercises": [
+    {
+     "name": "Incline dumbbell press",
+     "reported": "One notch incline bench press dumbbell 55x12; 60x10 (his words; per hand per his usual convention)",
+     "in_log": true
     }
    ]
   }
