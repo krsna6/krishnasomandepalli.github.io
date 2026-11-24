@@ -881,10 +881,10 @@
   {
    "date": "2026-11-24",
    "kind": "strength",
-   "summary": "chest and arms day (mid-workout report)",
+   "summary": "chest and arms day",
    "source": "his report",
-   "note": "Sent mid-workout ('started with'); more exercises may follow. 'One notch incline' is his bench angle setting, kept in the notes; linked to 'Incline dumbbell press' (its 'low-incline dumbbell press' alias fits one notch up from flat).",
-   "his_notes": "Chest and arms target today - started with: 'One notch incline bench press dumbbell 55x12; 60x10'. Plan: 'gonna stop there and switch to machine decline usolateral press and flys with arms' (his words; 'usolateral' kept verbatim - intent, not yet reported as done). Then: 'So did the decline is lateral press machine thing with each side plates 45x12; 50x5; 55x5; 60x5. Preacher curl machine - 60 total plate total 20 controlled reps'",
+   "note": "Sent mid-workout ('started with'); more exercises may follow. 'One notch incline' is his bench angle setting, kept in the notes; linked to 'Incline dumbbell press' (its 'low-incline dumbbell press' alias fits one notch up from flat). Session complete per his 'finished with' message. No watch photo this time, so no duration or calorie fields.",
+   "his_notes": "Chest and arms target today - started with: 'One notch incline bench press dumbbell 55x12; 60x10'. Plan: 'gonna stop there and switch to machine decline usolateral press and flys with arms' (his words; 'usolateral' kept verbatim - intent, not yet reported as done). Then: 'So did the decline is lateral press machine thing with each side plates 45x12; 50x5; 55x5; 60x5. Preacher curl machine - 60 total plate total 20 controlled reps'. Finished: 'seated hammer curls controlled - each arm 20x10; 22.5x10'",
    "exercises": [
     {
      "name": "Incline dumbbell press",
@@ -902,6 +902,12 @@
      "reported": "60 total plate, 20 controlled reps (his words; today he said 'total' - 60 is the whole plate load, not per arm)",
      "in_log": false,
      "missing": "'preacher curl' is not in the exercise map (new exercises are the other agent's to add); set count for the 20 reps"
+    },
+    {
+     "name": "Seated hammer curls",
+     "reported": "seated hammer curls controlled - each arm 20x10; 22.5x10 (his words; dumbbells, lb per arm)",
+     "in_log": false,
+     "missing": "hammer curls are not in the exercise map (new exercises are the other agent's to add)"
     }
    ]
   }
