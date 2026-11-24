@@ -882,9 +882,9 @@
    "date": "2026-11-24",
    "kind": "strength",
    "summary": "chest and arms day",
-   "source": "his report",
-   "note": "Sent mid-workout ('started with'); more exercises may follow. 'One notch incline' is his bench angle setting, kept in the notes; linked to 'Incline dumbbell press' (its 'low-incline dumbbell press' alias fits one notch up from flat). Session complete per his 'finished with' message. No watch photo this time, so no duration or calorie fields.",
-   "his_notes": "Chest and arms target today - started with: 'One notch incline bench press dumbbell 55x12; 60x10'. Plan: 'gonna stop there and switch to machine decline usolateral press and flys with arms' (his words; 'usolateral' kept verbatim - intent, not yet reported as done). Then: 'So did the decline is lateral press machine thing with each side plates 45x12; 50x5; 55x5; 60x5. Preacher curl machine - 60 total plate total 20 controlled reps'. Finished: 'seated hammer curls controlled - each arm 20x10; 22.5x10'",
+   "source": "his report + Apple Watch photo",
+   "note": "Sent mid-workout ('started with'); more exercises may follow. 'One notch incline' is his bench angle setting, kept in the notes; linked to 'Incline dumbbell press' (its 'low-incline dumbbell press' alias fits one notch up from flat). Session complete per his 'finished with' message. Watch photo at the end shows 57:32, 323 active cal, 401 total cal.",
+   "his_notes": "Chest and arms target today - started with: 'One notch incline bench press dumbbell 55x12; 60x10'. Plan: 'gonna stop there and switch to machine decline usolateral press and flys with arms' (his words; 'usolateral' kept verbatim - intent, not yet reported as done). Then: 'So did the decline is lateral press machine thing with each side plates 45x12; 50x5; 55x5; 60x5. Preacher curl machine - 60 total plate total 20 controlled reps'. Finished: 'seated hammer curls controlled - each arm 20x10; 22.5x10'. He summed the decline press as '4 sets total'. Watch photo at the end: 57:32, 323 active cal, 401 total cal",
    "exercises": [
     {
      "name": "Incline dumbbell press",
@@ -893,7 +893,7 @@
     },
     {
      "name": "Machine decline unilateral press (plate-loaded)",
-     "reported": "decline unilateral press machine, plates each side 45x12; 50x5; 55x5; 60x5 (his words; 'is lateral' = unilateral, kept verbatim in his_notes)",
+     "reported": "decline unilateral press machine, plates each side 45x12; 50x5; 55x5; 60x5 (his words; 'is lateral' = unilateral, kept verbatim in his_notes); he summed it as '4 sets total', matching the four reported pairs",
      "in_log": false,
      "missing": "map only has 'Decline bench press' - his is a plate-loaded unilateral machine, not a bench press, so kept unlinked for the other agent to map"
     },
@@ -909,7 +909,10 @@
      "in_log": false,
      "missing": "hammer curls are not in the exercise map (new exercises are the other agent's to add)"
     }
-   ]
+   ],
+   "duration": "57:32",
+   "active_cal": 323,
+   "total_cal": 401
   }
  ]
 }
